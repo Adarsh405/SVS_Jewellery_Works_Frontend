@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/NavBar/navBar.js";
 import Dashboard from "./components/Dashboard/Dashboard.js";
 import Login from "./components/Login/login.js";
+import AddItem from "./components/AddItem/AddItem";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 
 const Jewellery = () => <h1>Jewellery</h1>;
@@ -57,6 +59,14 @@ const App = () => {
         <Route
           path="/login"
           element={<Login />}
+        />
+        <Route
+          path="/addJewellery"
+          element={
+            <ProtectedRoute>
+              <AddItem />
+            </ProtectedRoute>
+          }
         />
         
 
