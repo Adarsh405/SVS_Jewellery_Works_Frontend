@@ -1,0 +1,40 @@
+/* =========================================================
+   LIVE PRICE
+========================================================= */
+
+.rate-card h3 {
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+
+/* INCREASE */
+
+.rate-card.increase h3 {
+  color: #16a34a;
+  transform: scale(1.04);
+}
+
+.rate-card.increase .price-arrow {
+  color: #16a34a;
+}
+
+
+/* DECREASE */
+
+.rate-card.decrease h3 {
+  color: #dc2626;
+  transform: scale(1.04);
+}
+
+.rate-card.decrease .price-arrow {
+  color: #dc2626;
+}
+
+
+/* Arrow */
+
+.price-arrow {
+  font-size: 12px;
+  margin-left: 6px;
+  transition: color 0.4s ease;
+}

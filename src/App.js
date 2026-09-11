@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+import Navbar from "./components/NavBar/navBar.js";
+import Dashboard from "./components/Dashboard/Dashboard.js";
+
+
+const Jewellery = () => <h1>Jewellery</h1>;
+const Customers = () => <h1>Customers</h1>;
+const Sales = () => <h1>Sales</h1>;
+const Purchases = () => <h1>Purchases</h1>;
+const Reports = () => <h1>Reports</h1>;
+const Settings = () => <h1>Settings</h1>;
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+
+      <Navbar />
+
+      <Routes>
+
+        <Route
+          path="/"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="/jewellery"
+          element={<Jewellery />}
+        />
+
+        <Route
+          path="/customers"
+          element={<Customers />}
+        />
+
+        <Route
+          path="/sales"
+          element={<Sales />}
+        />
+
+        <Route
+          path="/purchases"
+          element={<Purchases />}
+        />
+
+        <Route
+          path="/reports"
+          element={<Reports />}
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
+        />
+        
+
+      </Routes>
+
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
