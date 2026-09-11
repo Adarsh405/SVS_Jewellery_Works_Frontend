@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Navigate } from "react-router-dom";
 import "./login.css";
 
-const API_URL = "https://svs-jewellery-backend.onrender.com";
+const API_URL = "https://svs-jewellery-works-backend.onrender.com";
 
 class Login extends Component {
   state = {

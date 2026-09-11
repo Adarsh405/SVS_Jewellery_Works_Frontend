@@ -45,7 +45,7 @@ class Dashboard extends Component {
   getJewelleryDetails = async () => {
 
       const API_URL =
-        'https://svs-jewellery-backend.onrender.com'
+        'https://svs-jewellery-works-backend.onrender.com'
 
       try {
 

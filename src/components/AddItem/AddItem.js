@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./AddItem.css";
 
-const API_URL = "https://svs-jewellery-backend.onrender.com";
+const API_URL = "https://svs-jewellery-works-backend.onrender.com";
 
 const AddItem = () => {
   const navigate = useNavigate();

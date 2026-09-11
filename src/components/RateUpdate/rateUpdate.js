@@ -25,7 +25,7 @@ class RateUpdate extends Component {
   getRates = async () => {
     try {
       const response = await fetch(
-        'https://svs-jewellery-backend.onrender.com/api/rates'
+        'https://svs-jewellery-works-backend.onrender.com/api/rates'
       )
 
       const data = await response.json()

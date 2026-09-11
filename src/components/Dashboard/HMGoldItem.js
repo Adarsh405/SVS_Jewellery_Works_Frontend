@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const API_URL =
-  'https://svs-jewellery-backend.onrender.com'
+  'https://svs-jewellery-works-backend.onrender.com'
 
 const HMGoldItem = ({
   item,

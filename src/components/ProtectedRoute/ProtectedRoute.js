@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const API_URL = "https://svs-jewellery-backend.onrender.com";
+const API_URL = "https://svs-jewellery-works-backend.onrender.com";
 
 const ProtectedRoute = ({ children }) => {
   const [checking, setChecking] = useState(true);
