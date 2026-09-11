@@ -5,7 +5,7 @@ import Dashboard from "./components/Dashboard/Dashboard.js";
 import Login from "./components/Login/login.js";
 import AddItem from "./components/AddItem/AddItem";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
-
+import RateUpdate from './components/RateUpdate/rateUpdate'
 
 const Jewellery = () => <h1>Jewellery</h1>;
 const Customers = () => <h1>Customers</h1>;
@@ -56,10 +56,14 @@ const App = () => {
           path="/settings"
           element={<Settings />}
         />
+
+        {/* Admin Login */}
         <Route
           path="/login"
           element={<Login />}
         />
+
+        {/* Protected Add Jewellery */}
         <Route
           path="/addJewellery"
           element={
@@ -68,7 +72,14 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        
+        <Route
+          path="/Rates"
+          element={
+            <ProtectedRoute>
+              <RateUpdate />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
 

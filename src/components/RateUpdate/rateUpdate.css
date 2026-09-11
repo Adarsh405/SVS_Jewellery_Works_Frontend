@@ -1,0 +1,475 @@
+.rate-page {
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(212, 175, 55, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 80%,
+      rgba(184, 134, 11, 0.08),
+      transparent 30%
+    ),
+    #f7f7f7;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.rate-card {
+  width: 100%;
+  max-width: 620px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid #e5d29a;
+
+  border-radius: 18px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 20px 50px rgba(70, 50, 15, 0.12);
+
+  animation: rateAppear 0.6s ease;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.rate-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 28px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #eee;
+}
+
+.rate-small-title {
+  font-size: 11px;
+  letter-spacing: 3px;
+  font-weight: 700;
+
+  color: #b8860b;
+}
+
+.rate-header h1 {
+  margin: 5px 0;
+
+  font-size: 28px;
+
+  color: #2b1b0e;
+}
+
+.rate-header p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #888;
+}
+
+.rate-icon {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 27px;
+  font-weight: 900;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9c7617,
+      #d4af37,
+      #b8860b
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(184, 134, 11, 0.3);
+
+  animation:
+    rateFloat 3s ease-in-out infinite;
+}
+
+
+/* =========================================
+   INPUT GROUP
+========================================= */
+
+.rate-input-group {
+  margin-bottom: 20px;
+}
+
+.rate-input-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #444;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+
+.rate-input-wrapper {
+  height: 52px;
+
+  display: flex;
+  align-items: center;
+
+  border: 2px solid #e1e1e1;
+
+  border-radius: 10px;
+
+  background: #fff;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.rate-input-wrapper:focus-within {
+  border-color: #c49a2c;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(196, 154, 44, 0.1);
+}
+
+.rate-input-wrapper > span {
+  padding-left: 15px;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  color: #b8860b;
+}
+
+.rate-input-wrapper input {
+  flex: 1;
+
+  width: 100%;
+
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  padding: 0 10px;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  color: #333;
+
+  background: transparent;
+}
+
+
+/* Remove browser decimal/spinner behavior */
+
+.rate-input-wrapper input::-webkit-inner-spin-button,
+.rate-input-wrapper input::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.rate-input-wrapper small {
+  padding-right: 15px;
+
+  font-size: 12px;
+
+  color: #999;
+}
+
+
+/* =========================================
+   VALIDATION HINT
+========================================= */
+
+.rate-hint {
+  margin-top: 5px;
+
+  font-size: 11px;
+
+  color: #999;
+}
+
+
+/* =========================================
+   SUCCESS
+========================================= */
+
+.rate-success {
+  margin: 12px 0;
+
+  padding: 11px 14px;
+
+  border-radius: 8px;
+
+  background: #ecfdf3;
+
+  border: 1px solid #86efac;
+
+  color: #15803d;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  animation:
+    messageAppear 0.3s ease;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.rate-error {
+  margin: 12px 0;
+
+  padding: 11px 14px;
+
+  border-radius: 8px;
+
+  background: #fff1f2;
+
+  border: 1px solid #fda4af;
+
+  color: #be123c;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  animation:
+    messageAppear 0.3s ease;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.rate-update-button {
+  width: 100%;
+
+  height: 52px;
+
+  margin-top: 8px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #9c7617,
+      #d4af37,
+      #b8860b
+    );
+
+  background-size: 200% 200%;
+
+  box-shadow:
+    0 8px 18px
+    rgba(184, 134, 11, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  animation:
+    rateButtonGradient 4s ease infinite;
+}
+
+.rate-update-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px
+    rgba(184, 134, 11, 0.35);
+}
+
+.rate-update-button:active {
+  transform: scale(0.98);
+}
+
+.rate-update-button:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.rate-footer {
+  margin-top: 18px;
+
+  text-align: center;
+
+  font-size: 11px;
+
+  color: #999;
+}
+
+
+/* =========================================
+   LOADING
+========================================= */
+
+.rate-loading {
+  padding: 30px;
+
+  font-size: 15px;
+
+  color: #777;
+}
+
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes rateAppear {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(20px)
+      scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+@keyframes rateFloat {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+
+}
+
+
+@keyframes rateButtonGradient {
+
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+
+}
+
+
+@keyframes messageAppear {
+
+  from {
+    opacity: 0;
+
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width: 600px) {
+
+  .rate-page {
+    padding: 15px;
+  }
+
+  .rate-card {
+    padding: 22px 18px;
+  }
+
+  .rate-header h1 {
+    font-size: 22px;
+  }
+
+  .rate-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 21px;
+  }
+
+}
