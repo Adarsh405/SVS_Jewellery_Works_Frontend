@@ -5,10 +5,6 @@ import {
   FaHome,
   FaRing,
   FaUsers,
-  FaFileInvoiceDollar,
-  FaShoppingCart,
-  FaChartBar,
-  FaCog,
   FaBars,
   FaTimes
 } from "react-icons/fa";
