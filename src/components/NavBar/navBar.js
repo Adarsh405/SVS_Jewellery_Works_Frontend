@@ -3,8 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 
 import {
   FaHome,
-  FaRing,
-  FaUsers,
+  FaGem, 
+  FaCoins,
   FaBars,
   FaTimes
 } from "react-icons/fa";
@@ -29,12 +29,12 @@ const Navbar = () => {
     },
     {
       path: "/addJewellery",
-      icon: <FaRing />,
+      icon: <FaGem />,
       label: "Add Jewellery"
     },
     {
       path: "/rates",
-      icon: <FaUsers />,
+      icon: <FaCoins />,
       label: "Update Rates"
     }
   ];
