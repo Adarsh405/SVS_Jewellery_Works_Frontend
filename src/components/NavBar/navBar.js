@@ -32,34 +32,14 @@ const Navbar = () => {
       label: "Dashboard"
     },
     {
-      path: "/jewellery",
+      path: "/addJewellery",
       icon: <FaRing />,
-      label: "Jewellery"
+      label: "Add Jewellery"
     },
     {
-      path: "/customers",
+      path: "/rates",
       icon: <FaUsers />,
-      label: "Customers"
-    },
-    {
-      path: "/sales",
-      icon: <FaFileInvoiceDollar />,
-      label: "Sales"
-    },
-    {
-      path: "/purchases",
-      icon: <FaShoppingCart />,
-      label: "Purchases"
-    },
-    {
-      path: "/reports",
-      icon: <FaChartBar />,
-      label: "Reports"
-    },
-    {
-      path: "/settings",
-      icon: <FaCog />,
-      label: "Settings"
+      label: "Update Rates"
     }
   ];
 
