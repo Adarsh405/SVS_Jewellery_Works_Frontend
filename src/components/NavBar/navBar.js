@@ -6,7 +6,8 @@ import {
   FaGem, 
   FaCoins,
   FaBars,
-  FaTimes
+  FaTimes,
+  FaCashRegister
 } from "react-icons/fa";
 
 import "./navBar.css";
@@ -26,6 +27,11 @@ const Navbar = () => {
       path: "/",
       icon: <FaHome />,
       label: "Dashboard"
+    },
+    {
+      path: "/sales",
+      icon: <FaCashRegister />,
+      label: "Sales"
     },
     {
       path: "/addJewellery",

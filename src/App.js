@@ -6,10 +6,10 @@ import Login from "./components/Login/login.js";
 import AddItem from "./components/AddItem/AddItem";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import RateUpdate from './components/RateUpdate/rateUpdate'
-
+import Payment from "./components/Payment/Payment";
+import Sales from "./components/Sales/sales.js"
 const Jewellery = () => <h1>Jewellery</h1>;
 const Customers = () => <h1>Customers</h1>;
-const Sales = () => <h1>Sales</h1>;
 const Purchases = () => <h1>Purchases</h1>;
 const Reports = () => <h1>Reports</h1>;
 const Settings = () => <h1>Settings</h1>;
@@ -65,6 +65,14 @@ const App = () => {
 
         {/* Protected Add Jewellery */}
         <Route
+          path="/sales"
+          element={
+            <ProtectedRoute>
+              <Sales />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/addJewellery"
           element={
             <ProtectedRoute>
@@ -80,7 +88,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-
+        <Route path="/payment" element={<Payment />} />
       </Routes>
 
     </BrowserRouter>
