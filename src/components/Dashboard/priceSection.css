@@ -1,40 +1,343 @@
 /* =========================================================
-   LIVE PRICE
+   SVS JEWELLERY
+   PREMIUM PRICE STATUS
 ========================================================= */
 
-.rate-card h3 {
-  transition: color 0.4s ease, transform 0.4s ease;
+
+/* =========================================================
+   PRICE CARD STATUS
+========================================================= */
+
+.rate-card.increase {
+  border-top: 2px solid rgba(22,163,74,0.35);
+
+  box-shadow:
+    0 10px 28px rgba(22,163,74,0.10);
 }
 
 
-/* INCREASE */
+.rate-card.decrease {
+  border-top: 2px solid rgba(220,38,38,0.30);
+
+  box-shadow:
+    0 10px 28px rgba(220,38,38,0.08);
+}
+
+
+/* =========================================================
+   PRICE NUMBER
+========================================================= */
 
 .rate-card.increase h3 {
-  color: #16a34a;
-  transform: scale(1.04);
+  color: #15803d !important;
+
+  text-shadow:
+    0 0 12px rgba(22,163,74,0.18);
+
+  animation:
+    priceIncrease 1.8s ease-in-out infinite;
 }
+
+
+.rate-card.decrease h3 {
+  color: #dc2626 !important;
+
+  text-shadow:
+    0 0 12px rgba(220,38,38,0.16);
+
+  animation:
+    priceDecrease 1.8s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   PRICE ARROW
+========================================================= */
+
+.price-arrow {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 5px;
+
+  font-size: 15px;
+
+  font-weight: 950;
+
+  transition:
+    transform 0.3s ease;
+}
+
 
 .rate-card.increase .price-arrow {
   color: #16a34a;
+
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(22,163,74,0.35)
+    );
+
+  animation:
+    arrowUp 1.5s ease-in-out infinite;
 }
 
-
-/* DECREASE */
-
-.rate-card.decrease h3 {
-  color: #dc2626;
-  transform: scale(1.04);
-}
 
 .rate-card.decrease .price-arrow {
   color: #dc2626;
+
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(220,38,38,0.3)
+    );
+
+  animation:
+    arrowDown 1.5s ease-in-out infinite;
 }
 
 
-/* Arrow */
+/* =========================================================
+   RATE UPDATE FLASH
+========================================================= */
 
-.price-arrow {
-  font-size: 12px;
-  margin-left: 6px;
-  transition: color 0.4s ease;
+.rate-card.rate-updated {
+  animation:
+    rateUpdated 0.9s ease,
+    cardFloat 5s ease-in-out infinite;
+}
+
+
+.rate-card.rate-updated h3 {
+  animation:
+    updatedNumber 0.9s ease;
+}
+
+
+/* =========================================================
+   GOLD RATE
+========================================================= */
+
+.rate-card.hallmark {
+  position: relative;
+}
+
+
+.rate-card.hallmark::before {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #fff0a0,
+      #d4af37,
+      #fff0a0,
+      transparent
+    );
+
+  background-size: 300% auto;
+
+  animation:
+    premiumGoldLine 3s linear infinite;
+}
+
+
+/* =========================================================
+   KDM RATE
+========================================================= */
+
+.rate-card.kdm::before {
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #c59b35,
+      #ffe27a,
+      #c59b35,
+      transparent
+    );
+
+  background-size: 300% auto;
+
+  animation:
+    premiumGoldLine 3.5s linear infinite;
+}
+
+
+/* =========================================================
+   SILVER RATE
+========================================================= */
+
+.rate-card.silver {
+  border-left-color: #8c98a3 !important;
+}
+
+
+.rate-card.silver h3 {
+  color: #42505c;
+
+  text-shadow:
+    0 0 10px rgba(120,135,148,0.2);
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes priceIncrease {
+
+  0%,
+  100% {
+    transform: scale(1);
+
+    text-shadow:
+      0 0 5px
+      rgba(22,163,74,0.15);
+  }
+
+  50% {
+    transform: scale(1.045);
+
+    text-shadow:
+      0 0 18px
+      rgba(22,163,74,0.42);
+  }
+}
+
+
+@keyframes priceDecrease {
+
+  0%,
+  100% {
+    transform: scale(1);
+
+    text-shadow:
+      0 0 5px
+      rgba(220,38,38,0.12);
+  }
+
+  50% {
+    transform: scale(1.035);
+
+    text-shadow:
+      0 0 17px
+      rgba(220,38,38,0.36);
+  }
+}
+
+
+@keyframes arrowUp {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-4px)
+      scale(1.12);
+  }
+}
+
+
+@keyframes arrowDown {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(4px)
+      scale(1.12);
+  }
+}
+
+
+@keyframes rateUpdated {
+
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform:
+      scale(1.07)
+      rotate(0.5deg);
+  }
+
+  70% {
+    transform:
+      scale(0.99);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+@keyframes updatedNumber {
+
+  0% {
+    opacity: 0.35;
+
+    transform:
+      scale(0.8)
+      translateY(6px);
+  }
+
+  60% {
+    opacity: 1;
+
+    transform:
+      scale(1.12)
+      translateY(-2px);
+  }
+
+  100% {
+    transform:
+      scale(1)
+      translateY(0);
+  }
+}
+
+
+@keyframes premiumGoldLine {
+
+  0% {
+    background-position: -300% center;
+  }
+
+  100% {
+    background-position: 300% center;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media screen and (max-width: 768px) {
+
+  .rate-card.increase h3,
+  .rate-card.decrease h3 {
+    animation-duration: 2.2s;
+  }
+
+
+  .price-arrow {
+    font-size: 12px;
+
+    margin-left: 2px;
+  }
 }
