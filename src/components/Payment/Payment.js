@@ -1,292 +1,75 @@
-const axios = require("axios");
+import { Component } from "react";
+import "./Payment.css";
+import PhonePeQr from './phonepe-qr.png'
+class Payment extends Component {
+  render() {
+    return (
+      <div className="payment-page">
+        <div className="payment-card">
 
-const PHONEPE_API =
-  "https://api.phonepe.com/apis/pg";
+          {/* Header */}
+          <div className="payment-header">
+            <div className="payment-logo">SVS</div>
 
+            <div>
+              <h1>SVS JEWELLERY</h1>
+              <p>Trusted Jewellery • Timeless Elegance</p>
+            </div>
+          </div>
 
-// ======================================================
-// GET PHONEPE ACCESS TOKEN
-// ======================================================
+          <div className="payment-divider"></div>
 
-const getPhonePeAccessToken = async () => {
-  try {
-    const params = new URLSearchParams();
+          {/* Payment Title */}
+          <div className="payment-title">
+            <span>SECURE PAYMENT</span>
+            <h2>Scan & Pay</h2>
+            <p>Use PhonePe to complete your payment</p>
+          </div>
 
-    params.append(
-      "client_id",
-      process.env.PHONEPE_CLIENT_ID
-    );
+          {/* QR Section */}
+          <div className="qr-container">
 
-    params.append(
-      "client_version",
-      process.env.PHONEPE_CLIENT_VERSION
-    );
+            <div className="qr-frame">
+              <img
+                src= {PhonePeQr}
+                alt="SVS Jewellery PhonePe QR Code"
+                className="payment-qr"
+              />
+            </div>
 
-    params.append(
-      "client_secret",
-      process.env.PHONEPE_CLIENT_SECRET
-    );
+            <div className="scan-text">
+              <strong>Scan QR Code</strong>
+              <span>Open PhonePe and scan the QR code</span>
+            </div>
 
-    params.append(
-      "grant_type",
-      "client_credentials"
-    );
+          </div>
 
-    const response = await axios.post(
-      "https://api.phonepe.com/apis/identity-manager/v1/oauth/token",
-      params.toString(),
-      {
-        headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded",
-        },
-      }
-    );
+          {/* Payment Details */}
+          <div className="payment-info">
 
-    return response.data.access_token;
+            <div className="info-item">
+              <span className="info-label">PAYMENT METHOD</span>
+              <strong>PhonePe UPI</strong>
+            </div>
 
-  } catch (error) {
-    console.error(
-      "PhonePe token error:",
-      error.response?.data || error.message
-    );
+            <div className="info-item">
+              <span className="info-label">MERCHANT</span>
+              <strong>SVS Jewellery</strong>
+            </div>
 
-    throw new Error(
-      "Unable to authenticate with PhonePe"
+          </div>
+
+          {/* Footer */}
+          <div className="payment-footer">
+            <span>◆</span>
+            <p>Please verify the merchant name before making payment</p>
+            <span>◆</span>
+          </div>
+
+        </div>
+      </div>
     );
   }
-};
+}
 
-
-// ======================================================
-// CREATE PAYMENT
-// ======================================================
-
-const createPayment = async (req, res) => {
-  try {
-    const { amount } = req.body;
-
-    const numericAmount = Number(amount);
-
-    if (
-      !numericAmount ||
-      numericAmount <= 0
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid payment amount",
-      });
-    }
-
-    // ₹100 = 10000 paise
-    const amountInPaise = Math.round(
-      numericAmount * 100
-    );
-
-    // Unique merchant order ID
-    const merchantOrderId =
-      `SVS_${Date.now()}_${Math.floor(
-        Math.random() * 10000
-      )}`;
-
-    // Get PhonePe token
-    const accessToken =
-      await getPhonePeAccessToken();
-
-
-    // PhonePe payment request
-    const paymentPayload = {
-      merchantOrderId,
-
-      amount: amountInPaise,
-
-      expireAfter: 1200,
-
-      paymentFlow: {
-        type: "PG_CHECKOUT",
-
-        merchantUrls: {
-          redirectUrl:
-            `${process.env.FRONTEND_URL}/payment?orderId=${merchantOrderId}`,
-        },
-      },
-    };
-
-
-    const response = await axios.post(
-      `${PHONEPE_API}/checkout/v2/pay`,
-
-      paymentPayload,
-
-      {
-        headers: {
-          "Content-Type":
-            "application/json",
-
-          Authorization:
-            `O-Bearer ${accessToken}`,
-        },
-      }
-    );
-
-
-    console.log(
-      "PhonePe create response:",
-      response.data
-    );
-
-
-    return res.status(200).json({
-      success: true,
-
-      orderId: merchantOrderId,
-
-      amount: numericAmount,
-
-      phonePe: response.data,
-    });
-
-  } catch (error) {
-
-    console.error(
-      "Create payment error:",
-      error.response?.data ||
-        error.message
-    );
-
-    return res.status(500).json({
-      success: false,
-
-      message:
-        "Unable to create PhonePe payment",
-
-      error:
-        error.response?.data ||
-        error.message,
-    });
-  }
-};
-
-
-// ======================================================
-// CHECK PAYMENT STATUS
-// ======================================================
-
-const checkPaymentStatus = async (
-  req,
-  res
-) => {
-
-  try {
-
-    const { orderId } = req.params;
-
-    if (!orderId) {
-      return res.status(400).json({
-        success: false,
-        message: "Order ID is required",
-      });
-    }
-
-
-    const accessToken =
-      await getPhonePeAccessToken();
-
-
-    const response = await axios.get(
-
-      `${PHONEPE_API}/checkout/v2/order/${orderId}/status`,
-
-      {
-        headers: {
-          "Content-Type":
-            "application/json",
-
-          Authorization:
-            `O-Bearer ${accessToken}`,
-        },
-      }
-    );
-
-
-    const data = response.data;
-
-
-    console.log(
-      "PhonePe status:",
-      data
-    );
-
-
-    let status = "PENDING";
-
-
-    if (data.state === "COMPLETED") {
-      status = "SUCCESS";
-    }
-
-    else if (
-      data.state === "FAILED" ||
-      data.state === "EXPIRED"
-    ) {
-      status = "FAILED";
-    }
-
-
-    const paymentDetails =
-      data.paymentDetails?.[0];
-
-
-    const transactionId =
-      paymentDetails?.transactionId ||
-      paymentDetails?.transactionReferenceId ||
-      null;
-
-
-    return res.status(200).json({
-
-      success: true,
-
-      orderId,
-
-      status,
-
-      amount:
-        data.amount
-          ? data.amount / 100
-          : null,
-
-      transactionId,
-
-      phonePe: data,
-    });
-
-
-  } catch (error) {
-
-    console.error(
-      "Payment status error:",
-      error.response?.data ||
-        error.message
-    );
-
-
-    return res.status(500).json({
-
-      success: false,
-
-      message:
-        "Unable to check payment status",
-
-      error:
-        error.response?.data ||
-        error.message,
-    });
-  }
-};
-
-
-module.exports = {
-  createPayment,
-  checkPaymentStatus,
-};
+export default Payment;

@@ -8,11 +8,6 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import RateUpdate from './components/RateUpdate/rateUpdate'
 import Payment from "./components/Payment/Payment";
 import Sales from "./components/Sales/sales.js"
-const Jewellery = () => <h1>Jewellery</h1>;
-const Customers = () => <h1>Customers</h1>;
-const Purchases = () => <h1>Purchases</h1>;
-const Reports = () => <h1>Reports</h1>;
-const Settings = () => <h1>Settings</h1>;
 
 const App = () => {
   return (
@@ -27,35 +22,7 @@ const App = () => {
           element={<Dashboard />}
         />
 
-        <Route
-          path="/jewellery"
-          element={<Jewellery />}
-        />
-
-        <Route
-          path="/customers"
-          element={<Customers />}
-        />
-
-        <Route
-          path="/sales"
-          element={<Sales />}
-        />
-
-        <Route
-          path="/purchases"
-          element={<Purchases />}
-        />
-
-        <Route
-          path="/reports"
-          element={<Reports />}
-        />
-
-        <Route
-          path="/settings"
-          element={<Settings />}
-        />
+       
 
         {/* Admin Login */}
         <Route

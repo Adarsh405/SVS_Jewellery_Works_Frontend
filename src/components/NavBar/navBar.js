@@ -7,8 +7,9 @@ import {
   FaCoins,
   FaBars,
   FaTimes,
-  FaCashRegister
+  FaCashRegister,
 } from "react-icons/fa";
+import { MdQrCode2 } from "react-icons/md";
 
 import "./navBar.css";
 
@@ -27,6 +28,11 @@ const Navbar = () => {
       path: "/",
       icon: <FaHome />,
       label: "Dashboard"
+    },
+    {
+      path: "/payment",
+      icon: <MdQrCode2 />,
+      label: "QR Payment"
     },
     {
       path: "/sales",
