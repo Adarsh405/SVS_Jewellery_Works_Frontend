@@ -6,19 +6,20 @@ class Inventory extends Component {
     super(props);
 
     this.state = {
-      kdmItems: [],
-      hallmarkItems: [],
-      silverItems: [],
+    kdmItems: [],
+    hallmarkItems: [],
+    silverItems: [],
 
-      rates: {
+    rates: {
         gold_rate: 0,
         hallmark_rate: 0,
         silver_rate: 0,
-      },
+    },
 
-      selectedType: "all",
-      loading: true,
-      error: "",
+    selectedType: "all",
+    searchQuery: "",
+    loading: true,
+    error: "",
     };
   }
 
@@ -147,7 +148,11 @@ class Inventory extends Component {
       selectedType: event.target.value,
     });
   };
-
+  handleSearchChange = (event) => {
+    this.setState({
+        searchQuery: event.target.value,
+    });
+    };
   getGoldPrice = (item, rate) => {
     const weight = Number(item.net_weight) || 0;
     const charges = Number(item.charges) || 0;
@@ -220,7 +225,31 @@ class Inventory extends Component {
       })),
     ];
   };
+  getFilteredItems = () => {
+    const { searchQuery } = this.state;
 
+    const items = this.getSelectedItems();
+
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) {
+        return items;
+    }
+
+    return items.filter((item) => {
+        const id = String(item.id || "").toLowerCase();
+        const name = String(item.name || "").toLowerCase();
+        const category = String(item.category || "").toLowerCase();
+        const status = String(item.status || "").toLowerCase();
+
+        return (
+        id.includes(query) ||
+        name.includes(query) ||
+        category.includes(query) ||
+        status.includes(query)
+        );
+    });
+    };
   getGoldAnalytics = (items, rate) => {
     const totalItems = items.length;
 
@@ -834,33 +863,80 @@ class Inventory extends Component {
   };
 
   renderItemTable = () => {
-    const items =
-      this.getSelectedItems();
+    const { searchQuery } = this.state;
+
+    const allItems = this.getSelectedItems();
+    const items = this.getFilteredItems();
 
     return (
-      <div className="inventory-list-section">
+        <div className="inventory-list-section">
+
+        {/* TABLE HEADER */}
         <div className="inventory-list-header">
-          <div>
+
+            <div>
             <span className="category-kicker">
-              ITEM REGISTER
+                ITEM REGISTER
             </span>
 
-            <h3>
-              Inventory Items
-            </h3>
+            <h3>Inventory Items</h3>
 
             <p>
-              {items.length} items shown
+                {items.length} of {allItems.length} items shown
             </p>
-          </div>
+            </div>
 
-          {this.renderSelector()}
+            {this.renderSelector()}
+
         </div>
 
+        {/* SEARCH BAR */}
+        <div className="inventory-search-section">
+
+            <div className="inventory-search-box">
+
+            <span className="inventory-search-icon">
+                🔍
+            </span>
+
+            <input
+                type="text"
+                value={searchQuery}
+                onChange={this.handleSearchChange}
+                placeholder="Search by item ID, name, category or status..."
+                className="inventory-search-input"
+            />
+
+            {searchQuery && (
+                <button
+                type="button"
+                className="inventory-search-clear"
+                onClick={() =>
+                    this.setState({
+                    searchQuery: "",
+                    })
+                }
+                aria-label="Clear search"
+                >
+                ×
+                </button>
+            )}
+
+            </div>
+
+            <div className="inventory-search-hint">
+            Search ID, item name, KDM, Hallmark, Silver, Available or Sold
+            </div>
+
+        </div>
+
+        {/* TABLE */}
         <div className="inventory-table-wrapper">
-          <table className="inventory-table">
+
+            <table className="inventory-table">
+
             <thead>
-              <tr>
+                <tr>
                 <th>ID</th>
                 <th>Item</th>
                 <th>Category</th>
@@ -869,130 +945,125 @@ class Inventory extends Component {
                 <th>Making Cost</th>
                 <th>Current Price</th>
                 <th>Status</th>
-              </tr>
+                </tr>
             </thead>
 
             <tbody>
-              {items.length === 0 ? (
+
+                {items.length === 0 ? (
+
                 <tr>
-                  <td
+                    <td
                     colSpan="8"
                     className="empty-inventory"
-                  >
-                    No items available
-                  </td>
+                    >
+                    {searchQuery
+                        ? `No items found for "${searchQuery}"`
+                        : "No items available"}
+                    </td>
                 </tr>
-              ) : (
-                items.map(
-                  (item, index) => {
+
+                ) : (
+
+                items.map((item) => {
+
                     const isSilver =
-                      item.category ===
-                      "Silver";
+                    item.category === "Silver";
 
                     const isSold =
-                      String(
-                        item.status
-                      ).toLowerCase() ===
-                      "sold";
+                    String(item.status).toLowerCase() === "sold";
 
-                    const price =
-                      isSilver
-                        ? this.getSilverPrice(
-                            item
-                          )
-                        : this.getGoldPrice(
-                            item,
-                            item.category ===
-                              "KDM"
-                              ? this.state.rates
-                                  .gold_rate
-                              : this.state.rates
-                                  .hallmark_rate
-                          );
+                    const price = isSilver
+                    ? this.getSilverPrice(item)
+                    : this.getGoldPrice(
+                        item,
+                        item.category === "KDM"
+                            ? this.state.rates.gold_rate
+                            : this.state.rates.hallmark_rate
+                        );
 
                     return (
-                      <tr
+                    <tr
                         key={`${item.category}-${item.id}`}
-                        style={{
-                          "--row-index": index,
-                        }}
-                      >
+                    >
+
                         <td>
-                          <span className="item-id">
+                        <span className="item-id">
                             #{item.id}
-                          </span>
+                        </span>
                         </td>
 
                         <td>
-                          <div className="item-name-cell">
+                        <div className="item-name-cell">
                             <strong>
-                              {item.name}
+                            {item.name}
                             </strong>
-                          </div>
+                        </div>
                         </td>
 
                         <td>
-                          <span
+                        <span
                             className={`category-pill ${item.category.toLowerCase()}`}
-                          >
+                        >
                             {item.category}
-                          </span>
+                        </span>
                         </td>
 
                         <td>
-                          {this.formatWeight(
+                        {this.formatWeight(
                             isSilver
-                              ? item.weight
-                              : item.net_weight
-                          )}
+                            ? item.weight
+                            : item.net_weight
+                        )}
                         </td>
 
                         <td>
-                          {isSilver
+                        {isSilver
                             ? "—"
                             : this.formatWeight(
                                 item.charges
-                              )}
-                        </td>
-
-                        <td>
-                          {this.formatCurrency(
-                            item.making_cost
-                          )}
-                        </td>
-
-                        <td>
-                          <strong className="table-price">
-                            {this.formatCurrency(
-                              price
                             )}
-                          </strong>
                         </td>
 
                         <td>
-                          <span
+                        {this.formatCurrency(
+                            item.making_cost
+                        )}
+                        </td>
+
+                        <td>
+                        <strong className="table-price">
+                            {this.formatCurrency(price)}
+                        </strong>
+                        </td>
+
+                        <td>
+                        <span
                             className={`status-pill ${
-                              isSold
+                            isSold
                                 ? "sold"
                                 : "available"
                             }`}
-                          >
+                        >
                             {isSold
-                              ? "Sold"
-                              : "Available"}
-                          </span>
+                            ? "Sold"
+                            : "Available"}
+                        </span>
                         </td>
-                      </tr>
+
+                    </tr>
                     );
-                  }
-                )
-              )}
+                })
+                )}
+
             </tbody>
-          </table>
+
+            </table>
+
         </div>
-      </div>
+        </div>
     );
-  };
+    };
 
   render() {
     const {

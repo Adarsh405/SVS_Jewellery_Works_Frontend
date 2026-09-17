@@ -1986,3 +1986,202 @@
     transition-duration: 0.01ms !important;
   }
 }
+/* =========================================================
+   INVENTORY SEARCH
+========================================================= */
+
+.inventory-search-section {
+  width: 100%;
+  margin: 20px 0 18px;
+
+  animation: inventorySearchReveal 0.45s ease both;
+}
+
+.inventory-search-box {
+  position: relative;
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #fffdf8
+    );
+
+  border: 1px solid rgba(184, 134, 11, 0.22);
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 25px rgba(82, 60, 20, 0.055);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.inventory-search-box:focus-within {
+  border-color: rgba(184, 134, 11, 0.55);
+
+  box-shadow:
+    0 10px 30px rgba(184, 134, 11, 0.12),
+    0 0 0 4px rgba(212, 175, 55, 0.06);
+
+  transform: translateY(-1px);
+}
+
+.inventory-search-icon {
+  width: 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+
+  opacity: 0.7;
+
+  user-select: none;
+}
+
+.inventory-search-input {
+  flex: 1;
+
+  width: 100%;
+
+  min-height: 52px;
+
+  padding: 0 48px 0 0;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #4f3a20;
+
+  font-family: inherit;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.inventory-search-input::placeholder {
+  color: #b0a18b;
+
+  font-weight: 500;
+}
+
+.inventory-search-clear {
+  position: absolute;
+
+  right: 15px;
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f5efe3;
+
+  color: #8d681d;
+
+  font-size: 20px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.inventory-search-clear:hover {
+  background: #eee1c8;
+
+  transform: rotate(90deg) scale(1.05);
+}
+
+.inventory-search-hint {
+  margin-top: 8px;
+
+  padding-left: 4px;
+
+  color: #aa9b83;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+}
+
+@keyframes inventorySearchReveal {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   SEARCH RESULT ANIMATION
+========================================================= */
+
+.inventory-table tbody tr {
+  animation: inventoryRowReveal 0.3s ease both;
+}
+
+@keyframes inventoryRowReveal {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   MOBILE SEARCH
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .inventory-search-section {
+    margin-top: 16px;
+  }
+
+  .inventory-search-input {
+    min-height: 48px;
+
+    font-size: 12px;
+  }
+
+  .inventory-search-icon {
+    width: 46px;
+  }
+
+  .inventory-search-hint {
+    font-size: 9px;
+  }
+}
