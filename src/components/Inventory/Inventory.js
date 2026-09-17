@@ -28,78 +28,119 @@ class Inventory extends Component {
 
   fetchInventoryData = async () => {
     try {
-      this.setState({
+        this.setState({
         loading: true,
         error: "",
-      });
+        });
 
-      const [
+        const [
         kdmResponse,
         hallmarkResponse,
         silverResponse,
         ratesResponse,
-      ] = await Promise.all([
+        ] = await Promise.all([
         fetch(
-          "https://svs-jewellery-works-backend.onrender.com/api/kdm"
+            "https://svs-jewellery-works-backend.onrender.com/api/kdm"
         ),
         fetch(
-          "https://svs-jewellery-works-backend.onrender.com/api/Hallmark"
+            "https://svs-jewellery-works-backend.onrender.com/api/Hallmark"
         ),
         fetch(
-          "https://svs-jewellery-works-backend.onrender.com/api/silver"
+            "https://svs-jewellery-works-backend.onrender.com/api/silver"
         ),
         fetch(
-          "https://svs-jewellery-works-backend.onrender.com/api/rates"
+            "https://svs-jewellery-works-backend.onrender.com/api/rates"
         ),
-      ]);
+        ]);
 
-      if (
+        if (
         !kdmResponse.ok ||
         !hallmarkResponse.ok ||
         !silverResponse.ok ||
         !ratesResponse.ok
-      ) {
-        throw new Error("Failed to fetch inventory data");
-      }
+        ) {
+        throw new Error(
+            "Failed to fetch inventory data"
+        );
+        }
 
-      const [
-        kdmItems,
-        hallmarkItems,
-        silverItems,
-        rates,
-      ] = await Promise.all([
+        const [
+        kdmResult,
+        hallmarkResult,
+        silverResult,
+        ratesResult,
+        ] = await Promise.all([
         kdmResponse.json(),
         hallmarkResponse.json(),
         silverResponse.json(),
         ratesResponse.json(),
-      ]);
+        ]);
 
-      this.setState({
-        kdmItems: Array.isArray(kdmItems) ? kdmItems : [],
-        hallmarkItems: Array.isArray(hallmarkItems)
-          ? hallmarkItems
-          : [],
-        silverItems: Array.isArray(silverItems)
-          ? silverItems
-          : [],
+        console.log("KDM API:", kdmResult);
+        console.log(
+        "HALLMARK API:",
+        hallmarkResult
+        );
+        console.log(
+        "SILVER API:",
+        silverResult
+        );
+        console.log(
+        "RATES API:",
+        ratesResult
+        );
+
+        const kdmItems = Array.isArray(
+        kdmResult?.data
+        )
+        ? kdmResult.data
+        : [];
+
+        const hallmarkItems = Array.isArray(
+        hallmarkResult?.data
+        )
+        ? hallmarkResult.data
+        : [];
+
+        const silverItems = Array.isArray(
+        silverResult?.data
+        )
+        ? silverResult.data
+        : [];
+
+        const rates = ratesResult?.data || {};
+
+        this.setState({
+        kdmItems,
+        hallmarkItems,
+        silverItems,
 
         rates: {
-          gold_rate: Number(rates.gold_rate) || 0,
-          hallmark_rate: Number(rates.hallmark_rate) || 0,
-          silver_rate: Number(rates.silver_rate) || 0,
+            gold_rate:
+            Number(rates.gold_rate) || 0,
+
+            hallmark_rate:
+            Number(rates.hallmark_rate) || 0,
+
+            silver_rate:
+            Number(rates.silver_rate) || 0,
         },
 
         loading: false,
-      });
+        });
     } catch (error) {
-      console.error(error);
+        console.error(
+        "Inventory API Error:",
+        error
+        );
 
-      this.setState({
+        this.setState({
         loading: false,
-        error: "Unable to load inventory details.",
-      });
+        error:
+            "Unable to load inventory details.",
+        });
     }
-  };
+    };
 
   handleTypeChange = (event) => {
     this.setState({
