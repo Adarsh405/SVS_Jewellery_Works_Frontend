@@ -1,24 +1,146 @@
 /* =========================================================
-   DASHBOARD
+   DASHBOARD - LUXURY JEWELLERY SHOWROOM
 ========================================================= */
 
 .dashboard {
-  
+  height: calc(100vh - 72px);
   width: 100%;
   box-sizing: border-box;
   padding: 18px 25px;
-  background:
-    radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.08), transparent 25%),
-    radial-gradient(circle at 90% 90%, rgba(184, 134, 11, 0.06), transparent 25%),
-    #f7f7f7;
 
+  position: relative;
   overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 20%,
+      rgba(212, 175, 55, 0.20),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(230, 200, 120, 0.20),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #fffdf7 0%,
+      #faf3df 35%,
+      #f5e8c9 65%,
+      #fffaf0 100%
+    );
 
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
+/* =========================================================
+   ANIMATED LUXURY CIRCLES
+========================================================= */
+
+.dashboard::before,
+.dashboard::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Large golden circle */
+.dashboard::before {
+  width: 280px;
+  height: 280px;
+  top: -100px;
+  right: 8%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(212, 175, 55, 0.22) 0%,
+      rgba(212, 175, 55, 0.10) 42%,
+      transparent 72%
+    );
+
+  border: 1px solid rgba(212, 175, 55, 0.16);
+
+  animation: luxuryCircleOne 12s ease-in-out infinite;
+}
+
+/* Soft pearl circle */
+.dashboard::after {
+  width: 230px;
+  height: 230px;
+  bottom: -80px;
+  left: 8%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.75) 0%,
+      rgba(239, 213, 157, 0.20) 45%,
+      transparent 72%
+    );
+
+  border: 1px solid rgba(212, 175, 55, 0.12);
+
+  animation: luxuryCircleTwo 14s ease-in-out infinite;
+}
+
+/* =========================================================
+   EXTRA FLOATING CIRCLES
+   Add these using dashboard content wrappers if needed
+========================================================= */
+
+.dashboard > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes luxuryCircleOne {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(-35px, 25px) scale(1.08);
+  }
+
+  50% {
+    transform: translate(-10px, 65px) scale(0.94);
+  }
+
+  75% {
+    transform: translate(35px, 25px) scale(1.06);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes luxuryCircleTwo {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  30% {
+    transform: translate(40px, -25px) scale(1.08);
+  }
+
+  60% {
+    transform: translate(70px, 15px) scale(0.95);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
 
 /* =========================================================
    SHOP HEADER
