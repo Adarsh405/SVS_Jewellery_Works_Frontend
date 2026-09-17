@@ -28,23 +28,30 @@ class Inventory extends Component {
 
   fetchInventoryData = async () => {
     try {
-      this.setState({ loading: true, error: "" });
+      this.setState({
+        loading: true,
+        error: "",
+      });
 
-      const [kdmResponse, hallmarkResponse, silverResponse, ratesResponse] =
-        await Promise.all([
-          fetch(
-            "https://svs-jewellery-works-backend.onrender.com/api/kdm"
-          ),
-          fetch(
-            "https://svs-jewellery-works-backend.onrender.com/api/Hallmark"
-          ),
-          fetch(
-            "https://svs-jewellery-works-backend.onrender.com/api/silver"
-          ),
-          fetch(
-            "https://svs-jewellery-works-backend.onrender.com/api/rates"
-          ),
-        ]);
+      const [
+        kdmResponse,
+        hallmarkResponse,
+        silverResponse,
+        ratesResponse,
+      ] = await Promise.all([
+        fetch(
+          "https://svs-jewellery-works-backend.onrender.com/api/kdm"
+        ),
+        fetch(
+          "https://svs-jewellery-works-backend.onrender.com/api/Hallmark"
+        ),
+        fetch(
+          "https://svs-jewellery-works-backend.onrender.com/api/silver"
+        ),
+        fetch(
+          "https://svs-jewellery-works-backend.onrender.com/api/rates"
+        ),
+      ]);
 
       if (
         !kdmResponse.ok ||
@@ -55,23 +62,33 @@ class Inventory extends Component {
         throw new Error("Failed to fetch inventory data");
       }
 
-      const [kdmItems, hallmarkItems, silverItems, rates] =
-        await Promise.all([
-          kdmResponse.json(),
-          hallmarkResponse.json(),
-          silverResponse.json(),
-          ratesResponse.json(),
-        ]);
+      const [
+        kdmItems,
+        hallmarkItems,
+        silverItems,
+        rates,
+      ] = await Promise.all([
+        kdmResponse.json(),
+        hallmarkResponse.json(),
+        silverResponse.json(),
+        ratesResponse.json(),
+      ]);
 
       this.setState({
         kdmItems: Array.isArray(kdmItems) ? kdmItems : [],
-        hallmarkItems: Array.isArray(hallmarkItems) ? hallmarkItems : [],
-        silverItems: Array.isArray(silverItems) ? silverItems : [],
+        hallmarkItems: Array.isArray(hallmarkItems)
+          ? hallmarkItems
+          : [],
+        silverItems: Array.isArray(silverItems)
+          ? silverItems
+          : [],
+
         rates: {
           gold_rate: Number(rates.gold_rate) || 0,
           hallmark_rate: Number(rates.hallmark_rate) || 0,
           silver_rate: Number(rates.silver_rate) || 0,
         },
+
         loading: false,
       });
     } catch (error) {
@@ -150,10 +167,12 @@ class Inventory extends Component {
         ...item,
         category: "KDM",
       })),
+
       ...hallmarkItems.map((item) => ({
         ...item,
         category: "Hallmark",
       })),
+
       ...silverItems.map((item) => ({
         ...item,
         category: "Silver",
@@ -165,45 +184,54 @@ class Inventory extends Component {
     const totalItems = items.length;
 
     const availableItems = items.filter(
-      (item) => String(item.status).toLowerCase() !== "sold"
+      (item) =>
+        String(item.status).toLowerCase() !== "sold"
     );
 
     const soldItems = items.filter(
-      (item) => String(item.status).toLowerCase() === "sold"
+      (item) =>
+        String(item.status).toLowerCase() === "sold"
     );
 
     const totalWeight = items.reduce(
-      (sum, item) => sum + (Number(item.net_weight) || 0),
+      (sum, item) =>
+        sum + (Number(item.net_weight) || 0),
       0
     );
 
     const availableWeight = availableItems.reduce(
-      (sum, item) => sum + (Number(item.net_weight) || 0),
+      (sum, item) =>
+        sum + (Number(item.net_weight) || 0),
       0
     );
 
     const soldWeight = soldItems.reduce(
-      (sum, item) => sum + (Number(item.net_weight) || 0),
+      (sum, item) =>
+        sum + (Number(item.net_weight) || 0),
       0
     );
 
     const totalCharges = items.reduce(
-      (sum, item) => sum + (Number(item.charges) || 0),
+      (sum, item) =>
+        sum + (Number(item.charges) || 0),
       0
     );
 
     const totalMakingCost = items.reduce(
-      (sum, item) => sum + (Number(item.making_cost) || 0),
+      (sum, item) =>
+        sum + (Number(item.making_cost) || 0),
       0
     );
 
     const availablePrice = availableItems.reduce(
-      (sum, item) => sum + this.getGoldPrice(item, rate),
+      (sum, item) =>
+        sum + this.getGoldPrice(item, rate),
       0
     );
 
     const totalPrice = items.reduce(
-      (sum, item) => sum + this.getGoldPrice(item, rate),
+      (sum, item) =>
+        sum + this.getGoldPrice(item, rate),
       0
     );
 
@@ -222,43 +250,54 @@ class Inventory extends Component {
   };
 
   getSilverAnalytics = () => {
-    const { silverItems, rates } = this.state;
+    const {
+      silverItems,
+      rates,
+    } = this.state;
 
     const availableItems = silverItems.filter(
-      (item) => String(item.status).toLowerCase() !== "sold"
+      (item) =>
+        String(item.status).toLowerCase() !== "sold"
     );
 
     const soldItems = silverItems.filter(
-      (item) => String(item.status).toLowerCase() === "sold"
+      (item) =>
+        String(item.status).toLowerCase() === "sold"
     );
 
     const totalWeight = silverItems.reduce(
-      (sum, item) => sum + (Number(item.weight) || 0),
+      (sum, item) =>
+        sum + (Number(item.weight) || 0),
       0
     );
 
     const availableWeight = availableItems.reduce(
-      (sum, item) => sum + (Number(item.weight) || 0),
+      (sum, item) =>
+        sum + (Number(item.weight) || 0),
       0
     );
 
     const soldWeight = soldItems.reduce(
-      (sum, item) => sum + (Number(item.weight) || 0),
+      (sum, item) =>
+        sum + (Number(item.weight) || 0),
       0
     );
 
     const totalMakingCost = silverItems.reduce(
-      (sum, item) => sum + (Number(item.making_cost) || 0),
+      (sum, item) =>
+        sum + (Number(item.making_cost) || 0),
       0
     );
 
     const availablePrice = availableItems.reduce(
-      (sum, item) => sum + this.getSilverPrice(item),
+      (sum, item) =>
+        sum + this.getSilverPrice(item),
       0
     );
 
     const totalPrice = silverItems.reduce(
-      (sum, item) => sum + this.getSilverPrice(item),
+      (sum, item) =>
+        sum + this.getSilverPrice(item),
       0
     );
 
@@ -282,24 +321,46 @@ class Inventory extends Component {
     return (
       <div className="inventory-rates">
         <div className="inventory-rate-item">
-          <span className="rate-label">KDM Gold</span>
-          <strong>{this.formatCurrency(rates.gold_rate)}</strong>
+          <span className="rate-label">
+            KDM Gold
+          </span>
+
+          <strong>
+            {this.formatCurrency(rates.gold_rate)}
+          </strong>
+
           <small>/ gram</small>
         </div>
 
         <div className="inventory-rate-divider" />
 
         <div className="inventory-rate-item">
-          <span className="rate-label">Hallmark Gold</span>
-          <strong>{this.formatCurrency(rates.hallmark_rate)}</strong>
+          <span className="rate-label">
+            Hallmark Gold
+          </span>
+
+          <strong>
+            {this.formatCurrency(
+              rates.hallmark_rate
+            )}
+          </strong>
+
           <small>/ gram</small>
         </div>
 
         <div className="inventory-rate-divider" />
 
         <div className="inventory-rate-item silver-rate">
-          <span className="rate-label">Silver</span>
-          <strong>{this.formatCurrency(rates.silver_rate)}</strong>
+          <span className="rate-label">
+            Silver
+          </span>
+
+          <strong>
+            {this.formatCurrency(
+              rates.silver_rate
+            )}
+          </strong>
+
           <small>/ gram</small>
         </div>
       </div>
@@ -308,7 +369,9 @@ class Inventory extends Component {
 
   renderSelector = (className = "") => {
     return (
-      <div className={`inventory-selector-wrapper ${className}`}>
+      <div
+        className={`inventory-selector-wrapper ${className}`}
+      >
         <label>View Inventory</label>
 
         <select
@@ -316,39 +379,78 @@ class Inventory extends Component {
           onChange={this.handleTypeChange}
           className="inventory-selector"
         >
-          <option value="all">All Items</option>
-          <option value="kdm">KDM Gold</option>
-          <option value="hallmark">Hallmark Gold</option>
-          <option value="silver">Silver</option>
+          <option value="all">
+            All Items
+          </option>
+
+          <option value="kdm">
+            KDM Gold
+          </option>
+
+          <option value="hallmark">
+            Hallmark Gold
+          </option>
+
+          <option value="silver">
+            Silver
+          </option>
         </select>
       </div>
     );
   };
 
-  renderMetric = (label, value, subText = "") => {
+  renderMetric = (
+    label,
+    value,
+    subText = ""
+  ) => {
     return (
       <div className="inventory-metric">
         <span>{label}</span>
+
         <strong>{value}</strong>
-        {subText && <small>{subText}</small>}
+
+        {subText && (
+          <small>{subText}</small>
+        )}
       </div>
     );
   };
 
-  renderGoldCard = (title, items, rate, typeClass) => {
-    const data = this.getGoldAnalytics(items, rate);
+  renderGoldCard = (
+    title,
+    items,
+    rate,
+    typeClass
+  ) => {
+    const data =
+      this.getGoldAnalytics(
+        items,
+        rate
+      );
 
     return (
-      <div className={`inventory-category-card ${typeClass}`}>
+      <div
+        className={`inventory-category-card ${typeClass}`}
+      >
+        <div className="category-card-shine" />
+
         <div className="category-card-header">
           <div>
-            <span className="category-kicker">GOLD COLLECTION</span>
+            <span className="category-kicker">
+              GOLD COLLECTION
+            </span>
+
             <h3>{title}</h3>
           </div>
 
           <div className="category-rate">
             <span>Current Rate</span>
-            <strong>{this.formatCurrency(rate)}/g</strong>
+
+            <strong>
+              {this.formatCurrency(rate)}
+              /g
+            </strong>
           </div>
         </div>
 
@@ -361,46 +463,75 @@ class Inventory extends Component {
 
           {this.renderMetric(
             "Total Weight",
-            this.formatWeight(data.totalWeight)
+            this.formatWeight(
+              data.totalWeight
+            )
           )}
 
           {this.renderMetric(
             "Available Weight",
-            this.formatWeight(data.availableWeight)
+            this.formatWeight(
+              data.availableWeight
+            )
           )}
 
           {this.renderMetric(
             "Sold Weight",
-            this.formatWeight(data.soldWeight)
+            this.formatWeight(
+              data.soldWeight
+            )
           )}
 
           {this.renderMetric(
             "Total Charges",
-            this.formatWeight(data.totalCharges)
+            this.formatWeight(
+              data.totalCharges
+            )
           )}
 
           {this.renderMetric(
             "Making Cost",
-            this.formatCurrency(data.totalMakingCost)
+            this.formatCurrency(
+              data.totalMakingCost
+            )
           )}
         </div>
 
         <div className="category-price-footer">
           <div>
-            <span>Current Stock Value</span>
-            <strong>{this.formatCurrency(data.availablePrice)}</strong>
+            <span>
+              Current Stock Value
+            </span>
+
+            <strong>
+              {this.formatCurrency(
+                data.availablePrice
+              )}
+            </strong>
           </div>
 
           <div>
-            <span>All Items Value</span>
-            <strong>{this.formatCurrency(data.totalPrice)}</strong>
+            <span>
+              All Items Value
+            </span>
+
+            <strong>
+              {this.formatCurrency(
+                data.totalPrice
+              )}
+            </strong>
           </div>
         </div>
 
         <div className="category-status">
           <span className="available-dot" />
+
           {data.availableItems} Available
-          <span className="status-separator">•</span>
+
+          <span className="status-separator">
+            •
+          </span>
+
           {data.soldItems} Sold
         </div>
       </div>
@@ -408,19 +539,31 @@ class Inventory extends Component {
   };
 
   renderSilverCard = () => {
-    const data = this.getSilverAnalytics();
+    const data =
+      this.getSilverAnalytics();
 
     return (
       <div className="inventory-category-card silver-category-card">
+        <div className="category-card-shine" />
+
         <div className="category-card-header">
           <div>
-            <span className="category-kicker">SILVER COLLECTION</span>
+            <span className="category-kicker">
+              SILVER COLLECTION
+            </span>
+
             <h3>Silver Items</h3>
           </div>
 
           <div className="category-rate silver-category-rate">
             <span>Current Rate</span>
-            <strong>{this.formatCurrency(data.rate)}/g</strong>
+
+            <strong>
+              {this.formatCurrency(
+                data.rate
+              )}
+              /g
+            </strong>
           </div>
         </div>
 
@@ -433,22 +576,30 @@ class Inventory extends Component {
 
           {this.renderMetric(
             "Total Weight",
-            this.formatWeight(data.totalWeight)
+            this.formatWeight(
+              data.totalWeight
+            )
           )}
 
           {this.renderMetric(
             "Available Weight",
-            this.formatWeight(data.availableWeight)
+            this.formatWeight(
+              data.availableWeight
+            )
           )}
 
           {this.renderMetric(
             "Sold Weight",
-            this.formatWeight(data.soldWeight)
+            this.formatWeight(
+              data.soldWeight
+            )
           )}
 
           {this.renderMetric(
             "Making Cost",
-            this.formatCurrency(data.totalMakingCost)
+            this.formatCurrency(
+              data.totalMakingCost
+            )
           )}
 
           {this.renderMetric(
@@ -459,20 +610,39 @@ class Inventory extends Component {
 
         <div className="category-price-footer">
           <div>
-            <span>Current Stock Value</span>
-            <strong>{this.formatCurrency(data.availablePrice)}</strong>
+            <span>
+              Current Stock Value
+            </span>
+
+            <strong>
+              {this.formatCurrency(
+                data.availablePrice
+              )}
+            </strong>
           </div>
 
           <div>
-            <span>All Items Value</span>
-            <strong>{this.formatCurrency(data.totalPrice)}</strong>
+            <span>
+              All Items Value
+            </span>
+
+            <strong>
+              {this.formatCurrency(
+                data.totalPrice
+              )}
+            </strong>
           </div>
         </div>
 
         <div className="category-status">
           <span className="silver-dot" />
+
           {data.availableItems} Available
-          <span className="status-separator">•</span>
+
+          <span className="status-separator">
+            •
+          </span>
+
           {data.soldItems} Sold
         </div>
       </div>
@@ -480,19 +650,25 @@ class Inventory extends Component {
   };
 
   renderAllOverview = () => {
-    const { kdmItems, hallmarkItems } = this.state;
-
-    const kdm = this.getGoldAnalytics(
+    const {
       kdmItems,
-      this.state.rates.gold_rate
-    );
-
-    const hallmark = this.getGoldAnalytics(
       hallmarkItems,
-      this.state.rates.hallmark_rate
-    );
+    } = this.state;
 
-    const silver = this.getSilverAnalytics();
+    const kdm =
+      this.getGoldAnalytics(
+        kdmItems,
+        this.state.rates.gold_rate
+      );
+
+    const hallmark =
+      this.getGoldAnalytics(
+        hallmarkItems,
+        this.state.rates.hallmark_rate
+      );
+
+    const silver =
+      this.getSilverAnalytics();
 
     const totalItems =
       kdm.totalItems +
@@ -516,12 +692,17 @@ class Inventory extends Component {
 
     return (
       <div className="all-overview-card">
+        <div className="overview-decoration" />
+
         <div className="all-overview-heading">
           <div>
             <span className="category-kicker">
               SHOWROOM INVENTORY
             </span>
-            <h3>Complete Collection</h3>
+
+            <h3>
+              Complete Collection
+            </h3>
           </div>
 
           <div className="inventory-health">
@@ -538,7 +719,9 @@ class Inventory extends Component {
 
           <div>
             <span>Available Items</span>
-            <strong>{availableItems}</strong>
+            <strong>
+              {availableItems}
+            </strong>
           </div>
 
           <div>
@@ -547,33 +730,61 @@ class Inventory extends Component {
           </div>
 
           <div>
-            <span>Current Stock Value</span>
-            <strong>{this.formatCurrency(totalStockValue)}</strong>
+            <span>
+              Current Stock Value
+            </span>
+
+            <strong>
+              {this.formatCurrency(
+                totalStockValue
+              )}
+            </strong>
           </div>
         </div>
 
         <div className="collection-breakdown">
           <div className="breakdown-item">
-            <span className="breakdown-icon kdm-icon">K</span>
+            <span className="breakdown-icon kdm-icon">
+              K
+            </span>
+
             <div>
               <small>KDM Gold</small>
-              <strong>{kdm.availableItems} Available</strong>
+
+              <strong>
+                {kdm.availableItems}
+                {" "}Available
+              </strong>
             </div>
           </div>
 
           <div className="breakdown-item">
-            <span className="breakdown-icon hm-icon">H</span>
+            <span className="breakdown-icon hm-icon">
+              H
+            </span>
+
             <div>
               <small>Hallmark Gold</small>
-              <strong>{hallmark.availableItems} Available</strong>
+
+              <strong>
+                {hallmark.availableItems}
+                {" "}Available
+              </strong>
             </div>
           </div>
 
           <div className="breakdown-item">
-            <span className="breakdown-icon silver-icon">S</span>
+            <span className="breakdown-icon silver-icon">
+              S
+            </span>
+
             <div>
               <small>Silver</small>
-              <strong>{silver.availableItems} Available</strong>
+
+              <strong>
+                {silver.availableItems}
+                {" "}Available
+              </strong>
             </div>
           </div>
         </div>
@@ -582,14 +793,21 @@ class Inventory extends Component {
   };
 
   renderItemTable = () => {
-    const items = this.getSelectedItems();
+    const items =
+      this.getSelectedItems();
 
     return (
       <div className="inventory-list-section">
         <div className="inventory-list-header">
           <div>
-            <span className="category-kicker">ITEM REGISTER</span>
-            <h3>Inventory Items</h3>
+            <span className="category-kicker">
+              ITEM REGISTER
+            </span>
+
+            <h3>
+              Inventory Items
+            </h3>
+
             <p>
               {items.length} items shown
             </p>
@@ -616,85 +834,117 @@ class Inventory extends Component {
             <tbody>
               {items.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="empty-inventory">
+                  <td
+                    colSpan="8"
+                    className="empty-inventory"
+                  >
                     No items available
                   </td>
                 </tr>
               ) : (
-                items.map((item) => {
-                  const isSilver =
-                    item.category === "Silver";
+                items.map(
+                  (item, index) => {
+                    const isSilver =
+                      item.category ===
+                      "Silver";
 
-                  const isSold =
-                    String(item.status).toLowerCase() === "sold";
+                    const isSold =
+                      String(
+                        item.status
+                      ).toLowerCase() ===
+                      "sold";
 
-                  const price = isSilver
-                    ? this.getSilverPrice(item)
-                    : this.getGoldPrice(
-                        item,
-                        item.category === "KDM"
-                          ? this.state.rates.gold_rate
-                          : this.state.rates.hallmark_rate
-                      );
+                    const price =
+                      isSilver
+                        ? this.getSilverPrice(
+                            item
+                          )
+                        : this.getGoldPrice(
+                            item,
+                            item.category ===
+                              "KDM"
+                              ? this.state.rates
+                                  .gold_rate
+                              : this.state.rates
+                                  .hallmark_rate
+                          );
 
-                  return (
-                    <tr key={`${item.category}-${item.id}`}>
-                      <td>
-                        <span className="item-id">
-                          #{item.id}
-                        </span>
-                      </td>
+                    return (
+                      <tr
+                        key={`${item.category}-${item.id}`}
+                        style={{
+                          "--row-index": index,
+                        }}
+                      >
+                        <td>
+                          <span className="item-id">
+                            #{item.id}
+                          </span>
+                        </td>
 
-                      <td>
-                        <div className="item-name-cell">
-                          <strong>{item.name}</strong>
-                        </div>
-                      </td>
+                        <td>
+                          <div className="item-name-cell">
+                            <strong>
+                              {item.name}
+                            </strong>
+                          </div>
+                        </td>
 
-                      <td>
-                        <span
-                          className={`category-pill ${item.category.toLowerCase()}`}
-                        >
-                          {item.category}
-                        </span>
-                      </td>
+                        <td>
+                          <span
+                            className={`category-pill ${item.category.toLowerCase()}`}
+                          >
+                            {item.category}
+                          </span>
+                        </td>
 
-                      <td>
-                        {this.formatWeight(
-                          isSilver
-                            ? item.weight
-                            : item.net_weight
-                        )}
-                      </td>
+                        <td>
+                          {this.formatWeight(
+                            isSilver
+                              ? item.weight
+                              : item.net_weight
+                          )}
+                        </td>
 
-                      <td>
-                        {isSilver
-                          ? "—"
-                          : this.formatWeight(item.charges)}
-                      </td>
+                        <td>
+                          {isSilver
+                            ? "—"
+                            : this.formatWeight(
+                                item.charges
+                              )}
+                        </td>
 
-                      <td>
-                        {this.formatCurrency(item.making_cost)}
-                      </td>
+                        <td>
+                          {this.formatCurrency(
+                            item.making_cost
+                          )}
+                        </td>
 
-                      <td>
-                        <strong className="table-price">
-                          {this.formatCurrency(price)}
-                        </strong>
-                      </td>
+                        <td>
+                          <strong className="table-price">
+                            {this.formatCurrency(
+                              price
+                            )}
+                          </strong>
+                        </td>
 
-                      <td>
-                        <span
-                          className={`status-pill ${
-                            isSold ? "sold" : "available"
-                          }`}
-                        >
-                          {isSold ? "Sold" : "Available"}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })
+                        <td>
+                          <span
+                            className={`status-pill ${
+                              isSold
+                                ? "sold"
+                                : "available"
+                            }`}
+                          >
+                            {isSold
+                              ? "Sold"
+                              : "Available"}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  }
+                )
               )}
             </tbody>
           </table>
@@ -710,7 +960,6 @@ class Inventory extends Component {
       selectedType,
       kdmItems,
       hallmarkItems,
-      silverItems,
       rates,
     } = this.state;
 
@@ -718,9 +967,18 @@ class Inventory extends Component {
       return (
         <div className="inventory-page">
           <div className="inventory-loading">
-            <div className="inventory-loader" />
-            <h3>Preparing your inventory</h3>
-            <p>Fetching the latest showroom stock...</p>
+            <div className="inventory-loader">
+              <span />
+            </div>
+
+            <h3>
+              Preparing your inventory
+            </h3>
+
+            <p>
+              Fetching the latest showroom
+              stock...
+            </p>
           </div>
         </div>
       );
@@ -730,9 +988,21 @@ class Inventory extends Component {
       return (
         <div className="inventory-page">
           <div className="inventory-error">
-            <h3>Inventory unavailable</h3>
+            <div className="error-icon">
+              !
+            </div>
+
+            <h3>
+              Inventory unavailable
+            </h3>
+
             <p>{error}</p>
-            <button onClick={this.fetchInventoryData}>
+
+            <button
+              onClick={
+                this.fetchInventoryData
+              }
+            >
               Try Again
             </button>
           </div>
@@ -744,25 +1014,30 @@ class Inventory extends Component {
       <div className="inventory-page">
         <div className="inventory-container">
 
-          {/* HEADER */}
+          {/* HERO */}
           <div className="inventory-hero">
-            <div>
+            <div className="hero-content">
               <span className="inventory-eyebrow">
                 SVS JEWELLERY • STOCK CONTROL
               </span>
 
-              <h1>Inventory Overview</h1>
+              <h1>
+                Inventory Overview
+              </h1>
 
               <p>
-                A live view of your KDM, Hallmark Gold and Silver
+                A live view of your KDM,
+                Hallmark Gold and Silver
                 collection.
               </p>
             </div>
 
-            {this.renderSelector("hero-selector")}
+            {this.renderSelector(
+              "hero-selector"
+            )}
           </div>
 
-          {/* CURRENT RATES */}
+          {/* RATES */}
           {this.renderRateBar()}
 
           {/* ALL */}
@@ -771,8 +1046,13 @@ class Inventory extends Component {
               {this.renderAllOverview()}
 
               <div className="category-section-title">
-                <span>COLLECTIONS</span>
-                <h2>Gold & Silver Stock</h2>
+                <span>
+                  COLLECTIONS
+                </span>
+
+                <h2>
+                  Gold & Silver Stock
+                </h2>
               </div>
 
               <div className="inventory-category-grid">
@@ -826,7 +1106,7 @@ class Inventory extends Component {
             </div>
           )}
 
-          {/* ITEM LIST */}
+          {/* ITEM REGISTER */}
           {this.renderItemTable()}
         </div>
       </div>
