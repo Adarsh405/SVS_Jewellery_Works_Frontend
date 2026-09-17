@@ -8,7 +8,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import RateUpdate from './components/RateUpdate/rateUpdate'
 import Payment from "./components/Payment/Payment";
 import Sales from "./components/Sales/sales.js"
-
+import Inventory from "./components/Inventory/Inventory"
 const App = () => {
   return (
     <BrowserRouter>
@@ -37,6 +37,12 @@ const App = () => {
             <ProtectedRoute>
               <Sales />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/Inventory"
+          element={
+              <Inventory />
           }
         />
         <Route

@@ -1,0 +1,1054 @@
+/* =========================================================
+   INVENTORY PAGE
+========================================================= */
+
+.inventory-page {
+  min-height: calc(100vh - 72px);
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 28px 30px 50px;
+
+  background:
+    radial-gradient(
+      circle at 8% 8%,
+      rgba(212, 175, 55, 0.13),
+      transparent 27%
+    ),
+    radial-gradient(
+      circle at 92% 18%,
+      rgba(184, 134, 11, 0.08),
+      transparent 24%
+    ),
+    linear-gradient(
+      135deg,
+      #fffdf8,
+      #f9f6ef,
+      #fff
+    );
+
+  color: #3d2b13;
+}
+
+.inventory-container {
+  width: 100%;
+  max-width: 1550px;
+  margin: auto;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.inventory-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 25px;
+  margin-bottom: 22px;
+}
+
+.inventory-eyebrow {
+  display: inline-block;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+
+  color: #a27b20;
+
+  margin-bottom: 7px;
+}
+
+.inventory-hero h1 {
+  margin: 0;
+
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 800;
+
+  letter-spacing: -1px;
+
+  background: linear-gradient(
+    90deg,
+    #765313,
+    #c49a32,
+    #8e681c
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.inventory-hero p {
+  margin: 8px 0 0;
+
+  font-size: 14px;
+  color: #8a7b68;
+}
+
+
+/* =========================================================
+   SELECTOR
+========================================================= */
+
+.inventory-selector-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inventory-selector-wrapper label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #a08355;
+}
+
+.inventory-selector {
+  min-width: 185px;
+
+  padding: 12px 38px 12px 15px;
+
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: #5a421c;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  outline: none;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 7px 20px rgba(104, 77, 25, 0.07);
+
+  transition: 0.25s ease;
+}
+
+.inventory-selector:hover {
+  border-color: #c69b37;
+
+  box-shadow:
+    0 9px 25px rgba(104, 77, 25, 0.12);
+}
+
+.inventory-selector:focus {
+  border-color: #b88b29;
+}
+
+
+/* =========================================================
+   LIVE RATES
+========================================================= */
+
+.inventory-rates {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 15px 20px;
+
+  box-sizing: border-box;
+
+  margin-bottom: 22px;
+
+  background:
+    linear-gradient(
+      110deg,
+      #fff,
+      #fffdf8,
+      #fff
+    );
+
+  border: 1px solid rgba(184, 134, 11, 0.17);
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 28px rgba(82, 60, 20, 0.06);
+}
+
+.inventory-rate-item {
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+.inventory-rate-item .rate-label {
+  color: #9a886d;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.inventory-rate-item strong {
+  color: #8d681b;
+  font-size: 16px;
+}
+
+.inventory-rate-item small {
+  color: #aa9b83;
+  font-size: 11px;
+}
+
+.inventory-rate-divider {
+  height: 28px;
+  width: 1px;
+  background: #e8dfcf;
+}
+
+
+/* =========================================================
+   ALL OVERVIEW
+========================================================= */
+
+.all-overview-card {
+  position: relative;
+
+  overflow: hidden;
+
+  margin-bottom: 28px;
+  padding: 25px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.98),
+      rgba(255, 252, 243, 0.98)
+    );
+
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  border-radius: 20px;
+
+  box-shadow:
+    0 12px 35px rgba(93, 68, 23, 0.07);
+}
+
+.all-overview-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  right: -70px;
+  top: -80px;
+
+  border-radius: 50%;
+
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.all-overview-heading {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.category-kicker {
+  font-size: 10px;
+  letter-spacing: 1.8px;
+  font-weight: 800;
+  color: #b08a3d;
+}
+
+.all-overview-heading h3 {
+  margin: 5px 0 0;
+
+  font-size: 23px;
+  color: #4d3719;
+}
+
+.inventory-health {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 13px;
+
+  border-radius: 30px;
+
+  background: #f4faf1;
+
+  color: #60814d;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.health-dot,
+.available-dot,
+.silver-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #78a85d;
+}
+
+.all-overview-grid {
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 1px;
+
+  overflow: hidden;
+
+  border: 1px solid #eee5d5;
+  border-radius: 14px;
+}
+
+.all-overview-grid > div {
+  padding: 19px;
+
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.all-overview-grid span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 11px;
+  color: #9b8c76;
+}
+
+.all-overview-grid strong {
+  font-size: 22px;
+  color: #5d431a;
+}
+
+.collection-breakdown {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  gap: 30px;
+
+  margin-top: 20px;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.breakdown-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.kdm-icon {
+  background: #fbf0ce;
+  color: #a47a16;
+}
+
+.hm-icon {
+  background: #f3e9d0;
+  color: #8e671e;
+}
+
+.silver-icon {
+  background: #edf0f1;
+  color: #687277;
+}
+
+.breakdown-item small {
+  display: block;
+
+  margin-bottom: 3px;
+
+  font-size: 10px;
+  color: #a3947c;
+}
+
+.breakdown-item strong {
+  font-size: 12px;
+  color: #5b4829;
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.category-section-title {
+  margin: 8px 0 16px;
+}
+
+.category-section-title span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  color: #b08a3d;
+}
+
+.category-section-title h2 {
+  margin: 4px 0 0;
+
+  font-size: 24px;
+  color: #4e381b;
+}
+
+
+/* =========================================================
+   CATEGORY CARDS
+========================================================= */
+
+.inventory-category-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 32px;
+}
+
+.single-category-layout {
+  max-width: 900px;
+
+  margin: 0 auto 32px;
+}
+
+.inventory-category-card {
+  position: relative;
+
+  overflow: hidden;
+
+  padding: 21px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fffdf8
+    );
+
+  border: 1px solid rgba(184, 134, 11, 0.19);
+  border-radius: 18px;
+
+  box-shadow:
+    0 10px 28px rgba(89, 65, 25, 0.06);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.inventory-category-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 35px rgba(89, 65, 25, 0.1);
+}
+
+.inventory-category-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #b88b2a,
+      #e1c36d,
+      #a77a1c
+    );
+}
+
+.silver-category-card::before {
+  background:
+    linear-gradient(
+      90deg,
+      #aeb6ba,
+      #dfe3e4,
+      #9ba4a8
+    );
+}
+
+.category-card-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  margin-bottom: 20px;
+}
+
+.category-card-header h3 {
+  margin: 5px 0 0;
+
+  font-size: 20px;
+  color: #4d381b;
+}
+
+.category-rate {
+  text-align: right;
+}
+
+.category-rate span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+
+  color: #aa9a7f;
+}
+
+.category-rate strong {
+  font-size: 13px;
+  color: #9b741f;
+}
+
+.silver-category-rate strong {
+  color: #69757a;
+}
+
+
+/* =========================================================
+   METRICS
+========================================================= */
+
+.inventory-metrics-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 9px;
+}
+
+.inventory-metric {
+  padding: 12px;
+
+  border-radius: 11px;
+
+  background: #fcfaf5;
+
+  border: 1px solid #f0e9dc;
+}
+
+.inventory-metric span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+  color: #a39580;
+}
+
+.inventory-metric strong {
+  display: block;
+
+  font-size: 15px;
+
+  color: #59431f;
+}
+
+.inventory-metric small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #a99b85;
+  font-size: 9px;
+}
+
+
+/* =========================================================
+   CATEGORY PRICE
+========================================================= */
+
+.category-price-footer {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 1px;
+
+  margin-top: 14px;
+
+  overflow: hidden;
+
+  border-radius: 12px;
+
+  border: 1px solid #eadfc9;
+}
+
+.category-price-footer > div {
+  padding: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fffdf6,
+      #fff
+    );
+}
+
+.category-price-footer span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 9px;
+  color: #9d8d73;
+}
+
+.category-price-footer strong {
+  font-size: 15px;
+  color: #8b671b;
+}
+
+.category-status {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  margin-top: 12px;
+
+  font-size: 10px;
+  color: #789162;
+  font-weight: 700;
+}
+
+.status-separator {
+  color: #c2b59e;
+  margin: 0 2px;
+}
+
+.silver-dot {
+  background: #829095;
+}
+
+
+/* =========================================================
+   ITEM REGISTER
+========================================================= */
+
+.inventory-list-section {
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  border: 1px solid rgba(184, 134, 11, 0.15);
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 30px rgba(89, 65, 25, 0.06);
+}
+
+.inventory-list-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 21px 22px;
+
+  border-bottom: 1px solid #eee7da;
+}
+
+.inventory-list-header h3 {
+  margin: 5px 0 2px;
+
+  font-size: 21px;
+  color: #4e391c;
+}
+
+.inventory-list-header p {
+  margin: 0;
+
+  font-size: 11px;
+  color: #a3947d;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.inventory-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.inventory-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 850px;
+}
+
+.inventory-table thead {
+  background: #fcfaf5;
+}
+
+.inventory-table th {
+  padding: 13px 16px;
+
+  text-align: left;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+
+  color: #a18f72;
+
+  white-space: nowrap;
+}
+
+.inventory-table td {
+  padding: 15px 16px;
+
+  border-top: 1px solid #f2eee6;
+
+  font-size: 12px;
+
+  color: #6b5a3f;
+}
+
+.inventory-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.inventory-table tbody tr:hover {
+  background: #fffdf7;
+}
+
+.item-id {
+  font-size: 11px;
+  font-weight: 700;
+
+  color: #a0781d;
+}
+
+.item-name-cell strong {
+  color: #4f3a20;
+}
+
+.category-pill {
+  display: inline-flex;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.category-pill.kdm {
+  background: #fbf1d5;
+  color: #98721d;
+}
+
+.category-pill.hallmark {
+  background: #f6ead0;
+  color: #8a671f;
+}
+
+.category-pill.silver {
+  background: #edf0f1;
+  color: #687378;
+}
+
+.table-price {
+  color: #8d681d;
+}
+
+.status-pill {
+  display: inline-flex;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.status-pill.available {
+  background: #edf7e9;
+  color: #62864e;
+}
+
+.status-pill.sold {
+  background: #f7eeee;
+  color: #a66b6b;
+}
+
+.empty-inventory {
+  text-align: center;
+
+  padding: 50px !important;
+
+  color: #a4947c !important;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.inventory-loading {
+  min-height: calc(100vh - 120px);
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.inventory-loader {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  border: 3px solid #eee5d3;
+  border-top-color: #b88b29;
+
+  animation: inventorySpin 0.9s linear infinite;
+
+  margin-bottom: 18px;
+}
+
+.inventory-loading h3 {
+  margin: 0;
+
+  color: #5b431e;
+}
+
+.inventory-loading p {
+  margin-top: 6px;
+
+  color: #a2937d;
+
+  font-size: 12px;
+}
+
+@keyframes inventorySpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.inventory-error {
+  min-height: calc(100vh - 120px);
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.inventory-error h3 {
+  margin: 0;
+
+  color: #60421d;
+}
+
+.inventory-error p {
+  color: #9c8b73;
+}
+
+.inventory-error button {
+  border: none;
+
+  padding: 10px 20px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #b88a28,
+    #d4af37
+  );
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .inventory-category-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .inventory-category-card:last-child {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 800px) {
+  .inventory-page {
+    padding: 20px 15px 40px;
+  }
+
+  .inventory-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .hero-selector {
+    width: 100%;
+  }
+
+  .hero-selector .inventory-selector {
+    width: 100%;
+  }
+
+  .inventory-rates {
+    flex-direction: column;
+
+    gap: 14px;
+  }
+
+  .inventory-rate-divider {
+    width: 80%;
+    height: 1px;
+  }
+
+  .inventory-rate-item {
+    width: 100%;
+  }
+
+  .all-overview-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .collection-breakdown {
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .inventory-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-category-card:last-child {
+    grid-column: auto;
+  }
+
+  .inventory-list-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .inventory-list-header .inventory-selector-wrapper {
+    width: 100%;
+  }
+
+  .inventory-list-header .inventory-selector {
+    width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .inventory-hero h1 {
+    font-size: 30px;
+  }
+
+  .all-overview-card {
+    padding: 18px;
+  }
+
+  .all-overview-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .all-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .category-card-header {
+    flex-direction: column;
+  }
+
+  .category-rate {
+    text-align: left;
+  }
+
+  .inventory-metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .category-price-footer {
+    grid-template-columns: 1fr;
+  }
+}

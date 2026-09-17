@@ -35,6 +35,11 @@ const Navbar = () => {
       label: "QR Payment"
     },
     {
+      path: "/Inventory",
+      icon: <MdQrCode2 />,
+      label: "Inventory"
+    },
+    {
       path: "/sales",
       icon: <FaCashRegister />,
       label: "Sales"
