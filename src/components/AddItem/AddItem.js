@@ -382,34 +382,6 @@ const AddItem = () => {
             </div>
 
           </button>
-
-
-          {/* ==================================
-              RATES
-          ================================== */}
-
-          <button
-            type="button"
-            className="type-btn rates-btn"
-            onClick={() =>
-              navigate("/Rates")
-            }
-          >
-
-            <span>₹</span>
-
-            <div>
-              <strong>
-                Rates
-              </strong>
-
-              <small>
-                Gold & Silver Rates
-              </small>
-            </div>
-
-          </button>
-
         </div>
 
 
