@@ -835,7 +835,7 @@ class Dashboard extends Component {
                 onSold={this.handleSilverItemSold}
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
-
+                sellRequest={this.state.sellRequest}
               />
 
             )}

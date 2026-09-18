@@ -9,7 +9,8 @@ const SilverItem = ({
   SilverRate,
   onSold,
   onAdd,
-  focusItemId
+  focusItemId,
+  sellRequest
 }) => {
 
   const [selling, setSelling] = useState(false)
@@ -444,7 +445,39 @@ const confirmMarkAsSold = async () => {
 
 }
 
+// ==========================================
+// ⭐ * KEY SELL SHORTCUT
+// ==========================================
 
+const sellRequestRef = useRef(sellRequest)
+
+useEffect(() => {
+
+  // Ignore initial render
+  if (sellRequestRef.current === sellRequest) {
+    return
+  }
+
+  // Store latest request
+  sellRequestRef.current = sellRequest
+
+  // Ignore empty request
+  if (!sellRequest) {
+    return
+  }
+
+  // Don't open sell popup for already sold item
+  if (
+    item.status?.toLowerCase() === 'sold' ||
+    status === 'sold'
+  ) {
+    return
+  }
+
+  // ⭐ Same function used by AVAILABLE button
+  markAsSold()
+
+}, [sellRequest, item.status, status])
 // ==========================================
 // POPUP KEYBOARD CONTROL
 // ==========================================
