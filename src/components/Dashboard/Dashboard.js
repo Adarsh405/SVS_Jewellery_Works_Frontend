@@ -29,7 +29,8 @@ class Dashboard extends Component {
     HMGoldRate: "",
     KDMGoldRate: "",
     silverRate: "",
-    isSearchFocused: true
+    isSearchFocused: true,
+    sellRequest: 0
   }
   focusItemId = () => {
     if (this.itemIdInputRef.current) {
@@ -475,7 +476,31 @@ class Dashboard extends Component {
   // ENTER KEY SEARCH
 
   onKeyDown = event => {
+    if (event.key === '*') {
 
+      event.preventDefault()
+
+      const {
+        selectedItem
+      } = this.state
+
+      // No active item
+      if (!selectedItem) {
+        this.setState({
+          message: 'Please search an item first'
+        })
+
+        return
+      }
+
+      // Trigger the respective item component
+      this.setState(prevState => ({
+        sellRequest: prevState.sellRequest + 1,
+        message: ''
+      }))
+
+      return
+    }
     if (event.key === 'Enter') {
 
       this.searchItem()
@@ -690,7 +715,7 @@ class Dashboard extends Component {
       silverRate,
       loading,
       cartItems,
-      isSearchFocused
+      isSearchFocused,
     } = this.state
 
 
@@ -790,6 +815,7 @@ class Dashboard extends Component {
                 onSold={this.handleItemSold}
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
+                sellRequest={this.state.sellRequest}
 
               />
 

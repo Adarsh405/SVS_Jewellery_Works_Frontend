@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
@@ -8,7 +8,8 @@ const GoldItem = ({
   KDMGoldrate,
   onSold,
   onAdd,
-  focusItemId
+  focusItemId,
+  sellRequest
 }) => {
 
   const [selling, setSelling] = useState(false)
@@ -155,7 +156,7 @@ const GoldItem = ({
   // ==================================
   // ADD SOLD ITEM + CUSTOMER DETAILS
   // ==================================
-
+  
   const soldResponse =
     await fetch(
       `${API_URL}/api/sold-items`,
@@ -251,7 +252,22 @@ const GoldItem = ({
 
   }
 
+  useEffect(() => {
+    if (!sellRequest) {
+      return
+    }
 
+    // Only act on the currently displayed item
+    if (
+      item.status?.toLowerCase() === 'sold' ||
+      status === 'sold'
+    ) {
+      return
+    }
+
+    markAsSold()
+
+  }, [sellRequest])
   return (
 
     <div
