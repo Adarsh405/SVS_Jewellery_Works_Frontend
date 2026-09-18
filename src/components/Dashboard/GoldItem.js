@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, {
+  useState,
+  useEffect,
+  useRef
+} from 'react'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
@@ -251,23 +255,46 @@ const GoldItem = ({
 }
 
   }
+  // ==========================================
+// ⭐ * KEY SELL SHORTCUT
+// ==========================================
 
-  useEffect(() => {
-    if (!sellRequest) {
-      return
-    }
+// Keep track of the previous request
+const previousSellRequest = useRef(sellRequest)
 
-    // Only act on the currently displayed item
-    if (
-      item.status?.toLowerCase() === 'sold' ||
-      status === 'sold'
-    ) {
-      return
-    }
+// Keep the latest markAsSold function
+const markAsSoldRef = useRef(markAsSold)
 
-    markAsSold()
+markAsSoldRef.current = markAsSold
 
-  }, [sellRequest])
+useEffect(() => {
+
+  // First render / new item render
+  if (previousSellRequest.current === sellRequest) {
+    return
+  }
+
+  // Update previous request immediately
+  previousSellRequest.current = sellRequest
+
+  // No request
+  if (!sellRequest) {
+    return
+  }
+
+  // Don't sell an already sold item
+  if (
+    item.status?.toLowerCase() === 'sold' ||
+    status === 'sold'
+  ) {
+    return
+  }
+
+  // ⭐ Trigger the exact same selling function
+  markAsSoldRef.current()
+
+}, [sellRequest, item.status, status])
+
   return (
 
     <div
