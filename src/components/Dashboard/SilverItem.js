@@ -449,16 +449,23 @@ const confirmMarkAsSold = async () => {
 // ⭐ * KEY SELL SHORTCUT
 // ==========================================
 
+// Store previous request
 const sellRequestRef = useRef(sellRequest)
+
+// Store latest markAsSold function
+const markAsSoldRef = useRef(markAsSold)
+
+// Always keep ref pointing to latest function
+markAsSoldRef.current = markAsSold
 
 useEffect(() => {
 
-  // Ignore initial render
+  // Ignore if request has not changed
   if (sellRequestRef.current === sellRequest) {
     return
   }
 
-  // Store latest request
+  // Update request immediately
   sellRequestRef.current = sellRequest
 
   // Ignore empty request
@@ -466,7 +473,7 @@ useEffect(() => {
     return
   }
 
-  // Don't open sell popup for already sold item
+  // Don't open popup for sold item
   if (
     item.status?.toLowerCase() === 'sold' ||
     status === 'sold'
@@ -474,14 +481,11 @@ useEffect(() => {
     return
   }
 
-  // ⭐ Same function used by AVAILABLE button
-  markAsSold()
+  // ⭐ Open the SAME customer popup
+  // used by the AVAILABLE button
+  markAsSoldRef.current()
 
 }, [sellRequest, item.status, status])
-// ==========================================
-// POPUP KEYBOARD CONTROL
-// ==========================================
-
 const handlePopupKeyDown = (e) => {
 
   // ESC = CLOSE
