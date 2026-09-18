@@ -5,8 +5,6 @@ import "./AddItem.css";
 const API_URL = "https://svs-jewellery-works-backend.onrender.com";
 
 const AddItem = () => {
-  const navigate = useNavigate();
-
   const [itemType, setItemType] = useState("KDM");
   const idInputRef = useRef(null);
   const [formData, setFormData] = useState({
