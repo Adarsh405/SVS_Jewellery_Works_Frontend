@@ -54,9 +54,7 @@ class GoldPriceSection extends Component {
           loading: false,
           apiSuccess: true,
 
-          goldRate: Number(
-            data.data.gold_rate,
-          ),
+          goldRate: Number(data.data.gold_rate),
 
           hallmarkRate: Number(
             data.data.hallmark_rate,
@@ -247,15 +245,14 @@ class GoldPriceSection extends Component {
   // =========================================================
 
   getJewelleryImage = () => {
-    const {
-      selectedRate,
-    } = this.state
+    const {selectedRate} = this.state
 
-    if (selectedRate === 'hallmark') {
-      return {kdmImage}
-    }
+    // Hallmark selected → Hallmark.png
+    // KDM selected → Kdm.png
 
-    return {HallmarkImage}
+    return selectedRate === 'hallmark'
+      ? HallmarkImage
+      : kdmImage
   }
 
   // =========================================================
@@ -263,9 +260,7 @@ class GoldPriceSection extends Component {
   // =========================================================
 
   getImageAlt = () => {
-    const {
-      selectedRate,
-    } = this.state
+    const {selectedRate} = this.state
 
     return selectedRate === 'hallmark'
       ? 'Hallmark Gold Jewellery'
@@ -277,9 +272,7 @@ class GoldPriceSection extends Component {
   // =========================================================
 
   renderBrandingBackground() {
-    const {
-      selectedRate,
-    } = this.state
+    const {selectedRate} = this.state
 
     const isHallmark =
       selectedRate === 'hallmark'
@@ -359,7 +352,9 @@ class GoldPriceSection extends Component {
         {/* GOLD RINGS */}
 
         <div className="branding-ring ring-one" />
+
         <div className="branding-ring ring-two" />
+
         <div className="branding-ring ring-three" />
       </div>
     )
@@ -372,7 +367,6 @@ class GoldPriceSection extends Component {
   renderLoading() {
     return (
       <div className="gold-loading">
-
         <div className="gold-svs-loader">
           <span>SVS</span>
         </div>
@@ -380,7 +374,6 @@ class GoldPriceSection extends Component {
         <div className="gold-loading-text">
           Loading Rates
         </div>
-
       </div>
     )
   }
@@ -392,7 +385,6 @@ class GoldPriceSection extends Component {
   renderError() {
     return (
       <div className="gold-error">
-
         <div className="gold-error-logo">
           SVS
         </div>
@@ -411,7 +403,6 @@ class GoldPriceSection extends Component {
         >
           Retry
         </button>
-
       </div>
     )
   }
@@ -449,13 +440,11 @@ class GoldPriceSection extends Component {
       <div
         className={`
           gold-page
-
           ${
             isFocused
               ? 'gold-focused'
               : 'gold-unfocused'
           }
-
           ${
             selectedRate === 'kdm'
               ? 'kdm-theme'
@@ -463,7 +452,6 @@ class GoldPriceSection extends Component {
           }
         `}
       >
-
         {/* =================================================
             BRANDING BACKGROUND
         ================================================= */}
@@ -484,18 +472,16 @@ class GoldPriceSection extends Component {
 
         <div className="gold-top">
 
-          {/* LEFT */}
+          {/* LEFT CONTROLS */}
 
           <div className="gold-controls">
 
             <div className="gold-section-label">
-
               <span className="label-line" />
 
               GOLD TYPE
 
               <span className="label-line" />
-
             </div>
 
             <div className="gold-rate-buttons">
@@ -558,7 +544,6 @@ class GoldPriceSection extends Component {
               </button>
 
             </div>
-
           </div>
 
           {/* RIGHT IMAGE */}
@@ -566,26 +551,20 @@ class GoldPriceSection extends Component {
           <div className="gold-image-wrapper">
 
             <div className="image-premium-label">
-
               <span />
 
               {selectedRate ===
               'hallmark'
                 ? 'HALLMARK'
                 : 'KDM'}
-
             </div>
 
             <div className="gold-image-box">
 
               <img
                 key={selectedRate}
-                src={
-                  this.getJewelleryImage()
-                }
-                alt={
-                  this.getImageAlt()
-                }
+                src={this.getJewelleryImage()}
+                alt={this.getImageAlt()}
               />
 
               <div className="image-bottom-label">
@@ -593,9 +572,7 @@ class GoldPriceSection extends Component {
               </div>
 
             </div>
-
           </div>
-
         </div>
 
         {/* =================================================
@@ -605,13 +582,11 @@ class GoldPriceSection extends Component {
         <div className="gold-input-area">
 
           <div className="input-heading">
-
             <span />
 
             ENTER JEWELLERY WEIGHT
 
             <span />
-
           </div>
 
           <div className="gold-input-box">
@@ -622,8 +597,7 @@ class GoldPriceSection extends Component {
 
             <input
               ref={element =>
-                (this.inputRef =
-                  element)
+                (this.inputRef = element)
               }
               autoFocus
               type="text"
@@ -644,14 +618,12 @@ class GoldPriceSection extends Component {
             <span className="input-unit">
               grams
             </span>
-
           </div>
 
           <div className="input-hint">
             Press <strong>ENTER</strong> to
             calculate
           </div>
-
         </div>
 
         {/* =================================================
@@ -709,7 +681,6 @@ class GoldPriceSection extends Component {
                 gold-price-card
               "
             >
-
               <div className="result-icon">
                 ₹
               </div>
@@ -724,7 +695,6 @@ class GoldPriceSection extends Component {
                   result.price,
                 )}
               </strong>
-
             </div>
 
           </div>
