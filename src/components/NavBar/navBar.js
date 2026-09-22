@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
-  FaHome, 
+  FaHome,
+  FaGem, 
   FaCoins,
   FaBars,
   FaTimes,
@@ -32,7 +33,7 @@ const Navbar = () => {
     {
       path: "/payment",
       icon: <MdQrCode2 />,
-      label: "QR Payment"
+      label: "QR"
     },
     {
       path: "/goldPriceSection",
@@ -52,17 +53,17 @@ const Navbar = () => {
     {
       path: "/addJewellery",
       icon: <FaGem />,
-      label: "Add Jewellery"
+      label: "Add Jew"
     },
     {
       path: "/rates",
       icon: <FaCoins />,
-      label: "Update Rates"
+      label: "Rates"
     },
     {
       path: "/oldSilverPriceSection",
       icon: <Recycle size={21} />,
-      label: "Old Silver"
+      label: "O-Silver"
     }
   ];
 
