@@ -214,7 +214,7 @@ class OldSilverPriceSection extends Component {
                     <div className="silver-image-box">
 
                         <img
-                            src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=700&q=85"
+                            src="https://tse3.mm.bing.net/th/id/OIP.TuyCbJAF-BENDqLJBs-60AHaF_?r=0&pid=Api&h=220&P=0"
                             alt="Silver Jewellery"
                         />
 

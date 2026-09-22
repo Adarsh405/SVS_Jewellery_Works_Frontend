@@ -271,7 +271,7 @@ class GoldPriceSection extends Component {
                     <div className="gold-image-box">
 
                         <img
-                            src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=700&q=85"
+                            src="https://i.pinimg.com/originals/9a/ca/37/9aca37e75a774508218415133dd98f07.jpg"
                             alt="Gold Necklace"
                         />
 
