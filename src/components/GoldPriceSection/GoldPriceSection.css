@@ -1,0 +1,522 @@
+* {
+    box-sizing: border-box;
+}
+
+.gold-page {
+    height: calc(100vh - 72px);
+    width: 100vw;
+
+    padding: 20px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(245, 158, 11, 0.12),
+            transparent 25%
+        ),
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8fafc,
+            #f1f5f9
+        );
+
+    transition: filter 0.3s ease;
+}
+
+.gold-unfocused {
+    filter: brightness(0.55);
+}
+
+.gold-focused {
+    filter: brightness(1);
+}
+
+
+/* TOP */
+
+.gold-top {
+    width: 100%;
+    height: 125px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.gold-rate-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.gold-rate-button {
+    height: 60px;
+    min-width: 170px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: #334155;
+    color: white;
+
+    font-size: 18px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.gold-rate-button:hover {
+    transform: translateY(-3px);
+    background: #1f2937;
+}
+
+.gold-rate-button.active {
+    background: #111827;
+
+    box-shadow:
+        0 10px 25px rgba(15, 23, 42, 0.2);
+}
+
+
+/* IMAGE */
+
+.gold-image-box {
+    width: 190px;
+    height: 115px;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.12);
+
+    animation: goldImageIn 0.4s ease;
+}
+
+.gold-image-box img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+@keyframes goldImageIn {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* INPUT */
+
+.gold-input-area {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.gold-input-box {
+    width: min(620px, 70vw);
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 28px;
+
+    background: white;
+
+    border: 3px solid #cbd5e1;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 15px 35px rgba(15, 23, 42, 0.08);
+
+    transition: 0.25s ease;
+}
+
+.gold-input-box:focus-within {
+    border-color: #111827;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 18px 45px rgba(15, 23, 42, 0.15);
+}
+
+.gold-input-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    text-align: center;
+
+    font-size: 46px;
+    font-weight: 900;
+
+    color: #111827;
+}
+
+.gold-input-box input::placeholder {
+    color: #cbd5e1;
+}
+
+.gold-input-box span {
+    color: #64748b;
+
+    font-size: 19px;
+    font-weight: 800;
+}
+
+
+/* RESULT */
+
+.gold-result {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-top: 25px;
+
+    animation: goldResultIn 0.4s ease;
+}
+
+.gold-result-card {
+    min-height: 155px;
+
+    background: white;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 20px;
+
+    padding: 22px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    box-shadow:
+        0 12px 30px rgba(15, 23, 42, 0.07);
+
+    position: relative;
+}
+
+.gold-result-card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 5px;
+
+    background: #334155;
+
+    border-radius: 20px 0 0 20px;
+}
+
+.gold-result-card span {
+    color: #64748b;
+
+    font-size: 14px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.7px;
+
+    margin-bottom: 10px;
+}
+
+.gold-result-card strong {
+    color: #111827;
+
+    font-size: clamp(30px, 3vw, 44px);
+
+    font-weight: 900;
+}
+
+.gold-result-card small {
+    font-size: 18px;
+    color: #64748b;
+}
+
+.gold-price-card {
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #ffffff
+        );
+
+    border-color: #fed7aa;
+}
+
+.gold-price-card::before {
+    background: #f59e0b;
+}
+
+.gold-price-card strong {
+    color: #9a3412;
+}
+
+@keyframes goldResultIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* CURRENT RATE */
+
+.gold-current-rate {
+    position: absolute;
+
+    left: 20px;
+    right: 20px;
+    bottom: 8px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+.gold-current-rate strong {
+    color: #334155;
+
+    font-size: 15px;
+}
+
+.gold-current-rate small {
+    font-size: 11px;
+    color: #94a3b8;
+}
+
+
+/* LOADING */
+
+.gold-loading {
+    height: calc(100vh - 72px);
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 18px;
+
+    background: #f8fafc;
+}
+
+.gold-svs-loader {
+    width: 90px;
+    height: 90px;
+
+    border-radius: 50%;
+
+    background: #111827;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+    font-weight: 900;
+
+    position: relative;
+
+    animation: loaderPulse 1.5s infinite;
+}
+
+.gold-svs-loader::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -6px;
+
+    border-radius: 50%;
+
+    border: 4px solid transparent;
+
+    border-top-color: #f59e0b;
+
+    animation: loaderSpin 0.8s linear infinite;
+}
+
+@keyframes loaderSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes loaderPulse {
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.gold-loading-text {
+    font-size: 17px;
+    font-weight: 800;
+    color: #475569;
+}
+
+
+/* ERROR */
+
+.gold-error {
+    height: calc(100vh - 72px);
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    background: #f8fafc;
+}
+
+.gold-error-logo {
+    width: 80px;
+    height: 80px;
+
+    border-radius: 50%;
+
+    background: #111827;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 900;
+}
+
+.gold-retry {
+    border: none;
+
+    padding: 12px 30px;
+
+    border-radius: 10px;
+
+    background: #111827;
+
+    color: white;
+
+    font-weight: 800;
+
+    cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+
+    .gold-page {
+        padding: 12px;
+    }
+
+    .gold-top {
+        height: 105px;
+    }
+
+    .gold-rate-button {
+        min-width: 110px;
+        height: 52px;
+
+        font-size: 14px;
+    }
+
+    .gold-image-box {
+        width: 110px;
+        height: 78px;
+    }
+
+    .gold-input-box {
+        width: 96%;
+        height: 82px;
+
+        padding: 0 15px;
+    }
+
+    .gold-input-box input {
+        font-size: 35px;
+    }
+
+    .gold-input-box span {
+        font-size: 13px;
+    }
+
+    .gold-result {
+        gap: 9px;
+        margin-top: 15px;
+    }
+
+    .gold-result-card {
+        min-height: 115px;
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .gold-result-card span {
+        font-size: 10px;
+    }
+
+    .gold-result-card strong {
+        font-size: 24px;
+    }
+
+    .gold-result-card small {
+        font-size: 13px;
+    }
+}

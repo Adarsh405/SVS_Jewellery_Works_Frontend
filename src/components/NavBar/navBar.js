@@ -10,6 +10,7 @@ import {
   FaCashRegister,
 } from "react-icons/fa";
 import { MdQrCode2 } from "react-icons/md";
+import { Gem, Recycle } from 'lucide-react'
 
 import "./navBar.css";
 
@@ -35,6 +36,11 @@ const Navbar = () => {
       label: "QR Payment"
     },
     {
+      path: "/goldPriceSection",
+      icon: <Gem size={21} />,
+      label: "Gold Price"
+    },
+    {
       path: "/Inventory",
       icon: <MdQrCode2 />,
       label: "Inventory"
@@ -53,6 +59,11 @@ const Navbar = () => {
       path: "/rates",
       icon: <FaCoins />,
       label: "Update Rates"
+    },
+    {
+      path: "/oldSilverPriceSection",
+      icon: <Recycle size={21} />,
+      label: "Old Silver"
     }
   ];
 

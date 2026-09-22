@@ -9,7 +9,9 @@ import RateUpdate from './components/RateUpdate/rateUpdate'
 import Payment from "./components/Payment/Payment";
 import Sales from "./components/Sales/sales.js"
 import Inventory from "./components/Inventory/Inventory"
-import PriceCalculater from "./components/PriceCalculater/PriceCalculater"
+import GoldPriceSection from './components/GoldPriceSection/GoldPriceSection'
+import OldSilverPriceSection from './components/OldSilverPriceSection/OldSilverPriceSection'
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -47,10 +49,13 @@ const App = () => {
           }
         />
         <Route
-          path="/priceCalculater"
-          element={
-              <PriceCalculater />
-          }
+            path="/goldPriceSection"
+            element={<GoldPriceSection />}
+        />
+
+        <Route
+            path="/oldSilverPriceSection"
+            element={<OldSilverPriceSection />}
         />
         <Route
           path="/addJewellery"
