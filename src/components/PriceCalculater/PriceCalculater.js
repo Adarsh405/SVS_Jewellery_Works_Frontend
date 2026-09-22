@@ -2,7 +2,7 @@ import "./PriceCalculater.css";
 import { Component, createRef } from "react";
 
 const API_URL =
-  "https://svs-jewellery-backend.onrender.com/api/rates";
+  "https://svs-jewellery-works-backend.onrender.com/api/rates";
 
 class PriceCalculater extends Component {
   constructor(props) {
