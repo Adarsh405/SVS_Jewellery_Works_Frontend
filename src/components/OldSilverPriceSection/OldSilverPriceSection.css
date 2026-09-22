@@ -3,208 +3,549 @@
 }
 
 /* =========================================================
-   MAIN PAGE — PREMIUM SHOWROOM BACKGROUND
+   PAGE
 ========================================================= */
 
 .silver-page {
     position: relative;
+
     height: calc(100vh - 72px);
     width: 100vw;
+
     padding: 20px;
+
     overflow: hidden;
 
     background:
         radial-gradient(
-            circle at 12% 18%,
+            circle at 15% 15%,
             rgba(212, 175, 55, 0.18),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(226, 232, 240, 0.8),
             transparent 28%
         ),
         radial-gradient(
-            circle at 88% 12%,
-            rgba(226, 232, 240, 0.75),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 78% 85%,
-            rgba(245, 221, 170, 0.20),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 20% 90%,
-            rgba(226, 232, 240, 0.55),
+            circle at 75% 85%,
+            rgba(245, 222, 170, 0.18),
             transparent 28%
         ),
         linear-gradient(
             135deg,
-            #ffffff 0%,
-            #fffdf8 28%,
-            #f8fafc 58%,
-            #fffaf0 100%
+            #ffffff,
+            #fffdf7,
+            #f8fafc,
+            #fffaf0,
+            #ffffff
         );
+
+    background-size: 180% 180%;
+
+    animation:
+        silverBackgroundMove 18s ease-in-out infinite;
 
     transition:
-        filter 0.35s ease,
-        transform 0.35s ease;
+        filter 0.35s ease;
 }
 
+
 /* =========================================================
-   ANIMATED LIGHT ORBS
+   BACKGROUND EFFECT LAYER
 ========================================================= */
 
-.silver-page::before,
-.silver-page::after {
-    content: "";
+.silver-background-effects {
     position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
     pointer-events: none;
+
     z-index: 0;
-    border-radius: 50%;
-    filter: blur(8px);
 }
 
-/* Champagne light */
-.silver-page::before {
-    width: 380px;
-    height: 380px;
-
-    left: -120px;
-    top: -150px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.16) 0%,
-            rgba(245, 222, 170, 0.10) 38%,
-            transparent 72%
-        );
-
-    animation: silverLuxuryOrb 12s ease-in-out infinite alternate;
-}
-
-/* Silver light */
-.silver-page::after {
-    width: 420px;
-    height: 420px;
-
-    right: -140px;
-    bottom: -180px;
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(203, 213, 225, 0.25) 0%,
-            rgba(241, 245, 249, 0.14) 40%,
-            transparent 72%
-        );
-
-    animation: silverLuxuryOrb2 15s ease-in-out infinite alternate;
-}
-
-@keyframes silverLuxuryOrb {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(100px, 70px) scale(1.18);
-    }
-
-    100% {
-        transform: translate(180px, 10px) scale(0.92);
-    }
-}
-
-@keyframes silverLuxuryOrb2 {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    50% {
-        transform: translate(-100px, -80px) scale(1.15);
-    }
-
-    100% {
-        transform: translate(-40px, -160px) scale(0.9);
-    }
-}
 
 /* =========================================================
-   MOVING SHIMMER
+   AURORA
 ========================================================= */
 
-.silver-page {
-    background-size: 180% 180%;
-    animation: silverBackgroundMove 18s ease-in-out infinite;
-}
-
-@keyframes silverBackgroundMove {
-    0% {
-        background-position: 0% 20%;
-    }
-
-    50% {
-        background-position: 100% 80%;
-    }
-
-    100% {
-        background-position: 0% 20%;
-    }
-}
-
-/* =========================================================
-   SUBTLE LUXURY GRID
-========================================================= */
-
-.silver-page > * {
-    position: relative;
-    z-index: 2;
-}
-
-.silver-page .silver-input-area::before {
-    content: "";
+.silver-aurora {
     position: absolute;
 
-    width: 500px;
-    height: 500px;
+    border-radius: 50%;
 
-    left: 50%;
+    filter: blur(55px);
+
+    opacity: 0.45;
+
+    mix-blend-mode: multiply;
+}
+
+.silver-aurora-one {
+    width: 500px;
+    height: 250px;
+
+    top: -120px;
+    left: 10%;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(212, 175, 55, 0.16),
+            rgba(255, 255, 255, 0)
+        );
+
+    animation:
+        silverAuroraOne 12s ease-in-out infinite;
+}
+
+.silver-aurora-two {
+    width: 450px;
+    height: 300px;
+
+    right: -100px;
+    top: 25%;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(203, 213, 225, 0.28),
+            rgba(255, 255, 255, 0)
+        );
+
+    animation:
+        silverAuroraTwo 15s ease-in-out infinite;
+}
+
+.silver-aurora-three {
+    width: 550px;
+    height: 260px;
+
+    bottom: -150px;
+    left: 25%;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(245, 222, 170, 0.2),
+            rgba(255, 255, 255, 0)
+        );
+
+    animation:
+        silverAuroraThree 18s ease-in-out infinite;
+}
+
+@keyframes silverAuroraOne {
+    0%,
+    100% {
+        transform:
+            translate(0, 0)
+            rotate(-8deg)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(160px, 90px)
+            rotate(8deg)
+            scale(1.2);
+    }
+}
+
+@keyframes silverAuroraTwo {
+    0%,
+    100% {
+        transform:
+            translate(0, 0)
+            rotate(10deg);
+    }
+
+    50% {
+        transform:
+            translate(-150px, 80px)
+            rotate(-8deg);
+    }
+}
+
+@keyframes silverAuroraThree {
+    0%,
+    100% {
+        transform:
+            translate(0, 0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(-100px, -100px)
+            scale(1.2);
+    }
+}
+
+
+/* =========================================================
+   FLOATING LIGHT ORBS
+========================================================= */
+
+.silver-light-orb {
+    position: absolute;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.95),
+            rgba(212, 175, 55, 0.12),
+            transparent 70%
+        );
+
+    filter: blur(3px);
+
+    animation:
+        silverOrbFloat 9s ease-in-out infinite;
+}
+
+.silver-orb-one {
+    width: 170px;
+    height: 170px;
+
+    left: 8%;
+    top: 25%;
+}
+
+.silver-orb-two {
+    width: 110px;
+    height: 110px;
+
+    right: 18%;
     top: 50%;
 
-    transform: translate(-50%, -50%);
-
-    background:
-        radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.055),
-            transparent 68%
-        );
-
-    pointer-events: none;
-
-    animation: silverGlow 5s ease-in-out infinite alternate;
+    animation-delay: -3s;
 }
 
-@keyframes silverGlow {
+.silver-orb-three {
+    width: 140px;
+    height: 140px;
+
+    left: 45%;
+    bottom: 5%;
+
+    animation-delay: -6s;
+}
+
+@keyframes silverOrbFloat {
+    0%,
+    100% {
+        transform:
+            translate3d(0, 0, 0)
+            scale(1);
+
+        opacity: 0.3;
+    }
+
+    50% {
+        transform:
+            translate3d(40px, -60px, 0)
+            scale(1.25);
+
+        opacity: 0.65;
+    }
+}
+
+
+/* =========================================================
+   ROTATING RINGS
+========================================================= */
+
+.silver-ring {
+    position: absolute;
+
+    border: 1px solid rgba(212, 175, 55, 0.12);
+
+    border-radius: 50%;
+
+    animation:
+        silverRingRotate 25s linear infinite;
+}
+
+.silver-ring-one {
+    width: 450px;
+    height: 450px;
+
+    right: -180px;
+    top: -180px;
+}
+
+.silver-ring-two {
+    width: 600px;
+    height: 600px;
+
+    left: -300px;
+    bottom: -350px;
+
+    border-color: rgba(203, 213, 225, 0.22);
+
+    animation-direction: reverse;
+}
+
+@keyframes silverRingRotate {
     from {
-        opacity: 0.35;
-        transform: translate(-50%, -50%) scale(0.9);
+        transform: rotate(0deg);
     }
 
     to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.12);
+        transform: rotate(360deg);
     }
 }
 
+
 /* =========================================================
-   FOCUS STATE
+   SHINE LINES
 ========================================================= */
 
-.silver-unfocused {
-    filter: brightness(0.72);
+.silver-shine-line {
+    position: absolute;
+
+    width: 2px;
+    height: 180px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(212, 175, 55, 0.4),
+            transparent
+        );
+
+    transform: rotate(35deg);
+
+    opacity: 0;
+
+    animation:
+        silverShineLine 7s ease-in-out infinite;
 }
+
+.silver-shine-one {
+    left: 20%;
+    top: -100px;
+}
+
+.silver-shine-two {
+    right: 30%;
+    top: -120px;
+
+    animation-delay: -3s;
+}
+
+@keyframes silverShineLine {
+    0% {
+        transform:
+            translateY(-150px)
+            rotate(35deg);
+
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 0.8;
+    }
+
+    60% {
+        opacity: 0;
+    }
+
+    100% {
+        transform:
+            translateY(700px)
+            rotate(35deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.silver-particles {
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.silver-particles span {
+    position: absolute;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffffff,
+            rgba(212, 175, 55, 0.5)
+        );
+
+    box-shadow:
+        0 0 10px rgba(212, 175, 55, 0.35);
+
+    animation:
+        silverParticleFloat
+        var(--particle-speed, 8s)
+        ease-in-out
+        infinite;
+}
+
+.silver-particles span:nth-child(1) {
+    left: 5%;
+    bottom: -20px;
+    --particle-speed: 8s;
+}
+
+.silver-particles span:nth-child(2) {
+    left: 15%;
+    bottom: -20px;
+    --particle-speed: 11s;
+    animation-delay: -2s;
+}
+
+.silver-particles span:nth-child(3) {
+    left: 25%;
+    bottom: -20px;
+    --particle-speed: 9s;
+    animation-delay: -4s;
+}
+
+.silver-particles span:nth-child(4) {
+    left: 35%;
+    bottom: -20px;
+    --particle-speed: 13s;
+    animation-delay: -6s;
+}
+
+.silver-particles span:nth-child(5) {
+    left: 45%;
+    bottom: -20px;
+    --particle-speed: 10s;
+    animation-delay: -3s;
+}
+
+.silver-particles span:nth-child(6) {
+    left: 55%;
+    bottom: -20px;
+    --particle-speed: 12s;
+    animation-delay: -7s;
+}
+
+.silver-particles span:nth-child(7) {
+    left: 65%;
+    bottom: -20px;
+    --particle-speed: 9s;
+    animation-delay: -5s;
+}
+
+.silver-particles span:nth-child(8) {
+    left: 75%;
+    bottom: -20px;
+    --particle-speed: 14s;
+    animation-delay: -1s;
+}
+
+.silver-particles span:nth-child(9) {
+    left: 85%;
+    bottom: -20px;
+    --particle-speed: 10s;
+    animation-delay: -8s;
+}
+
+.silver-particles span:nth-child(10) {
+    left: 95%;
+    bottom: -20px;
+    --particle-speed: 12s;
+    animation-delay: -4s;
+}
+
+.silver-particles span:nth-child(11) {
+    left: 40%;
+    bottom: -20px;
+    --particle-speed: 15s;
+    animation-delay: -10s;
+}
+
+.silver-particles span:nth-child(12) {
+    left: 70%;
+    bottom: -20px;
+    --particle-speed: 11s;
+    animation-delay: -6s;
+}
+
+@keyframes silverParticleFloat {
+    0% {
+        transform:
+            translateY(0)
+            scale(0.5);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.8;
+    }
+
+    50% {
+        transform:
+            translateY(-45vh)
+            translateX(35px)
+            scale(1);
+    }
+
+    80% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform:
+            translateY(-100vh)
+            translateX(-40px)
+            scale(0.3);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   PAGE CONTENT
+========================================================= */
+
+.silver-page > *:not(.silver-background-effects):not(.silver-particles) {
+    position: relative;
+    z-index: 3;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
 
 .silver-focused {
     filter: brightness(1);
+}
+
+.silver-unfocused {
+    filter: brightness(0.72);
 }
 
 
@@ -217,6 +558,7 @@
     height: 125px;
 
     display: flex;
+
     justify-content: space-between;
     align-items: flex-start;
 }
@@ -226,98 +568,136 @@
    TITLE
 ========================================================= */
 
+.silver-title-wrapper {
+    position: relative;
+}
+
 .silver-title-button {
     height: 60px;
     min-width: 190px;
-    padding: 0 30px;
 
-    border-radius: 14px;
+    padding: 0 25px;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    gap: 12px;
+
+    border-radius: 16px;
+
     background:
         linear-gradient(
             135deg,
-            #ffffff,
-            #f8fafc
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 253, 245, 0.98)
         );
 
-    color: #334155;
+    color: #9a7611;
 
-    font-size: 18px;
-    font-weight: 800;
-
-    border: 1px solid rgba(203, 213, 225, 0.8);
+    border:
+        1px solid rgba(212, 175, 55, 0.25);
 
     box-shadow:
-        0 10px 25px rgba(15, 23, 42, 0.08),
-        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+        0 15px 35px rgba(15, 23, 42, 0.08),
+        0 0 30px rgba(212, 175, 55, 0.08);
+
+    font-size: 18px;
+
+    font-weight: 900;
 
     animation:
-        silverTitleIn 0.6s ease,
-        silverFloat 5s ease-in-out infinite;
-
-    position: relative;
-    overflow: hidden;
+        silverTitleEntrance 0.8s ease,
+        silverTitleFloat 5s ease-in-out infinite;
 }
 
-.silver-title-button::before {
-    content: "";
+.silver-title-icon,
+.silver-title-sparkle {
+    color: #d4af37;
 
-    position: absolute;
+    animation:
+        silverSparkle 2s ease-in-out infinite;
+}
 
-    width: 120px;
-    height: 120px;
+.silver-title-sparkle {
+    animation-delay: -1s;
+}
 
-    top: -70px;
-    left: -100px;
+.silver-title-line {
+    width: 70%;
+
+    height: 2px;
+
+    margin: 8px auto;
 
     background:
-        radial-gradient(
-            circle,
-            rgba(212, 175, 55, 0.25),
-            transparent 70%
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            transparent
         );
 
-    animation: silverTitleGlow 4s ease-in-out infinite;
+    animation:
+        silverLinePulse 3s ease-in-out infinite;
 }
 
-@keyframes silverTitleIn {
+@keyframes silverTitleEntrance {
     from {
         opacity: 0;
-        transform: translateX(-20px);
+        transform:
+            translateX(-40px)
+            scale(0.9);
     }
 
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform:
+            translateX(0)
+            scale(1);
     }
 }
 
-@keyframes silverTitleGlow {
-    0% {
-        transform: translate(0, 0);
-    }
-
-    50% {
-        transform: translate(230px, 40px);
-    }
-
-    100% {
-        transform: translate(0, 0);
-    }
-}
-
-@keyframes silverFloat {
+@keyframes silverTitleFloat {
     0%,
     100% {
         transform: translateY(0);
     }
 
     50% {
-        transform: translateY(-3px);
+        transform: translateY(-4px);
+    }
+}
+
+@keyframes silverSparkle {
+    0%,
+    100% {
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        opacity: 0.6;
+    }
+
+    50% {
+        transform:
+            scale(1.35)
+            rotate(180deg);
+
+        opacity: 1;
+    }
+}
+
+@keyframes silverLinePulse {
+    0%,
+    100% {
+        opacity: 0.3;
+        transform: scaleX(0.7);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scaleX(1);
     }
 }
 
@@ -326,7 +706,33 @@
    IMAGE
 ========================================================= */
 
+.silver-image-wrapper {
+    position: relative;
+}
+
+.silver-image-glow {
+    position: absolute;
+
+    inset: -15px;
+
+    border-radius: 25px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.25),
+            transparent 70%
+        );
+
+    filter: blur(15px);
+
+    animation:
+        silverImageGlow 4s ease-in-out infinite;
+}
+
 .silver-image-box {
+    position: relative;
+
     width: 190px;
     height: 115px;
 
@@ -336,14 +742,14 @@
 
     background: #ffffff;
 
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border:
+        1px solid rgba(226, 232, 240, 0.9);
 
     box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.10),
-        0 0 30px rgba(212, 175, 55, 0.08);
+        0 15px 35px rgba(15, 23, 42, 0.10);
 
     animation:
-        silverImageIn 0.6s ease,
+        silverImageEntrance 0.8s ease,
         silverImageFloat 6s ease-in-out infinite;
 }
 
@@ -354,24 +760,62 @@
     object-fit: cover;
 
     transition:
-        transform 0.6s ease,
-        filter 0.6s ease;
+        transform 0.7s ease;
 }
 
 .silver-image-box:hover img {
-    transform: scale(1.08);
-    filter: brightness(1.04);
+    transform: scale(1.1);
 }
 
-@keyframes silverImageIn {
+.silver-image-shine {
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 50%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.8),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation:
+        silverImageShine 5s ease-in-out infinite;
+}
+
+@keyframes silverImageGlow {
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+@keyframes silverImageEntrance {
     from {
         opacity: 0;
-        transform: scale(0.94);
+        transform:
+            translateX(40px)
+            scale(0.9);
     }
 
     to {
         opacity: 1;
-        transform: scale(1);
+        transform:
+            translateX(0)
+            scale(1);
     }
 }
 
@@ -386,25 +830,80 @@
     }
 }
 
+@keyframes silverImageShine {
+    0% {
+        left: -100%;
+    }
+
+    35%,
+    100% {
+        left: 160%;
+    }
+}
+
 
 /* =========================================================
-   INPUT
+   INPUT AREA
 ========================================================= */
 
 .silver-input-area {
     width: 100%;
 
     display: flex;
+
     justify-content: center;
 
     position: relative;
 }
 
+.silver-input-aura {
+    position: absolute;
+
+    width: 600px;
+    height: 170px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(212, 175, 55, 0.12),
+            transparent 70%
+        );
+
+    filter: blur(20px);
+
+    animation:
+        silverInputAura 4s ease-in-out infinite;
+}
+
+@keyframes silverInputAura {
+    0%,
+    100% {
+        transform: scale(0.9);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   INPUT BOX
+========================================================= */
+
 .silver-input-box {
+    position: relative;
+
     width: min(620px, 70vw);
+
     height: 100px;
 
     display: flex;
+
     align-items: center;
 
     padding: 0 28px;
@@ -413,77 +912,151 @@
         linear-gradient(
             145deg,
             rgba(255, 255, 255, 0.98),
-            rgba(255, 253, 248, 0.96)
+            rgba(255, 253, 247, 0.98)
         );
 
-    border: 2px solid rgba(226, 232, 240, 0.95);
+    border:
+        2px solid rgba(212, 175, 55, 0.22);
 
-    border-radius: 22px;
+    border-radius: 24px;
 
     box-shadow:
-        0 15px 35px rgba(15, 23, 42, 0.08),
-        0 0 40px rgba(212, 175, 55, 0.06);
+        0 20px 50px rgba(15, 23, 42, 0.10),
+        0 0 40px rgba(212, 175, 55, 0.10);
+
+    overflow: hidden;
 
     transition:
-        0.3s ease;
-
-    position: relative;
-    overflow: hidden;
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
 }
 
-/* Moving premium shine */
+.silver-input-box:hover {
+    transform: translateY(-3px);
+}
 
-.silver-input-box::before {
-    content: "";
+.silver-input-box:focus-within {
+    border-color: rgba(212, 175, 55, 0.75);
 
+    transform:
+        translateY(-5px)
+        scale(1.01);
+
+    box-shadow:
+        0 25px 60px rgba(15, 23, 42, 0.12),
+        0 0 50px rgba(212, 175, 55, 0.18);
+}
+
+
+/* =========================================================
+   INPUT SHIMMER
+========================================================= */
+
+.silver-input-shimmer {
     position: absolute;
 
-    top: 0;
-    left: -120%;
+    width: 120px;
+    height: 180%;
 
-    width: 80%;
-    height: 100%;
+    left: -150px;
+    top: -40px;
 
     background:
         linear-gradient(
             90deg,
             transparent,
-            rgba(255, 255, 255, 0.75),
+            rgba(255, 255, 255, 0.9),
             transparent
         );
 
-    transform: skewX(-20deg);
+    transform: rotate(20deg);
 
-    animation: silverInputShine 5s ease-in-out infinite;
+    animation:
+        silverInputShimmer 4.5s ease-in-out infinite;
 
     pointer-events: none;
 }
 
-@keyframes silverInputShine {
+@keyframes silverInputShimmer {
     0% {
-        left: -120%;
+        left: -150px;
     }
 
-    45%,
+    40%,
     100% {
-        left: 150%;
+        left: 750px;
     }
 }
 
-.silver-input-box:focus-within {
-    border-color: rgba(212, 175, 55, 0.65);
 
-    transform: translateY(-3px);
+/* =========================================================
+   INPUT CORNERS
+========================================================= */
 
-    box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.12),
-        0 0 35px rgba(212, 175, 55, 0.14);
+.silver-input-corner {
+    position: absolute;
+
+    width: 13px;
+    height: 13px;
+
+    border-color: rgba(212, 175, 55, 0.5);
+
+    opacity: 0;
+
+    transition: 0.3s ease;
 }
+
+.corner-one {
+    top: 8px;
+    left: 8px;
+
+    border-top: 2px solid;
+    border-left: 2px solid;
+}
+
+.corner-two {
+    top: 8px;
+    right: 8px;
+
+    border-top: 2px solid;
+    border-right: 2px solid;
+}
+
+.corner-three {
+    bottom: 8px;
+    left: 8px;
+
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+}
+
+.corner-four {
+    bottom: 8px;
+    right: 8px;
+
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+}
+
+.silver-input-box:focus-within .silver-input-corner {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
 
 .silver-input-box input {
+    position: relative;
+
+    z-index: 5;
+
     width: 100%;
 
     border: none;
+
     outline: none;
 
     background: transparent;
@@ -491,26 +1064,119 @@
     text-align: center;
 
     font-size: 46px;
+
     font-weight: 900;
 
     color: #334155;
-
-    position: relative;
-    z-index: 2;
 }
 
 .silver-input-box input::placeholder {
     color: #cbd5e1;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+.silver-input-box:focus-within input::placeholder {
+    opacity: 0.3;
 }
 
 .silver-input-box span {
+    position: relative;
+
+    z-index: 5;
+
     color: #64748b;
 
     font-size: 19px;
-    font-weight: 800;
 
-    position: relative;
-    z-index: 2;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   ENTER HINT
+========================================================= */
+
+.silver-enter-hint {
+    position: absolute;
+
+    right: 20px;
+    bottom: 10px;
+
+    font-size: 9px;
+
+    letter-spacing: 1px;
+
+    font-weight: 900;
+
+    color: #c3a34a;
+
+    opacity: 0.55;
+
+    animation:
+        silverEnterPulse 2s ease-in-out infinite;
+}
+
+@keyframes silverEnterPulse {
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   INPUT PULSE
+========================================================= */
+
+.silver-input-pulse {
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    background: #d4af37;
+
+    box-shadow:
+        0 0 0 0 rgba(212, 175, 55, 0.4);
+
+    opacity: 0;
+
+    animation:
+        silverInputPulse 2.5s infinite;
+}
+
+@keyframes silverInputPulse {
+    0% {
+        transform: scale(0.8);
+
+        box-shadow:
+            0 0 0 0 rgba(212, 175, 55, 0.4);
+
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 35px rgba(212, 175, 55, 0);
+
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 
@@ -530,76 +1196,177 @@
 
     margin-top: 25px;
 
-    animation: silverResultIn 0.5s ease;
+    animation:
+        silverResultsEntrance 0.7s ease;
 }
 
+@keyframes silverResultsEntrance {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   RESULT CARD
+========================================================= */
+
 .silver-result-card {
+    position: relative;
+
     min-height: 155px;
+
+    padding: 22px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    overflow: hidden;
 
     background:
         linear-gradient(
             145deg,
             rgba(255, 255, 255, 0.98),
-            rgba(255, 253, 248, 0.95)
+            rgba(255, 253, 247, 0.98)
         );
 
-    border: 1px solid rgba(226, 232, 240, 0.9);
+    border:
+        1px solid rgba(226, 232, 240, 0.9);
 
-    border-radius: 20px;
-
-    padding: 22px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    border-radius: 22px;
 
     box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.07),
-        0 0 25px rgba(212, 175, 55, 0.04);
-
-    position: relative;
-
-    overflow: hidden;
+        0 15px 35px rgba(15, 23, 42, 0.07),
+        0 0 30px rgba(212, 175, 55, 0.05);
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
 }
 
 .silver-result-card:hover {
-    transform: translateY(-5px);
+    transform:
+        translateY(-8px)
+        scale(1.015);
 
     box-shadow:
-        0 20px 40px rgba(15, 23, 42, 0.10),
-        0 0 30px rgba(212, 175, 55, 0.08);
+        0 25px 50px rgba(15, 23, 42, 0.10),
+        0 0 40px rgba(212, 175, 55, 0.12);
 }
 
-.silver-result-card::before {
-    content: "";
 
+/* =========================================================
+   CARD GLOW
+========================================================= */
+
+.silver-card-glow {
     position: absolute;
 
-    left: 0;
-    top: 0;
-    bottom: 0;
+    width: 150px;
+    height: 150px;
 
-    width: 5px;
+    right: -70px;
+    top: -70px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.16),
+            transparent 70%
+        );
+
+    animation:
+        silverCardGlow 4s ease-in-out infinite;
+}
+
+@keyframes silverCardGlow {
+    0%,
+    100% {
+        transform: scale(0.8);
+    }
+
+    50% {
+        transform: scale(1.3);
+    }
+}
+
+
+/* =========================================================
+   CARD ICON
+========================================================= */
+
+.silver-card-icon {
+    position: absolute;
+
+    top: 17px;
+    right: 20px;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
 
     background:
         linear-gradient(
-            180deg,
-            #d4af37,
-            #e7d18b,
-            #cbd5e1
+            135deg,
+            #fffdf5,
+            #f8fafc
         );
 
-    border-radius: 20px 0 0 20px;
+    color: #c09a2e;
+
+    border:
+        1px solid rgba(212, 175, 55, 0.25);
+
+    font-size: 15px;
+
+    animation:
+        silverIconFloat 3s ease-in-out infinite;
 }
+
+@keyframes silverIconFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
 
 .silver-result-card span {
     color: #64748b;
 
     font-size: 14px;
+
     font-weight: 900;
 
     letter-spacing: 0.7px;
@@ -613,6 +1380,9 @@
     font-size: clamp(30px, 3vw, 44px);
 
     font-weight: 900;
+
+    animation:
+        silverNumberIn 0.7s ease;
 }
 
 .silver-result-card small {
@@ -621,33 +1391,92 @@
     color: #64748b;
 }
 
+@keyframes silverNumberIn {
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(10px)
+            scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
 
 /* =========================================================
-   PRICE
+   CARD LINE
+========================================================= */
+
+.silver-card-line {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #d4af37,
+            #e8d28d,
+            transparent
+        );
+
+    background-size: 200% 100%;
+
+    animation:
+        silverCardLine 3s linear infinite;
+}
+
+@keyframes silverCardLine {
+    from {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+
+/* =========================================================
+   PRICE CARD
 ========================================================= */
 
 .silver-price-card {
     background:
         linear-gradient(
             135deg,
-            #fffdf5,
+            #fffdf4,
             #ffffff,
             #f8fafc
         );
 }
 
-.silver-price-card::before {
-    background:
-        linear-gradient(
-            180deg,
-            #d4af37,
-            #e6c968,
-            #cbd5e1
-        );
-}
-
 .silver-price-card strong {
     color: #a47c00;
+}
+
+.silver-price-sparkle {
+    position: absolute;
+
+    right: 70px;
+    bottom: 25px;
+
+    color: #d4af37;
+
+    animation:
+        silverSparkle 2s ease-in-out infinite;
 }
 
 
@@ -658,8 +1487,8 @@
 .silver-percentage {
     position: absolute;
 
-    top: 15px;
-    right: 15px;
+    top: 60px;
+    right: 20px;
 
     padding: 5px 10px;
 
@@ -668,27 +1497,31 @@
     background:
         linear-gradient(
             135deg,
-            #fff7d6,
+            #fff8dc,
             #fef3c7
         );
 
     color: #9a7611;
 
-    border: 1px solid rgba(212, 175, 55, 0.20);
+    border:
+        1px solid rgba(212, 175, 55, 0.2);
 
     font-size: 12px;
+
     font-weight: 900;
+
+    animation:
+        silverBadgePulse 2s ease-in-out infinite;
 }
 
-@keyframes silverResultIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px) scale(0.98);
+@keyframes silverBadgePulse {
+    0%,
+    100% {
+        transform: scale(1);
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
+    50% {
+        transform: scale(1.08);
     }
 }
 
@@ -714,6 +1547,7 @@
     color: #64748b;
 
     font-size: 12px;
+
     font-weight: 800;
 }
 
@@ -731,16 +1565,242 @@
 
 
 /* =========================================================
+   LIVE
+========================================================= */
+
+.silver-live {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    color: #6b8e23;
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 0.7px;
+}
+
+.silver-live span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #8aaa45;
+
+    box-shadow:
+        0 0 0 0 rgba(138, 170, 69, 0.4);
+
+    animation:
+        silverLivePulse 2s infinite;
+}
+
+@keyframes silverLivePulse {
+    0% {
+        box-shadow:
+            0 0 0 0 rgba(138, 170, 69, 0.45);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 7px rgba(138, 170, 69, 0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0 rgba(138, 170, 69, 0);
+    }
+}
+
+
+/* =========================================================
    LOADING
 ========================================================= */
 
 .silver-loading {
+    position: relative;
+
     height: calc(100vh - 72px);
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
+
+    align-items: center;
+
+    gap: 18px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fffdf5,
+            #f8fafc
+        );
+}
+
+.silver-loading-orbit {
+    position: relative;
+
+    width: 120px;
+    height: 120px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.silver-loading-ring {
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: 50%;
+
+    border:
+        3px solid transparent;
+
+    border-top-color: #d4af37;
+
+    border-right-color: #e8d28d;
+
+    animation:
+        silverLoaderSpin 1s linear infinite;
+}
+
+.silver-loading-ring::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 10px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid transparent;
+
+    border-left-color: #cbd5e1;
+
+    animation:
+        silverLoaderSpin 2s linear infinite reverse;
+}
+
+.silver-svs-loader {
+    width: 76px;
+    height: 76px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fffdf5
+        );
+
+    color: #a47c00;
+
+    border:
+        1px solid rgba(212, 175, 55, 0.25);
+
+    font-size: 21px;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08);
+
+    animation:
+        silverLoaderPulse 1.5s ease-in-out infinite;
+}
+
+.silver-loading-text {
+    color: #475569;
+
+    font-size: 17px;
+
+    font-weight: 800;
+}
+
+.silver-loading-dots {
+    display: flex;
+
+    gap: 6px;
+}
+
+.silver-loading-dots span {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #d4af37;
+
+    animation:
+        silverDotBounce 1.2s infinite;
+}
+
+.silver-loading-dots span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.silver-loading-dots span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes silverLoaderSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes silverLoaderPulse {
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes silverDotBounce {
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: translateY(-6px);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.silver-error {
+    height: calc(100vh - 72px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
     align-items: center;
 
     gap: 18px;
@@ -753,135 +1813,50 @@
         );
 }
 
-.silver-svs-loader {
-    width: 90px;
-    height: 90px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #f8fafc
-        );
-
-    color: #a47c00;
-
-    border: 1px solid #e2e8f0;
+.silver-error-logo {
+    width: 85px;
+    height: 85px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
+
+    border-radius: 50%;
+
+    color: #a47c00;
 
     font-size: 22px;
-    font-weight: 900;
-
-    position: relative;
-
-    animation: silverLoaderPulse 1.5s infinite;
-
-    box-shadow:
-        0 10px 35px rgba(15, 23, 42, 0.08);
-}
-
-.silver-svs-loader::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -6px;
-
-    border-radius: 50%;
-
-    border: 4px solid transparent;
-
-    border-top-color: #d4af37;
-
-    border-right-color: #e7d18b;
-
-    animation: silverLoaderSpin 0.8s linear infinite;
-}
-
-@keyframes silverLoaderSpin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes silverLoaderPulse {
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-.silver-loading-text {
-    font-size: 17px;
-
-    font-weight: 800;
-
-    color: #475569;
-}
-
-
-/* =========================================================
-   ERROR
-========================================================= */
-
-.silver-error {
-    height: calc(100vh - 72px);
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
-
-    gap: 20px;
-
-    background:
-        radial-gradient(
-            circle at center,
-            #fffdf5,
-            #f8fafc
-        );
-}
-
-.silver-error-logo {
-    width: 80px;
-    height: 80px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff,
-            #f8fafc
-        );
-
-    color: #a47c00;
-
-    border: 1px solid #e2e8f0;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
 
     font-weight: 900;
 
+    background: #ffffff;
+
+    border:
+        1px solid rgba(212, 175, 55, 0.3);
+
     box-shadow:
-        0 10px 30px rgba(15, 23, 42, 0.08);
+        0 15px 40px rgba(15, 23, 42, 0.08);
+
+    animation:
+        silverErrorFloat 3s ease-in-out infinite;
+}
+
+.silver-error-text {
+    color: #64748b;
+
+    font-size: 14px;
+
+    font-weight: 700;
 }
 
 .silver-retry {
-    border: 1px solid rgba(212, 175, 55, 0.35);
+    border:
+        1px solid rgba(212, 175, 55, 0.35);
 
     padding: 12px 30px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
     background:
         linear-gradient(
@@ -896,14 +1871,46 @@
 
     cursor: pointer;
 
-    transition: 0.25s ease;
+    transition: 0.3s ease;
 }
 
 .silver-retry:hover {
-    transform: translateY(-2px);
+    transform:
+        translateY(-3px)
+        scale(1.04);
 
     box-shadow:
-        0 8px 20px rgba(212, 175, 55, 0.15);
+        0 12px 25px rgba(212, 175, 55, 0.15);
+}
+
+@keyframes silverErrorFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+
+/* =========================================================
+   BACKGROUND ANIMATION
+========================================================= */
+
+@keyframes silverBackgroundMove {
+    0% {
+        background-position: 0% 30%;
+    }
+
+    50% {
+        background-position: 100% 70%;
+    }
+
+    100% {
+        background-position: 0% 30%;
+    }
 }
 
 
@@ -922,12 +1929,20 @@
     }
 
     .silver-title-button {
-        min-width: 115px;
+        min-width: 125px;
+
         height: 52px;
 
-        padding: 0 15px;
+        padding: 0 14px;
 
         font-size: 14px;
+
+        gap: 7px;
+    }
+
+    .silver-title-icon,
+    .silver-title-sparkle {
+        font-size: 11px;
     }
 
     .silver-image-box {
@@ -940,6 +1955,8 @@
         height: 82px;
 
         padding: 0 15px;
+
+        border-radius: 18px;
     }
 
     .silver-input-box input {
@@ -950,29 +1967,104 @@
         font-size: 13px;
     }
 
+    .silver-enter-hint {
+        right: 12px;
+        bottom: 7px;
+
+        font-size: 7px;
+    }
+
     .silver-result {
         gap: 9px;
+
         margin-top: 15px;
     }
 
     .silver-result-card {
-        min-height: 115px;
+        min-height: 120px;
 
         padding: 14px;
 
-        border-radius: 14px;
+        border-radius: 15px;
     }
 
     .silver-result-card span {
-        font-size: 10px;
+        font-size: 9px;
+
+        letter-spacing: 0.3px;
     }
 
     .silver-result-card strong {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .silver-result-card small {
-        font-size: 13px;
+        font-size: 12px;
+    }
+
+    .silver-card-icon {
+        width: 27px;
+        height: 27px;
+
+        top: 10px;
+        right: 10px;
+
+        font-size: 11px;
+    }
+
+    .silver-percentage {
+        top: 45px;
+        right: 10px;
+
+        padding: 3px 6px;
+
+        font-size: 9px;
+    }
+
+    .silver-current-rate {
+        bottom: 6px;
+
+        gap: 7px;
+
+        font-size: 9px;
+    }
+
+    .silver-current-rate strong {
+        font-size: 12px;
+    }
+
+    .silver-current-rate small {
+        font-size: 9px;
+    }
+
+    .silver-live {
+        font-size: 7px;
+    }
+
+    .silver-aurora-one {
+        width: 300px;
+        height: 180px;
+    }
+
+    .silver-aurora-two {
+        width: 280px;
+        height: 200px;
+    }
+
+    .silver-ring-one {
+        width: 300px;
+        height: 300px;
+
+        right: -160px;
+        top: -150px;
+    }
+
+    .silver-ring-two {
+        width: 400px;
+        height: 400px;
+
+        left: -230px;
+        bottom: -260px;
     }
 }
 
@@ -983,14 +2075,11 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-    .silver-page,
-    .silver-page::before,
-    .silver-page::after,
-    .silver-title-button,
-    .silver-image-box,
-    .silver-input-box::before,
-    .silver-page .silver-input-area::before,
-    .silver-svs-loader {
-        animation: none;
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
     }
 }
