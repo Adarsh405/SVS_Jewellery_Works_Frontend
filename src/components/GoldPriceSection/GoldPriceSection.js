@@ -1,7 +1,8 @@
-import {Component} from 'react'
+import { Component } from 'react'
 import './GoldPriceSection.css'
 
-const API_URL = 'https://svs-jewellery-works-backend.onrender.com/api/rates'
+const API_URL =
+    'https://svs-jewellery-works-backend.onrender.com/api/rates'
 
 class GoldPriceSection extends Component {
     state = {
@@ -11,6 +12,7 @@ class GoldPriceSection extends Component {
         goldRate: 0,
         hallmarkRate: 0,
 
+        // Hallmark is default
         selectedRate: 'hallmark',
 
         weight: '',
@@ -23,24 +25,42 @@ class GoldPriceSection extends Component {
 
     componentDidMount() {
         this.fetchRates()
-        document.addEventListener('click', this.handlePageClick)
+
+        document.addEventListener(
+            'click',
+            this.handlePageClick
+        )
     }
 
     componentWillUnmount() {
-        document.removeEventListener('click', this.handlePageClick)
+        document.removeEventListener(
+            'click',
+            this.handlePageClick
+        )
     }
+
+    /* =====================================================
+       FETCH RATES
+    ===================================================== */
 
     fetchRates = async () => {
         try {
             const response = await fetch(API_URL)
+
             const data = await response.json()
 
             if (data.success) {
                 this.setState({
                     loading: false,
                     apiSuccess: true,
-                    goldRate: Number(data.data.gold_rate),
-                    hallmarkRate: Number(data.data.hallmark_rate),
+
+                    goldRate: Number(
+                        data.data.gold_rate
+                    ),
+
+                    hallmarkRate: Number(
+                        data.data.hallmark_rate
+                    ),
                 })
             } else {
                 this.setState({
@@ -49,7 +69,10 @@ class GoldPriceSection extends Component {
                 })
             }
         } catch (error) {
-            console.error(error)
+            console.error(
+                'Error fetching gold rates:',
+                error
+            )
 
             this.setState({
                 loading: false,
@@ -57,6 +80,10 @@ class GoldPriceSection extends Component {
             })
         }
     }
+
+    /* =====================================================
+       PAGE CLICK
+    ===================================================== */
 
     handlePageClick = () => {
         this.setState({
@@ -70,9 +97,14 @@ class GoldPriceSection extends Component {
         }, 0)
     }
 
+    /* =====================================================
+       INPUT CHANGE
+    ===================================================== */
+
     handleInputChange = event => {
         const value = event.target.value
 
+        // Allow only numbers and decimal
         if (/^\d*\.?\d*$/.test(value)) {
             this.setState({
                 weight: value,
@@ -81,12 +113,21 @@ class GoldPriceSection extends Component {
         }
     }
 
+    /* =====================================================
+       INPUT KEY DOWN
+    ===================================================== */
+
     handleInputKeyDown = event => {
         if (event.key === 'Enter') {
             event.preventDefault()
+
             this.calculatePrice()
         }
     }
+
+    /* =====================================================
+       INPUT BLUR
+    ===================================================== */
 
     handleInputBlur = () => {
         this.setState({
@@ -94,11 +135,17 @@ class GoldPriceSection extends Component {
         })
     }
 
+    /* =====================================================
+       CHANGE RATE
+    ===================================================== */
+
     handleRateChange = rate => {
         this.setState(
             {
                 selectedRate: rate,
+
                 result: null,
+
                 isFocused: true,
             },
             () => {
@@ -108,6 +155,10 @@ class GoldPriceSection extends Component {
             }
         )
     }
+
+    /* =====================================================
+       CALCULATE PRICE
+    ===================================================== */
 
     calculatePrice = () => {
         const {
@@ -119,13 +170,20 @@ class GoldPriceSection extends Component {
 
         const enteredWeight = Number(weight)
 
-        if (!enteredWeight || enteredWeight <= 0) {
+        if (
+            !enteredWeight ||
+            enteredWeight <= 0
+        ) {
             if (this.inputRef) {
                 this.inputRef.focus()
             }
 
             return
         }
+
+        /* ================================================
+           MAKING COST
+        ================================================ */
 
         let makingCost = 0
 
@@ -137,24 +195,44 @@ class GoldPriceSection extends Component {
             makingCost = 3000
         }
 
+        /* ================================================
+           CURRENT RATE
+        ================================================ */
+
         const currentRate =
             selectedRate === 'hallmark'
                 ? hallmarkRate
                 : goldRate
 
-        const goldValue = enteredWeight * currentRate
+        /* ================================================
+           GOLD VALUE
+        ================================================ */
 
-        const finalPrice = goldValue + makingCost
+        const goldValue =
+            enteredWeight * currentRate
+
+        /* ================================================
+           FINAL PRICE
+        ================================================ */
+
+        const finalPrice =
+            goldValue + makingCost
 
         this.setState(
             {
                 result: {
                     weight: enteredWeight,
+
                     makingCost,
+
                     currentRate,
+
+                    goldValue,
+
                     price: finalPrice,
                 },
 
+                // Clear input after calculation
                 weight: '',
 
                 isFocused: true,
@@ -167,11 +245,52 @@ class GoldPriceSection extends Component {
         )
     }
 
+    /* =====================================================
+       FORMAT NUMBER
+    ===================================================== */
+
     formatNumber = number => {
-        return Number(number).toLocaleString('en-IN', {
-            maximumFractionDigits: 2,
-        })
+        return Number(number).toLocaleString(
+            'en-IN',
+            {
+                maximumFractionDigits: 2,
+            }
+        )
     }
+
+    /* =====================================================
+       GET IMAGE
+    ===================================================== */
+
+    getJewelleryImage = () => {
+        const {
+            selectedRate,
+        } = this.state
+
+        if (selectedRate === 'hallmark') {
+            return 'https://i.pinimg.com/originals/9a/ca/37/9aca37e75a774508218415133dd98f07.jpg'
+        }
+
+        return 'https://i.pinimg.com/originals/6c/4e/83/6c4e83d3e48bdeaf4b3dff9f0a0d8b45.jpg'
+    }
+
+    /* =====================================================
+       GET IMAGE ALT
+    ===================================================== */
+
+    getImageAlt = () => {
+        const {
+            selectedRate,
+        } = this.state
+
+        return selectedRate === 'hallmark'
+            ? 'Hallmark Gold Jewellery'
+            : 'KDM Gold Jewellery'
+    }
+
+    /* =====================================================
+       LOADING
+    ===================================================== */
 
     renderLoading() {
         return (
@@ -187,11 +306,19 @@ class GoldPriceSection extends Component {
         )
     }
 
+    /* =====================================================
+       ERROR
+    ===================================================== */
+
     renderError() {
         return (
             <div className="gold-error">
                 <div className="gold-error-logo">
                     SVS
+                </div>
+
+                <div>
+                    Unable to load gold rates
                 </div>
 
                 <button
@@ -204,46 +331,100 @@ class GoldPriceSection extends Component {
         )
     }
 
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
     render() {
         const {
             loading,
             apiSuccess,
+
             selectedRate,
+
             weight,
+
             result,
+
             isFocused,
+
             hallmarkRate,
+
             goldRate,
         } = this.state
+
+        /* =================================================
+           LOADING
+        ================================================= */
 
         if (loading) {
             return this.renderLoading()
         }
 
+        /* =================================================
+           ERROR
+        ================================================= */
+
         if (!apiSuccess) {
             return this.renderError()
         }
 
+        /* =================================================
+           CURRENT RATE
+        ================================================= */
+
+        const currentRate =
+            selectedRate === 'hallmark'
+                ? hallmarkRate
+                : goldRate
+
+        /* =================================================
+           MAIN PAGE
+        ================================================= */
+
         return (
             <div
-                className={
-                    isFocused
-                        ? 'gold-page gold-focused'
-                        : 'gold-page gold-unfocused'
-                }
+                className={`
+                    gold-page
+                    ${
+                        isFocused
+                            ? 'gold-focused'
+                            : 'gold-unfocused'
+                    }
+                    ${
+                        selectedRate === 'kdm'
+                            ? 'kdm-theme'
+                            : ''
+                    }
+                `}
             >
-                {/* TOP */}
+                {/* =================================================
+                   TOP SECTION
+                ================================================= */}
 
                 <div className="gold-top">
 
+                    {/* =============================================
+                       RATE BUTTONS
+                    ============================================= */}
+
                     <div className="gold-rate-buttons">
 
+                        {/* =========================================
+                           HALLMARK
+                        ========================================= */}
+
                         <button
-                            className={
-                                selectedRate === 'hallmark'
-                                    ? 'gold-rate-button active'
-                                    : 'gold-rate-button'
-                            }
+                            type="button"
+                            className={`
+                                gold-rate-button
+                                ${
+                                    selectedRate ===
+                                    'hallmark'
+                                        ? 'active'
+                                        : ''
+                                }
+                            `}
                             onClick={() =>
                                 this.handleRateChange(
                                     'hallmark'
@@ -253,14 +434,24 @@ class GoldPriceSection extends Component {
                             Hallmark
                         </button>
 
+                        {/* =========================================
+                           KDM
+                        ========================================= */}
+
                         <button
-                            className={
-                                selectedRate === 'kdm'
-                                    ? 'gold-rate-button active'
-                                    : 'gold-rate-button'
-                            }
+                            type="button"
+                            className={`
+                                gold-rate-button
+                                ${
+                                    selectedRate === 'kdm'
+                                        ? 'active'
+                                        : ''
+                                }
+                            `}
                             onClick={() =>
-                                this.handleRateChange('kdm')
+                                this.handleRateChange(
+                                    'kdm'
+                                )
                             }
                         >
                             KDM
@@ -268,18 +459,25 @@ class GoldPriceSection extends Component {
 
                     </div>
 
+                    {/* =============================================
+                       JEWELLERY IMAGE
+                    ============================================= */}
+
                     <div className="gold-image-box">
 
                         <img
-                            src="https://i.pinimg.com/originals/9a/ca/37/9aca37e75a774508218415133dd98f07.jpg"
-                            alt="Gold Necklace"
+                            key={selectedRate}
+                            src={this.getJewelleryImage()}
+                            alt={this.getImageAlt()}
                         />
 
                     </div>
 
                 </div>
 
-                {/* INPUT */}
+                {/* =================================================
+                   INPUT
+                ================================================= */}
 
                 <div className="gold-input-area">
 
@@ -287,7 +485,8 @@ class GoldPriceSection extends Component {
 
                         <input
                             ref={element =>
-                                (this.inputRef = element)
+                                (this.inputRef =
+                                    element)
                             }
                             autoFocus
                             type="text"
@@ -295,44 +494,65 @@ class GoldPriceSection extends Component {
                             value={weight}
                             placeholder="Enter Weight"
                             onChange={
-                                this.handleInputChange
+                                this
+                                    .handleInputChange
                             }
                             onKeyDown={
-                                this.handleInputKeyDown
+                                this
+                                    .handleInputKeyDown
                             }
                             onBlur={
                                 this.handleInputBlur
                             }
                         />
 
-                        <span>grams</span>
+                        <span>
+                            grams
+                        </span>
 
                     </div>
 
                 </div>
 
-                {/* RESULT */}
+                {/* =================================================
+                   RESULT
+                ================================================= */}
 
                 {result && (
                     <div className="gold-result">
 
+                        {/* =========================================
+                           WEIGHT
+                        ========================================= */}
+
                         <div className="gold-result-card">
 
-                            <span>WEIGHT</span>
+                            <span>
+                                WEIGHT
+                            </span>
 
                             <strong>
                                 {this.formatNumber(
                                     result.weight
                                 )}
 
-                                <small> g</small>
+                                <small>
+                                    {' '}
+                                    g
+                                </small>
                             </strong>
 
                         </div>
 
+                        {/* =========================================
+                           MAKING COST
+                        ========================================= */}
+
                         <div className="gold-result-card">
 
-                            <span>MAKING COST</span>
+                            <span>
+                                MAKING COST
+                            </span>
 
                             <strong>
                                 ₹
@@ -343,9 +563,20 @@ class GoldPriceSection extends Component {
 
                         </div>
 
-                        <div className="gold-result-card gold-price-card">
+                        {/* =========================================
+                           FINAL PRICE
+                        ========================================= */}
 
-                            <span>PRICE</span>
+                        <div
+                            className="
+                                gold-result-card
+                                gold-price-card
+                            "
+                        >
+
+                            <span>
+                                PRICE
+                            </span>
 
                             <strong>
                                 ₹
@@ -359,7 +590,9 @@ class GoldPriceSection extends Component {
                     </div>
                 )}
 
-                {/* CURRENT RATE */}
+                {/* =================================================
+                   CURRENT RATE
+                ================================================= */}
 
                 <div className="gold-current-rate">
 
@@ -370,12 +603,12 @@ class GoldPriceSection extends Component {
                     <strong>
                         ₹
                         {this.formatNumber(
-                            selectedRate === 'hallmark'
-                                ? hallmarkRate
-                                : goldRate
+                            currentRate
                         )}
 
-                        <small>/ gram</small>
+                        <small>
+                            / gram
+                        </small>
                     </strong>
 
                 </div>

@@ -1,8 +1,27 @@
+/* =========================================================
+   GOLD PRICE SECTION
+========================================================= */
+
 * {
     box-sizing: border-box;
 }
 
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
 .gold-page {
+    --primary: #d97706;
+    --secondary: #f59e0b;
+    --accent: #fbbf24;
+    --light: #fff7ed;
+    --border: #fed7aa;
+    --text: #78350f;
+    --soft: #fffbeb;
+
+    position: relative;
+    isolation: isolate;
+
     height: calc(100vh - 72px);
     width: 100vw;
 
@@ -12,94 +31,438 @@
 
     background:
         radial-gradient(
-            circle at 85% 15%,
-            rgba(245, 158, 11, 0.12),
-            transparent 25%
+            circle at 10% 10%,
+            rgba(251, 191, 36, 0.20),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(245, 158, 11, 0.20),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(253, 186, 116, 0.18),
+            transparent 35%
         ),
         linear-gradient(
             135deg,
-            #ffffff,
-            #f8fafc,
-            #f1f5f9
+            #fffdf8,
+            #fff7ed,
+            #fffaf0
         );
 
-    transition: filter 0.3s ease;
+    background-size: 100% 100%;
+
+    transition:
+        background 0.8s ease,
+        filter 0.3s ease;
 }
 
+/* =========================================================
+   KDM COMPLETE THEME
+========================================================= */
+
+.gold-page.kdm-theme {
+    --primary: #9333ea;
+    --secondary: #ec4899;
+    --accent: #c084fc;
+    --light: #faf5ff;
+    --border: #e9d5ff;
+    --text: #581c87;
+    --soft: #fdf4ff;
+
+    background:
+        radial-gradient(
+            circle at 10% 15%,
+            rgba(168, 85, 247, 0.22),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(236, 72, 153, 0.20),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(192, 132, 252, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #fffaff,
+            #faf5ff,
+            #fdf2f8
+        );
+}
+
+/* =========================================================
+   ANIMATED BACKGROUND LIGHTS
+========================================================= */
+
+.gold-page::before,
+.gold-page::after {
+    content: "";
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    filter: blur(30px);
+
+    opacity: 0.35;
+
+    animation:
+        floatingGlow 7s ease-in-out infinite alternate;
+}
+
+.gold-page::before {
+    top: -100px;
+    left: 30%;
+
+    background: var(--accent);
+}
+
+.gold-page::after {
+    right: -100px;
+    bottom: -100px;
+
+    background: var(--secondary);
+
+    animation-delay: 2s;
+}
+
+@keyframes floatingGlow {
+    0% {
+        transform: translate(0, 0) scale(0.9);
+    }
+
+    50% {
+        transform: translate(40px, 30px) scale(1.1);
+    }
+
+    100% {
+        transform: translate(-20px, 50px) scale(0.95);
+    }
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
 .gold-unfocused {
-    filter: brightness(0.55);
+    filter: brightness(0.72);
 }
 
 .gold-focused {
     filter: brightness(1);
 }
 
-
-/* TOP */
+/* =========================================================
+   TOP SECTION
+========================================================= */
 
 .gold-top {
+    position: relative;
+
     width: 100%;
     height: 125px;
 
     display: flex;
+
     justify-content: space-between;
     align-items: flex-start;
+
+    z-index: 5;
 }
+
+/* =========================================================
+   RATE BUTTONS
+========================================================= */
 
 .gold-rate-buttons {
+    width: 100%;
+
     display: flex;
-    gap: 12px;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    gap: 20px;
 }
 
+/* =========================================================
+   RATE BUTTON
+========================================================= */
+
 .gold-rate-button {
-    height: 60px;
-    min-width: 170px;
+    position: relative;
 
-    border: none;
-    border-radius: 14px;
+    height: 65px;
 
-    background: #334155;
+    width: 190px;
+
+    border: 2px solid transparent;
+
+    border-radius: 18px;
+
     color: white;
 
     font-size: 18px;
-    font-weight: 800;
+
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
 
     cursor: pointer;
 
-    transition: 0.2s ease;
-}
+    overflow: hidden;
 
-.gold-rate-button:hover {
-    transform: translateY(-3px);
-    background: #1f2937;
-}
-
-.gold-rate-button.active {
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #f97316
+        );
 
     box-shadow:
-        0 10px 25px rgba(15, 23, 42, 0.2);
+        0 10px 25px rgba(245, 158, 11, 0.25);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        background 0.6s ease,
+        border 0.4s ease;
 }
 
+/* Shine */
 
-/* IMAGE */
+.gold-rate-button::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            100deg,
+            transparent,
+            rgba(255,255,255,0.5),
+            transparent
+        );
+
+    transform: skewX(-25deg);
+
+    transition: left 0.7s ease;
+}
+
+.gold-rate-button:hover::before {
+    left: 140%;
+}
+
+/* Glow */
+
+.gold-rate-button::after {
+    content: "";
+
+    position: absolute;
+
+    inset: -3px;
+
+    border-radius: 20px;
+
+    border: 2px solid rgba(255,255,255,0.25);
+
+    opacity: 0;
+
+    animation: buttonGlow 2s infinite;
+}
+
+@keyframes buttonGlow {
+    0%,
+    100% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.02);
+    }
+}
+
+/* =========================================================
+   HALLMARK BUTTON
+========================================================= */
+
+.gold-rate-button:first-child {
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #f97316,
+            #fbbf24
+        );
+
+    box-shadow:
+        0 12px 30px rgba(245, 158, 11, 0.35);
+}
+
+/* =========================================================
+   KDM BUTTON
+========================================================= */
+
+.gold-rate-button:last-child {
+    background:
+        linear-gradient(
+            135deg,
+            #8b5cf6,
+            #ec4899,
+            #c084fc
+        );
+
+    box-shadow:
+        0 12px 30px rgba(168, 85, 247, 0.30);
+}
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.gold-rate-button:hover {
+    transform:
+        translateY(-6px)
+        scale(1.03);
+}
+
+/* =========================================================
+   ACTIVE HALLMARK
+========================================================= */
+
+.gold-rate-button:first-child.active {
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #ea580c,
+            #fbbf24
+        );
+
+    border-color: #fde68a;
+
+    box-shadow:
+        0 16px 40px rgba(245, 158, 11, 0.45),
+        0 0 35px rgba(251, 191, 36, 0.25);
+
+    animation:
+        hallmarkPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes hallmarkPulse {
+    0%,
+    100% {
+        box-shadow:
+            0 16px 40px rgba(245, 158, 11, 0.40);
+    }
+
+    50% {
+        box-shadow:
+            0 18px 45px rgba(245, 158, 11, 0.55),
+            0 0 30px rgba(251, 191, 36, 0.35);
+    }
+}
+
+/* =========================================================
+   ACTIVE KDM
+========================================================= */
+
+.gold-page.kdm-theme
+.gold-rate-button:last-child.active {
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #db2777,
+            #a855f7
+        );
+
+    border-color: #f0abfc;
+
+    box-shadow:
+        0 16px 40px rgba(168, 85, 247, 0.45),
+        0 0 35px rgba(236, 72, 153, 0.25);
+
+    animation:
+        kdmPulse 2.2s ease-in-out infinite;
+}
+
+@keyframes kdmPulse {
+    0%,
+    100% {
+        box-shadow:
+            0 16px 40px rgba(168, 85, 247, 0.40);
+    }
+
+    50% {
+        box-shadow:
+            0 18px 45px rgba(168, 85, 247, 0.55),
+            0 0 30px rgba(236, 72, 153, 0.35);
+    }
+}
+
+/* =========================================================
+   IMAGE
+========================================================= */
 
 .gold-image-box {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
     width: 190px;
     height: 115px;
 
     overflow: hidden;
 
-    border-radius: 18px;
+    border-radius: 20px;
 
     background: white;
 
-    border: 1px solid #e2e8f0;
+    border: 3px solid var(--border);
 
     box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.12);
+        0 15px 35px rgba(120, 53, 15, 0.15);
 
-    animation: goldImageIn 0.4s ease;
+    animation:
+        goldImageIn 0.7s ease,
+        imageFloat 4s ease-in-out infinite;
+
+    transition:
+        border 0.6s ease,
+        box-shadow 0.6s ease,
+        transform 0.5s ease;
+}
+
+.gold-image-box:hover {
+    transform:
+        scale(1.05)
+        rotate(1deg);
+
+    box-shadow:
+        0 20px 45px rgba(245, 158, 11, 0.25);
 }
 
 .gold-image-box img {
@@ -107,64 +470,163 @@
     height: 100%;
 
     object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform 0.8s ease,
+        filter 0.6s ease;
+}
+
+.gold-image-box:hover img {
+    transform: scale(1.12);
+}
+
+@keyframes imageFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-7px);
+    }
 }
 
 @keyframes goldImageIn {
     from {
         opacity: 0;
-        transform: scale(0.94);
+        transform:
+            scale(0.8)
+            translateX(30px);
     }
 
     to {
         opacity: 1;
-        transform: scale(1);
+        transform:
+            scale(1)
+            translateX(0);
     }
 }
 
-
-/* INPUT */
+/* =========================================================
+   INPUT AREA
+========================================================= */
 
 .gold-input-area {
+    position: relative;
+
     width: 100%;
 
     display: flex;
+
     justify-content: center;
+
+    z-index: 3;
 }
 
+/* =========================================================
+   INPUT BOX
+========================================================= */
+
 .gold-input-box {
+    position: relative;
+
     width: min(620px, 70vw);
+
     height: 100px;
 
     display: flex;
+
     align-items: center;
 
     padding: 0 28px;
 
-    background: white;
+    background:
+        rgba(255,255,255,0.88);
 
-    border: 3px solid #cbd5e1;
+    backdrop-filter: blur(15px);
 
-    border-radius: 22px;
+    border:
+        3px solid var(--border);
+
+    border-radius: 24px;
 
     box-shadow:
-        0 15px 35px rgba(15, 23, 42, 0.08);
+        0 15px 35px rgba(120, 53, 15, 0.08);
 
-    transition: 0.25s ease;
+    transition:
+        border 0.5s ease,
+        transform 0.35s ease,
+        box-shadow 0.5s ease;
+}
+
+.gold-input-box::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -3px;
+
+    border-radius: 25px;
+
+    padding: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            var(--accent),
+            var(--secondary),
+            var(--primary)
+        );
+
+    background-size: 300% 100%;
+
+    animation:
+        borderFlow 4s linear infinite;
+
+    z-index: -1;
+
+    opacity: 0;
+
+    transition: opacity 0.4s ease;
+}
+
+.gold-input-box:focus-within::before {
+    opacity: 1;
+}
+
+@keyframes borderFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 300% 50%;
+    }
 }
 
 .gold-input-box:focus-within {
-    border-color: #111827;
+    border-color: transparent;
 
-    transform: translateY(-2px);
+    transform:
+        translateY(-5px)
+        scale(1.015);
 
     box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.15);
+        0 20px 50px rgba(245, 158, 11, 0.18);
 }
+
+/* =========================================================
+   INPUT
+========================================================= */
 
 .gold-input-box input {
     width: 100%;
 
     border: none;
+
     outline: none;
 
     background: transparent;
@@ -172,24 +634,55 @@
     text-align: center;
 
     font-size: 46px;
+
     font-weight: 900;
 
-    color: #111827;
+    color: var(--text);
+
+    transition:
+        color 0.5s ease,
+        transform 0.3s ease;
+}
+
+.gold-input-box input:focus {
+    transform: scale(1.02);
 }
 
 .gold-input-box input::placeholder {
-    color: #cbd5e1;
+    color: #d6d3d1;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.gold-input-box input:focus::placeholder {
+    opacity: 0.3;
+
+    transform: translateX(10px);
 }
 
 .gold-input-box span {
-    color: #64748b;
+    color: var(--primary);
 
     font-size: 19px;
-    font-weight: 800;
+
+    font-weight: 900;
+
+    transition:
+        color 0.5s ease,
+        transform 0.3s ease;
 }
 
+.gold-input-box:focus-within span {
+    transform:
+        translateX(3px)
+        scale(1.05);
+}
 
-/* RESULT */
+/* =========================================================
+   RESULT
+========================================================= */
 
 .gold-result {
     width: 100%;
@@ -203,28 +696,46 @@
 
     margin-top: 25px;
 
-    animation: goldResultIn 0.4s ease;
+    animation:
+        goldResultIn 0.6s cubic-bezier(.17,.67,.35,1.3);
+
+    position: relative;
+
+    z-index: 2;
 }
 
 .gold-result-card {
     min-height: 155px;
 
-    background: white;
+    background:
+        rgba(255,255,255,0.90);
 
-    border: 1px solid #e2e8f0;
+    backdrop-filter: blur(12px);
+
+    border:
+        2px solid var(--border);
 
     border-radius: 20px;
 
     padding: 22px;
 
     display: flex;
+
     flex-direction: column;
+
     justify-content: center;
 
     box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.07);
+        0 12px 30px rgba(120, 53, 15, 0.08);
 
     position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease,
+        border 0.5s ease;
 }
 
 .gold-result-card::before {
@@ -236,71 +747,211 @@
     top: 0;
     bottom: 0;
 
-    width: 5px;
+    width: 6px;
 
-    background: #334155;
+    background:
+        linear-gradient(
+            180deg,
+            var(--primary),
+            var(--accent)
+        );
 
-    border-radius: 20px 0 0 20px;
+    border-radius:
+        20px 0 0 20px;
+
+    transition:
+        width 0.35s ease;
+}
+
+.gold-result-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+
+    right: -45px;
+    top: -45px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    opacity: 0.10;
+
+    transition:
+        transform 0.5s ease;
+}
+
+.gold-result-card:hover {
+    transform:
+        translateY(-8px)
+        scale(1.02);
+
+    box-shadow:
+        0 20px 45px rgba(120, 53, 15, 0.14);
+}
+
+.gold-result-card:hover::before {
+    width: 10px;
+}
+
+.gold-result-card:hover::after {
+    transform: scale(2.5);
 }
 
 .gold-result-card span {
-    color: #64748b;
+    color: var(--primary);
 
     font-size: 14px;
 
     font-weight: 900;
 
-    letter-spacing: 0.7px;
+    letter-spacing: 1px;
 
     margin-bottom: 10px;
 }
 
 .gold-result-card strong {
-    color: #111827;
+    color: var(--text);
 
-    font-size: clamp(30px, 3vw, 44px);
+    font-size:
+        clamp(30px, 3vw, 44px);
 
     font-weight: 900;
+
+    transition:
+        color 0.5s ease,
+        transform 0.3s ease;
+}
+
+.gold-result-card:hover strong {
+    transform: scale(1.04);
 }
 
 .gold-result-card small {
     font-size: 18px;
-    color: #64748b;
+
+    color: var(--primary);
 }
+
+/* =========================================================
+   PRICE CARD
+========================================================= */
 
 .gold-price-card {
     background:
         linear-gradient(
             135deg,
             #fff7ed,
-            #ffffff
+            #ffffff,
+            #fffbeb
         );
 
-    border-color: #fed7aa;
+    border-color:
+        #fbbf24;
 }
 
 .gold-price-card::before {
-    background: #f59e0b;
+    background:
+        linear-gradient(
+            180deg,
+            #f59e0b,
+            #fbbf24
+        );
 }
 
 .gold-price-card strong {
-    color: #9a3412;
+    color: #b45309;
 }
+
+/* =========================================================
+   KDM RESULT THEME
+========================================================= */
+
+.gold-page.kdm-theme
+.gold-result-card {
+    border-color: #e9d5ff;
+
+    box-shadow:
+        0 12px 30px rgba(126, 34, 206, 0.08);
+}
+
+.gold-page.kdm-theme
+.gold-result-card::before {
+    background:
+        linear-gradient(
+            180deg,
+            #9333ea,
+            #ec4899
+        );
+}
+
+.gold-page.kdm-theme
+.gold-result-card span {
+    color: #9333ea;
+}
+
+.gold-page.kdm-theme
+.gold-result-card strong {
+    color: #581c87;
+}
+
+.gold-page.kdm-theme
+.gold-result-card small {
+    color: #a855f7;
+}
+
+.gold-page.kdm-theme
+.gold-price-card {
+    background:
+        linear-gradient(
+            135deg,
+            #faf5ff,
+            #ffffff,
+            #fdf2f8
+        );
+
+    border-color: #d8b4fe;
+}
+
+.gold-page.kdm-theme
+.gold-price-card strong {
+    color: #9333ea;
+}
+
+/* =========================================================
+   RESULT ANIMATION
+========================================================= */
 
 @keyframes goldResultIn {
-    from {
+    0% {
         opacity: 0;
-        transform: translateY(15px);
+
+        transform:
+            translateY(30px)
+            scale(0.94);
     }
 
-    to {
+    60% {
+        transform:
+            translateY(-5px)
+            scale(1.02);
+    }
+
+    100% {
         opacity: 1;
-        transform: translateY(0);
+
+        transform:
+            translateY(0)
+            scale(1);
     }
 }
 
-
-/* CURRENT RATE */
+/* =========================================================
+   CURRENT RATE
+========================================================= */
 
 .gold-current-rate {
     position: absolute;
@@ -312,43 +963,102 @@
     display: flex;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 12px;
 
-    color: #64748b;
+    color: var(--primary);
 
     font-size: 12px;
 
-    font-weight: 800;
+    font-weight: 900;
+
+    transition:
+        color 0.5s ease;
+}
+
+.gold-current-rate::before {
+    content: "";
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: var(--secondary);
+
+    box-shadow:
+        0 0 0 0
+        rgba(245, 158, 11, 0.5);
+
+    animation:
+        ratePulse 1.7s infinite;
+}
+
+@keyframes ratePulse {
+    0% {
+        box-shadow:
+            0 0 0 0
+            rgba(245, 158, 11, 0.5);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 9px
+            rgba(245, 158, 11, 0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0
+            rgba(245, 158, 11, 0);
+    }
 }
 
 .gold-current-rate strong {
-    color: #334155;
+    color: var(--text);
 
-    font-size: 15px;
+    font-size: 17px;
+
+    transition:
+        color 0.5s ease,
+        transform 0.3s ease;
+}
+
+.gold-current-rate strong:hover {
+    transform: scale(1.08);
 }
 
 .gold-current-rate small {
     font-size: 11px;
-    color: #94a3b8;
+
+    color: var(--primary);
 }
 
-
-/* LOADING */
+/* =========================================================
+   LOADING
+========================================================= */
 
 .gold-loading {
     height: calc(100vh - 72px);
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 18px;
 
-    background: #f8fafc;
+    background:
+        radial-gradient(
+            circle,
+            #fff7ed,
+            #ffffff
+        );
 }
 
 .gold-svs-loader {
@@ -357,20 +1067,29 @@
 
     border-radius: 50%;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #f97316
+        );
 
     color: white;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-size: 22px;
+
     font-weight: 900;
 
     position: relative;
 
-    animation: loaderPulse 1.5s infinite;
+    animation:
+        loaderPulse 1.5s infinite;
 }
 
 .gold-svs-loader::before {
@@ -378,15 +1097,32 @@
 
     position: absolute;
 
-    inset: -6px;
+    inset: -7px;
 
     border-radius: 50%;
 
     border: 4px solid transparent;
 
-    border-top-color: #f59e0b;
+    border-top-color: #fbbf24;
+    border-right-color: #ec4899;
 
-    animation: loaderSpin 0.8s linear infinite;
+    animation:
+        loaderSpin 0.8s linear infinite;
+}
+
+.gold-svs-loader::after {
+    content: "";
+
+    position: absolute;
+
+    inset: -15px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(245,158,11,0.15);
+
+    animation:
+        loaderOuter 2s linear infinite;
 }
 
 @keyframes loaderSpin {
@@ -395,33 +1131,58 @@
     }
 }
 
+@keyframes loaderOuter {
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
 @keyframes loaderPulse {
     50% {
-        transform: scale(1.05);
+        transform: scale(1.08);
     }
 }
 
 .gold-loading-text {
     font-size: 17px;
+
     font-weight: 800;
-    color: #475569;
+
+    color: #92400e;
+
+    animation:
+        loadingText 1.5s infinite;
 }
 
+@keyframes loadingText {
+    50% {
+        opacity: 0.45;
+    }
+}
 
-/* ERROR */
+/* =========================================================
+   ERROR
+========================================================= */
 
 .gold-error {
     height: calc(100vh - 72px);
 
     display: flex;
+
     flex-direction: column;
 
     justify-content: center;
+
     align-items: center;
 
     gap: 20px;
 
-    background: #f8fafc;
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #fff
+        );
 }
 
 .gold-error-logo {
@@ -430,15 +1191,33 @@
 
     border-radius: 50%;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #ec4899
+        );
 
     color: white;
 
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
     font-weight: 900;
+
+    animation:
+        errorFloat 2s ease-in-out infinite;
+}
+
+@keyframes errorFloat {
+    50% {
+        transform:
+            translateY(-10px)
+            rotate(5deg);
+    }
 }
 
 .gold-retry {
@@ -446,23 +1225,47 @@
 
     padding: 12px 30px;
 
-    border-radius: 10px;
+    border-radius: 12px;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #ec4899
+        );
 
     color: white;
 
-    font-weight: 800;
+    font-weight: 900;
 
     cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(236,72,153,0.20);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
+.gold-retry:hover {
+    transform:
+        translateY(-4px)
+        scale(1.04);
 
-/* MOBILE */
+    box-shadow:
+        0 15px 30px rgba(236,72,153,0.30);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 700px) {
 
     .gold-page {
+        height: calc(100vh - 72px);
+
         padding: 12px;
     }
 
@@ -470,23 +1273,38 @@
         height: 105px;
     }
 
+    .gold-rate-buttons {
+        gap: 8px;
+    }
+
     .gold-rate-button {
-        min-width: 110px;
+        width: 120px;
+
+        min-width: 0;
+
         height: 52px;
 
         font-size: 14px;
+
+        border-radius: 14px;
     }
 
     .gold-image-box {
         width: 110px;
+
         height: 78px;
+
+        border-radius: 15px;
     }
 
     .gold-input-box {
         width: 96%;
+
         height: 82px;
 
         padding: 0 15px;
+
+        border-radius: 18px;
     }
 
     .gold-input-box input {
@@ -499,12 +1317,15 @@
 
     .gold-result {
         gap: 9px;
+
         margin-top: 15px;
     }
 
     .gold-result-card {
         min-height: 115px;
+
         padding: 14px;
+
         border-radius: 14px;
     }
 
@@ -518,5 +1339,56 @@
 
     .gold-result-card small {
         font-size: 13px;
+    }
+
+    .gold-current-rate {
+        bottom: 6px;
+
+        font-size: 10px;
+
+        gap: 7px;
+    }
+
+    .gold-current-rate strong {
+        font-size: 14px;
+    }
+
+    .gold-current-rate small {
+        font-size: 9px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .gold-rate-button {
+        width: 105px;
+
+        height: 48px;
+
+        font-size: 13px;
+    }
+
+    .gold-image-box {
+        width: 95px;
+
+        height: 70px;
+    }
+
+    .gold-input-box input {
+        font-size: 30px;
+    }
+
+    .gold-result-card {
+        min-height: 105px;
+
+        padding: 11px;
+    }
+
+    .gold-result-card strong {
+        font-size: 21px;
     }
 }
