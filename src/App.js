@@ -9,6 +9,7 @@ import RateUpdate from './components/RateUpdate/rateUpdate'
 import Payment from "./components/Payment/Payment";
 import Sales from "./components/Sales/sales.js"
 import Inventory from "./components/Inventory/Inventory"
+import PriceCalculater from "./components/PriceCalculater/PriceCalculater"
 const App = () => {
   return (
     <BrowserRouter>
@@ -43,6 +44,12 @@ const App = () => {
           path="/Inventory"
           element={
               <Inventory />
+          }
+        />
+        <Route
+          path="/priceCalculater"
+          element={
+              <PriceCalculater />
           }
         />
         <Route
