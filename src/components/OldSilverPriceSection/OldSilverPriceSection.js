@@ -1,7 +1,7 @@
 import {Component} from 'react'
 import './OldSilverPriceSection.css'
 
-const API_URL = 'https://svs-jewellery-backend.onrender.com/api/rates'
+const API_URL = 'https://svs-jewellery-works-backend.onrender.com/api/rates'
 
 class OldSilverPriceSection extends Component {
     state = {
