@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import {Component} from 'react'
 import './GoldPriceSection.css'
 
 const API_URL =
@@ -12,7 +12,6 @@ class GoldPriceSection extends Component {
         goldRate: 0,
         hallmarkRate: 0,
 
-        // Hallmark is default
         selectedRate: 'hallmark',
 
         weight: '',
@@ -104,7 +103,6 @@ class GoldPriceSection extends Component {
     handleInputChange = event => {
         const value = event.target.value
 
-        // Allow only numbers and decimal
         if (/^\d*\.?\d*$/.test(value)) {
             this.setState({
                 weight: value,
@@ -143,9 +141,7 @@ class GoldPriceSection extends Component {
         this.setState(
             {
                 selectedRate: rate,
-
                 result: null,
-
                 isFocused: true,
             },
             () => {
@@ -222,17 +218,12 @@ class GoldPriceSection extends Component {
             {
                 result: {
                     weight: enteredWeight,
-
                     makingCost,
-
                     currentRate,
-
                     goldValue,
-
                     price: finalPrice,
                 },
 
-                // Clear input after calculation
                 weight: '',
 
                 isFocused: true,
@@ -259,7 +250,7 @@ class GoldPriceSection extends Component {
     }
 
     /* =====================================================
-       GET IMAGE
+       GET JEWELLERY IMAGE
     ===================================================== */
 
     getJewelleryImage = () => {
@@ -295,6 +286,7 @@ class GoldPriceSection extends Component {
     renderLoading() {
         return (
             <div className="gold-loading">
+
                 <div className="gold-svs-loader">
                     <span>SVS</span>
                 </div>
@@ -302,6 +294,7 @@ class GoldPriceSection extends Component {
                 <div className="gold-loading-text">
                     Loading Rates
                 </div>
+
             </div>
         )
     }
@@ -313,12 +306,17 @@ class GoldPriceSection extends Component {
     renderError() {
         return (
             <div className="gold-error">
+
                 <div className="gold-error-logo">
                     SVS
                 </div>
 
-                <div>
+                <div className="gold-error-title">
                     Unable to load gold rates
+                </div>
+
+                <div className="gold-error-subtitle">
+                    Please check your internet connection
                 </div>
 
                 <button
@@ -327,6 +325,7 @@ class GoldPriceSection extends Component {
                 >
                     Retry
                 </button>
+
             </div>
         )
     }
@@ -339,17 +338,11 @@ class GoldPriceSection extends Component {
         const {
             loading,
             apiSuccess,
-
             selectedRate,
-
             weight,
-
             result,
-
             isFocused,
-
             hallmarkRate,
-
             goldRate,
         } = this.state
 
@@ -398,6 +391,14 @@ class GoldPriceSection extends Component {
                     }
                 `}
             >
+
+                {/* =================================================
+                   DECORATIVE SHOWROOM ELEMENTS
+                ================================================= */}
+
+                <div className="showroom-orb showroom-orb-one" />
+                <div className="showroom-orb showroom-orb-two" />
+
                 {/* =================================================
                    TOP SECTION
                 ================================================= */}
@@ -410,14 +411,11 @@ class GoldPriceSection extends Component {
 
                     <div className="gold-rate-buttons">
 
-                        {/* =========================================
-                           HALLMARK
-                        ========================================= */}
-
                         <button
                             type="button"
                             className={`
                                 gold-rate-button
+                                hallmark-button
                                 ${
                                     selectedRate ===
                                     'hallmark'
@@ -431,17 +429,20 @@ class GoldPriceSection extends Component {
                                 )
                             }
                         >
-                            Hallmark
-                        </button>
+                            <span className="button-icon">
+                                ✦
+                            </span>
 
-                        {/* =========================================
-                           KDM
-                        ========================================= */}
+                            <span>
+                                Hallmark
+                            </span>
+                        </button>
 
                         <button
                             type="button"
                             className={`
                                 gold-rate-button
+                                kdm-button
                                 ${
                                     selectedRate === 'kdm'
                                         ? 'active'
@@ -454,34 +455,78 @@ class GoldPriceSection extends Component {
                                 )
                             }
                         >
-                            KDM
+                            <span className="button-icon">
+                                ◆
+                            </span>
+
+                            <span>
+                                KDM
+                            </span>
                         </button>
 
                     </div>
 
                     {/* =============================================
-                       JEWELLERY IMAGE
+                       PREMIUM JEWELLERY SHOWROOM IMAGE
                     ============================================= */}
 
-                    <div className="gold-image-box">
+                    <div className="gold-image-wrapper">
 
-                        <img
-                            key={selectedRate}
-                            src={this.getJewelleryImage()}
-                            alt={this.getImageAlt()}
-                        />
+                        <div className="image-label">
+                            <span className="image-label-dot" />
+
+                            PREMIUM
+                        </div>
+
+                        <div
+                            className="
+                                gold-image-box
+                            "
+                        >
+
+                            <img
+                                key={selectedRate}
+                                src={
+                                    this.getJewelleryImage()
+                                }
+                                alt={
+                                    this.getImageAlt()
+                                }
+                            />
+
+                            <div className="image-overlay">
+                                <span>
+                                    SVS JEWELLERY
+                                </span>
+                            </div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
                 {/* =================================================
-                   INPUT
+                   INPUT AREA
                 ================================================= */}
 
                 <div className="gold-input-area">
 
+                    <div className="input-heading">
+                        <span className="input-heading-line" />
+
+                        <span>
+                            ENTER JEWELLERY WEIGHT
+                        </span>
+
+                        <span className="input-heading-line" />
+                    </div>
+
                     <div className="gold-input-box">
+
+                        <div className="input-side-icon">
+                            ◆
+                        </div>
 
                         <input
                             ref={element =>
@@ -494,22 +539,24 @@ class GoldPriceSection extends Component {
                             value={weight}
                             placeholder="Enter Weight"
                             onChange={
-                                this
-                                    .handleInputChange
+                                this.handleInputChange
                             }
                             onKeyDown={
-                                this
-                                    .handleInputKeyDown
+                                this.handleInputKeyDown
                             }
                             onBlur={
                                 this.handleInputBlur
                             }
                         />
 
-                        <span>
+                        <span className="input-unit">
                             grams
                         </span>
 
+                    </div>
+
+                    <div className="input-hint">
+                        Press <strong>ENTER</strong> to calculate
                     </div>
 
                 </div>
@@ -521,11 +568,13 @@ class GoldPriceSection extends Component {
                 {result && (
                     <div className="gold-result">
 
-                        {/* =========================================
-                           WEIGHT
-                        ========================================= */}
+                        {/* WEIGHT */}
 
                         <div className="gold-result-card">
+
+                            <div className="result-card-icon">
+                                ⚖
+                            </div>
 
                             <span>
                                 WEIGHT
@@ -544,11 +593,13 @@ class GoldPriceSection extends Component {
 
                         </div>
 
-                        {/* =========================================
-                           MAKING COST
-                        ========================================= */}
+                        {/* MAKING COST */}
 
                         <div className="gold-result-card">
+
+                            <div className="result-card-icon">
+                                ✦
+                            </div>
 
                             <span>
                                 MAKING COST
@@ -563,9 +614,7 @@ class GoldPriceSection extends Component {
 
                         </div>
 
-                        {/* =========================================
-                           FINAL PRICE
-                        ========================================= */}
+                        {/* FINAL PRICE */}
 
                         <div
                             className="
@@ -574,8 +623,12 @@ class GoldPriceSection extends Component {
                             "
                         >
 
+                            <div className="result-card-icon">
+                                ₹
+                            </div>
+
                             <span>
-                                PRICE
+                                FINAL PRICE
                             </span>
 
                             <strong>
@@ -596,9 +649,15 @@ class GoldPriceSection extends Component {
 
                 <div className="gold-current-rate">
 
-                    <span>
-                        CURRENT RATE
+                    <div className="live-indicator">
+                        <span />
+                    </div>
+
+                    <span className="current-rate-label">
+                        LIVE GOLD RATE
                     </span>
+
+                    <div className="current-rate-divider" />
 
                     <strong>
                         ₹
@@ -611,6 +670,26 @@ class GoldPriceSection extends Component {
                         </small>
                     </strong>
 
+                    <span className="current-rate-type">
+                        {selectedRate === 'hallmark'
+                            ? 'HALLMARK'
+                            : 'KDM'}
+                    </span>
+
+                </div>
+
+                {/* =================================================
+                   BRAND FOOTER
+                ================================================= */}
+
+                <div className="gold-brand-footer">
+                    <span className="brand-line" />
+
+                    <span>
+                        SVS JEWELLERY
+                    </span>
+
+                    <span className="brand-line" />
                 </div>
 
             </div>
