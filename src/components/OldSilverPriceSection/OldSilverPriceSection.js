@@ -1,6 +1,7 @@
 import {Component} from 'react'
 
 import './OldSilverPriceSection.css'
+import SilverImage from './Silver.png'
 
 const API_URL =
     'https://svs-jewellery-works-backend.onrender.com/api/rates'
@@ -319,7 +320,7 @@ class OldSilverPriceSection extends Component {
                         <div className="silver-image-overlay"></div>
 
                         <img
-                            src="https://tse3.mm.bing.net/th/id/OIP.TuyCbJAF-BENDqLJBs-60AHaF_?r=0&pid=Api&h=220&P=0"
+                            src={SilverImage}
                             alt="Silver Jewellery"
                         />
 
