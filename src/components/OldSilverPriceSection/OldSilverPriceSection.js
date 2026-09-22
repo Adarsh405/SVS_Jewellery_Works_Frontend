@@ -1,4 +1,5 @@
 import {Component} from 'react'
+
 import './OldSilverPriceSection.css'
 
 const API_URL =
@@ -15,22 +16,31 @@ class OldSilverPriceSection extends Component {
     }
 
     inputRef = null
+    pageRef = null
 
     componentDidMount() {
         this.fetchRates()
-        document.addEventListener('click', this.handlePageClick)
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('click', this.handlePageClick)
     }
 
     fetchRates = async () => {
         try {
+            this.setState({
+                loading: true,
+            })
+
             const response = await fetch(API_URL)
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch silver rate')
+            }
+
             const data = await response.json()
 
-            if (data.success) {
+            if (
+                data.success &&
+                data.data &&
+                data.data.silver_rate !== undefined
+            ) {
                 this.setState({
                     loading: false,
                     apiSuccess: true,
@@ -43,7 +53,7 @@ class OldSilverPriceSection extends Component {
                 })
             }
         } catch (error) {
-            console.error(error)
+            console.error('Silver rate error:', error)
 
             this.setState({
                 loading: false,
@@ -52,16 +62,15 @@ class OldSilverPriceSection extends Component {
         }
     }
 
-    handlePageClick = () => {
-        this.setState({
-            isFocused: true,
-        })
-
-        setTimeout(() => {
-            if (this.inputRef) {
-                this.inputRef.focus()
-            }
-        }, 0)
+    handlePageClick = event => {
+        if (
+            this.pageRef &&
+            this.pageRef.contains(event.target)
+        ) {
+            this.setState({
+                isFocused: true,
+            })
+        }
     }
 
     handleInputChange = event => {
@@ -82,6 +91,12 @@ class OldSilverPriceSection extends Component {
         }
     }
 
+    handleInputFocus = () => {
+        this.setState({
+            isFocused: true,
+        })
+    }
+
     handleInputBlur = () => {
         this.setState({
             isFocused: false,
@@ -89,7 +104,10 @@ class OldSilverPriceSection extends Component {
     }
 
     calculatePrice = () => {
-        const {weight, silverRate} = this.state
+        const {
+            weight,
+            silverRate,
+        } = this.state
 
         const totalWeight = Number(weight)
 
@@ -97,12 +115,19 @@ class OldSilverPriceSection extends Component {
             if (this.inputRef) {
                 this.inputRef.focus()
             }
+
             return
         }
 
-        const calculatedWeight = totalWeight * 0.6
+        /*
+         * Old silver calculation:
+         * 60% of entered weight
+         */
+        const calculatedWeight =
+            totalWeight * 0.6
 
-        const price = calculatedWeight * silverRate
+        const price =
+            calculatedWeight * silverRate
 
         this.setState(
             {
@@ -112,9 +137,11 @@ class OldSilverPriceSection extends Component {
                     price,
                     currentRate: silverRate,
                 },
+
                 weight: '',
                 isFocused: true,
             },
+
             () => {
                 if (this.inputRef) {
                     this.inputRef.focus()
@@ -124,46 +151,60 @@ class OldSilverPriceSection extends Component {
     }
 
     formatNumber = number => {
-        return Number(number).toLocaleString('en-IN', {
-            maximumFractionDigits: 2,
-        })
+        return Number(number).toLocaleString(
+            'en-IN',
+            {
+                maximumFractionDigits: 2,
+            },
+        )
     }
 
     renderFloatingParticles() {
         return (
-            <div className="silver-particles">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+            <div
+                className="silver-particles"
+                aria-hidden="true"
+            >
+                {Array.from(
+                    {length: 18},
+                    (_, index) => (
+                        <span
+                            key={index}
+                            className={`silver-particle-${index + 1}`}
+                        ></span>
+                    ),
+                )}
             </div>
         )
     }
 
     renderLuxuryBackground() {
         return (
-            <div className="silver-background-effects">
+            <div
+                className="silver-background-effects"
+                aria-hidden="true"
+            >
                 <div className="silver-aurora silver-aurora-one"></div>
+
                 <div className="silver-aurora silver-aurora-two"></div>
+
                 <div className="silver-aurora silver-aurora-three"></div>
 
                 <div className="silver-light-orb silver-orb-one"></div>
+
                 <div className="silver-light-orb silver-orb-two"></div>
+
                 <div className="silver-light-orb silver-orb-three"></div>
 
                 <div className="silver-ring silver-ring-one"></div>
+
                 <div className="silver-ring silver-ring-two"></div>
 
                 <div className="silver-shine-line silver-shine-one"></div>
+
                 <div className="silver-shine-line silver-shine-two"></div>
+
+                <div className="silver-grid"></div>
             </div>
         )
     }
@@ -173,6 +214,8 @@ class OldSilverPriceSection extends Component {
             <div className="silver-loading">
                 <div className="silver-loading-orbit">
                     <div className="silver-loading-ring"></div>
+
+                    <div className="silver-loading-ring silver-loading-ring-two"></div>
 
                     <div className="silver-svs-loader">
                         SVS
@@ -233,13 +276,18 @@ class OldSilverPriceSection extends Component {
 
         return (
             <div
+                ref={element => {
+                    this.pageRef = element
+                }}
                 className={
                     isFocused
                         ? 'silver-page silver-focused'
                         : 'silver-page silver-unfocused'
                 }
+                onClick={this.handlePageClick}
             >
                 {this.renderLuxuryBackground()}
+
                 {this.renderFloatingParticles()}
 
                 {/* =================================================
@@ -253,26 +301,30 @@ class OldSilverPriceSection extends Component {
                                 ✦
                             </span>
 
-                            <span>Old-Silver</span>
+                            <span>
+                                Old-Silver
+                            </span>
 
                             <span className="silver-title-sparkle">
                                 ✦
                             </span>
                         </div>
 
-                        <div className="silver-title-line"></div>
+                        <div className="silver-title-subtitle">
+                            PRECIOUS METAL CALCULATOR
+                        </div>
                     </div>
 
-                    <div className="silver-image-wrapper">
-                        <div className="silver-image-glow"></div>
+                    <div className="silver-image-box">
+                        <div className="silver-image-overlay"></div>
 
-                        <div className="silver-image-box">
-                            <img
-                                src="https://tse3.mm.bing.net/th/id/OIP.TuyCbJAF-BENDqLJBs-60AHaF_?r=0&pid=Api&h=220&P=0"
-                                alt="Silver Jewellery"
-                            />
+                        <img
+                            src="https://tse3.mm.bing.net/th/id/OIP.TuyCbJAF-BENDqLJBs-60AHaF_?r=0&pid=Api&h=220&P=0"
+                            alt="Silver Jewellery"
+                        />
 
-                            <div className="silver-image-shine"></div>
+                        <div className="silver-image-label">
+                            SILVER
                         </div>
                     </div>
                 </div>
@@ -282,15 +334,16 @@ class OldSilverPriceSection extends Component {
                 ================================================= */}
 
                 <div className="silver-input-area">
-                    <div className="silver-input-aura"></div>
+                    <div className="silver-input-caption">
+                        ENTER OLD SILVER WEIGHT
+                    </div>
 
                     <div className="silver-input-box">
-                        <div className="silver-input-corner corner-one"></div>
-                        <div className="silver-input-corner corner-two"></div>
-                        <div className="silver-input-corner corner-three"></div>
-                        <div className="silver-input-corner corner-four"></div>
+                        <div className="silver-input-glow"></div>
 
-                        <div className="silver-input-shimmer"></div>
+                        <div className="silver-input-icon">
+                            ◈
+                        </div>
 
                         <input
                             ref={element =>
@@ -301,19 +354,28 @@ class OldSilverPriceSection extends Component {
                             inputMode="decimal"
                             value={weight}
                             placeholder="Enter Weight"
-                            onChange={this.handleInputChange}
-                            onKeyDown={this.handleInputKeyDown}
-                            onBlur={this.handleInputBlur}
+                            onChange={
+                                this.handleInputChange
+                            }
+                            onKeyDown={
+                                this.handleInputKeyDown
+                            }
+                            onFocus={
+                                this.handleInputFocus
+                            }
+                            onBlur={
+                                this.handleInputBlur
+                            }
                         />
 
-                        <span>grams</span>
+                        <span>
+                            grams
+                        </span>
 
                         <div className="silver-enter-hint">
-                            ENTER ↵
+                            PRESS ENTER
                         </div>
                     </div>
-
-                    <div className="silver-input-pulse"></div>
                 </div>
 
                 {/* =================================================
@@ -322,6 +384,8 @@ class OldSilverPriceSection extends Component {
 
                 {result && (
                     <div className="silver-result">
+                        {/* TOTAL WEIGHT */}
+
                         <div className="silver-result-card">
                             <div className="silver-card-glow"></div>
 
@@ -337,11 +401,17 @@ class OldSilverPriceSection extends Component {
                                 {this.formatNumber(
                                     result.totalWeight,
                                 )}
-                                <small> g</small>
+
+                                <small>
+                                    {' '}
+                                    g
+                                </small>
                             </strong>
 
                             <div className="silver-card-line"></div>
                         </div>
+
+                        {/* 60% WEIGHT */}
 
                         <div className="silver-result-card">
                             <div className="silver-card-glow"></div>
@@ -358,7 +428,11 @@ class OldSilverPriceSection extends Component {
                                 {this.formatNumber(
                                     result.calculatedWeight,
                                 )}
-                                <small> g</small>
+
+                                <small>
+                                    {' '}
+                                    g
+                                </small>
                             </strong>
 
                             <div className="silver-percentage">
@@ -367,6 +441,8 @@ class OldSilverPriceSection extends Component {
 
                             <div className="silver-card-line"></div>
                         </div>
+
+                        {/* PRICE */}
 
                         <div className="silver-result-card silver-price-card">
                             <div className="silver-card-glow"></div>
@@ -407,8 +483,14 @@ class OldSilverPriceSection extends Component {
                     </span>
 
                     <strong>
-                        ₹{this.formatNumber(silverRate)}
-                        <small>/ gram</small>
+                        ₹
+                        {this.formatNumber(
+                            silverRate,
+                        )}
+
+                        <small>
+                            / gram
+                        </small>
                     </strong>
 
                     <div className="silver-live">
