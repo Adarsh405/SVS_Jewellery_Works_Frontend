@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import {
-  FaHome,
-  FaGem, 
+  FaHome, 
   FaCoins,
   FaBars,
   FaTimes,
