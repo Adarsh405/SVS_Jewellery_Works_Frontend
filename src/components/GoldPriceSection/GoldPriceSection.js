@@ -84,7 +84,18 @@ class GoldPriceSection extends Component {
        PAGE CLICK
     ===================================================== */
 
-    handlePageClick = () => {
+    handlePageClick = event => {
+        /*
+         * Don't steal focus when clicking buttons.
+         */
+        if (
+            event.target.closest(
+                '.gold-rate-button'
+            )
+        ) {
+            return
+        }
+
         this.setState({
             isFocused: true,
         })
@@ -250,7 +261,7 @@ class GoldPriceSection extends Component {
     }
 
     /* =====================================================
-       GET JEWELLERY IMAGE
+       JEWELLERY IMAGE
     ===================================================== */
 
     getJewelleryImage = () => {
@@ -266,7 +277,7 @@ class GoldPriceSection extends Component {
     }
 
     /* =====================================================
-       GET IMAGE ALT
+       IMAGE ALT
     ===================================================== */
 
     getImageAlt = () => {
@@ -371,10 +382,6 @@ class GoldPriceSection extends Component {
                 ? hallmarkRate
                 : goldRate
 
-        /* =================================================
-           MAIN PAGE
-        ================================================= */
-
         return (
             <div
                 className={`
@@ -393,11 +400,11 @@ class GoldPriceSection extends Component {
             >
 
                 {/* =================================================
-                   DECORATIVE SHOWROOM ELEMENTS
+                   DECORATIVE BACKGROUND
                 ================================================= */}
 
-                <div className="showroom-orb showroom-orb-one" />
-                <div className="showroom-orb showroom-orb-two" />
+                <div className="gold-decoration gold-decoration-one" />
+                <div className="gold-decoration gold-decoration-two" />
 
                 {/* =================================================
                    TOP SECTION
@@ -405,84 +412,95 @@ class GoldPriceSection extends Component {
 
                 <div className="gold-top">
 
-                    {/* =============================================
-                       RATE BUTTONS
-                    ============================================= */}
+                    {/* =================================================
+                       LEFT SIDE - RATE BUTTONS
+                    ================================================= */}
 
-                    <div className="gold-rate-buttons">
+                    <div className="gold-controls">
 
-                        <button
-                            type="button"
-                            className={`
-                                gold-rate-button
-                                hallmark-button
-                                ${
-                                    selectedRate ===
-                                    'hallmark'
-                                        ? 'active'
-                                        : ''
+                        <div className="gold-section-label">
+                            <span className="label-line" />
+
+                            GOLD TYPE
+
+                            <span className="label-line" />
+                        </div>
+
+                        <div className="gold-rate-buttons">
+
+                            {/* HALLMARK */}
+
+                            <button
+                                type="button"
+                                className={`
+                                    gold-rate-button
+                                    hallmark-button
+                                    ${
+                                        selectedRate ===
+                                        'hallmark'
+                                            ? 'active'
+                                            : ''
+                                    }
+                                `}
+                                onClick={() =>
+                                    this.handleRateChange(
+                                        'hallmark'
+                                    )
                                 }
-                            `}
-                            onClick={() =>
-                                this.handleRateChange(
-                                    'hallmark'
-                                )
-                            }
-                        >
-                            <span className="button-icon">
-                                ✦
-                            </span>
+                            >
+                                <span className="button-symbol">
+                                    ✦
+                                </span>
 
-                            <span>
-                                Hallmark
-                            </span>
-                        </button>
+                                <span>
+                                    Hallmark
+                                </span>
+                            </button>
 
-                        <button
-                            type="button"
-                            className={`
-                                gold-rate-button
-                                kdm-button
-                                ${
-                                    selectedRate === 'kdm'
-                                        ? 'active'
-                                        : ''
+                            {/* KDM */}
+
+                            <button
+                                type="button"
+                                className={`
+                                    gold-rate-button
+                                    kdm-button
+                                    ${
+                                        selectedRate === 'kdm'
+                                            ? 'active'
+                                            : ''
+                                    }
+                                `}
+                                onClick={() =>
+                                    this.handleRateChange(
+                                        'kdm'
+                                    )
                                 }
-                            `}
-                            onClick={() =>
-                                this.handleRateChange(
-                                    'kdm'
-                                )
-                            }
-                        >
-                            <span className="button-icon">
-                                ◆
-                            </span>
+                            >
+                                <span className="button-symbol">
+                                    ◆
+                                </span>
 
-                            <span>
-                                KDM
-                            </span>
-                        </button>
+                                <span>
+                                    KDM
+                                </span>
+                            </button>
+
+                        </div>
 
                     </div>
 
-                    {/* =============================================
-                       PREMIUM JEWELLERY SHOWROOM IMAGE
-                    ============================================= */}
+                    {/* =================================================
+                       RIGHT SIDE - JEWELLERY IMAGE
+                    ================================================= */}
 
                     <div className="gold-image-wrapper">
 
-                        <div className="image-label">
-                            <span className="image-label-dot" />
-
+                        <div className="image-premium-label">
+                            <span />
                             PREMIUM
                         </div>
 
-                        <div
-                            className="
-                                gold-image-box
-                            "
-                        >
+                        <div className="gold-image-box">
 
                             <img
                                 key={selectedRate}
@@ -494,10 +512,8 @@ class GoldPriceSection extends Component {
                                 }
                             />
 
-                            <div className="image-overlay">
-                                <span>
-                                    SVS JEWELLERY
-                                </span>
+                            <div className="image-bottom-label">
+                                SVS JEWELLERY
                             </div>
 
                         </div>
@@ -513,18 +529,16 @@ class GoldPriceSection extends Component {
                 <div className="gold-input-area">
 
                     <div className="input-heading">
-                        <span className="input-heading-line" />
+                        <span />
 
-                        <span>
-                            ENTER JEWELLERY WEIGHT
-                        </span>
+                        ENTER JEWELLERY WEIGHT
 
-                        <span className="input-heading-line" />
+                        <span />
                     </div>
 
                     <div className="gold-input-box">
 
-                        <div className="input-side-icon">
+                        <div className="input-symbol">
                             ◆
                         </div>
 
@@ -572,7 +586,7 @@ class GoldPriceSection extends Component {
 
                         <div className="gold-result-card">
 
-                            <div className="result-card-icon">
+                            <div className="result-icon">
                                 ⚖
                             </div>
 
@@ -597,7 +611,7 @@ class GoldPriceSection extends Component {
 
                         <div className="gold-result-card">
 
-                            <div className="result-card-icon">
+                            <div className="result-icon">
                                 ✦
                             </div>
 
@@ -614,7 +628,7 @@ class GoldPriceSection extends Component {
 
                         </div>
 
-                        {/* FINAL PRICE */}
+                        {/* PRICE */}
 
                         <div
                             className="
@@ -623,7 +637,7 @@ class GoldPriceSection extends Component {
                             "
                         >
 
-                            <div className="result-card-icon">
+                            <div className="result-icon">
                                 ₹
                             </div>
 
@@ -649,15 +663,13 @@ class GoldPriceSection extends Component {
 
                 <div className="gold-current-rate">
 
-                    <div className="live-indicator">
-                        <span />
-                    </div>
+                    <span className="live-dot" />
 
-                    <span className="current-rate-label">
-                        LIVE GOLD RATE
+                    <span className="live-text">
+                        LIVE RATE
                     </span>
 
-                    <div className="current-rate-divider" />
+                    <span className="rate-divider" />
 
                     <strong>
                         ₹
@@ -670,7 +682,7 @@ class GoldPriceSection extends Component {
                         </small>
                     </strong>
 
-                    <span className="current-rate-type">
+                    <span className="rate-type">
                         {selectedRate === 'hallmark'
                             ? 'HALLMARK'
                             : 'KDM'}
@@ -679,17 +691,11 @@ class GoldPriceSection extends Component {
                 </div>
 
                 {/* =================================================
-                   BRAND FOOTER
+                   BRAND
                 ================================================= */}
 
-                <div className="gold-brand-footer">
-                    <span className="brand-line" />
-
-                    <span>
-                        SVS JEWELLERY
-                    </span>
-
-                    <span className="brand-line" />
+                <div className="gold-brand">
+                    SVS JEWELLERY
                 </div>
 
             </div>

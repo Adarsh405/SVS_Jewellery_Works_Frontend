@@ -1,6 +1,7 @@
 /* =========================================================
    SVS JEWELLERY
-   PREMIUM GOLD PRICE SECTION
+   PREMIUM SHOWROOM GOLD PRICE SECTION
+   LIGHT / WHITE / GOLD THEME
 ========================================================= */
 
 * {
@@ -14,18 +15,16 @@
 .gold-page {
     --primary: #b8860b;
     --secondary: #d4af37;
-    --accent: #f4d47c;
+    --accent: #f1d77a;
 
-    --light: #fffaf0;
-    --border: #e8cf82;
     --text: #654b08;
-    --soft: #fffdf5;
+    --soft-text: #927d4c;
 
     position: relative;
     isolation: isolate;
 
-    height: calc(100vh - 72px);
     width: 100vw;
+    height: calc(100vh - 72px);
 
     padding: 20px;
 
@@ -33,67 +32,64 @@
 
     background:
         radial-gradient(
-            circle at 10% 10%,
-            rgba(212,175,55,0.18),
+            circle at 10% 15%,
+            rgba(212,175,55,0.13),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(244,212,124,0.16),
             transparent 28%
         ),
         radial-gradient(
-            circle at 90% 12%,
-            rgba(244,212,124,0.22),
-            transparent 30%
-        ),
-        radial-gradient(
             circle at 50% 100%,
-            rgba(212,175,55,0.12),
+            rgba(212,175,55,0.09),
             transparent 35%
         ),
         linear-gradient(
             135deg,
-            #fffef9,
-            #fffaf0,
-            #fffdf7
+            #ffffff 0%,
+            #fffdf7 50%,
+            #fffaf0 100%
         );
 
     transition:
-        background 0.8s ease,
         filter 0.4s ease;
 }
 
 /* =========================================================
-   KDM THEME
+   KDM LIGHT THEME
 ========================================================= */
 
 .gold-page.kdm-theme {
     --primary: #8b5cf6;
-    --secondary: #c084fc;
-    --accent: #f0abfc;
+    --secondary: #a855f7;
+    --accent: #e9b8ff;
 
-    --light: #faf5ff;
-    --border: #e9d5ff;
     --text: #581c87;
-    --soft: #fdf4ff;
+    --soft-text: #80618f;
 
     background:
         radial-gradient(
             circle at 10% 15%,
-            rgba(168,85,247,0.18),
-            transparent 28%
+            rgba(168,85,247,0.10),
+            transparent 27%
         ),
         radial-gradient(
-            circle at 90% 15%,
-            rgba(236,72,153,0.16),
+            circle at 90% 20%,
+            rgba(236,72,153,0.09),
             transparent 28%
         ),
         radial-gradient(
             circle at 50% 100%,
-            rgba(192,132,252,0.14),
+            rgba(192,132,252,0.08),
             transparent 35%
         ),
         linear-gradient(
             135deg,
-            #fffaff,
-            #faf5ff,
-            #fdf2f8
+            #ffffff,
+            #fdfaff,
+            #fffafd
         );
 }
 
@@ -102,7 +98,7 @@
 ========================================================= */
 
 .gold-unfocused {
-    filter: brightness(0.78);
+    filter: brightness(0.9);
 }
 
 .gold-focused {
@@ -110,14 +106,11 @@
 }
 
 /* =========================================================
-   DECORATIVE ORBS
+   BACKGROUND DECORATIONS
 ========================================================= */
 
-.showroom-orb {
+.gold-decoration {
     position: absolute;
-
-    width: 180px;
-    height: 180px;
 
     border-radius: 50%;
 
@@ -125,58 +118,56 @@
 
     z-index: -2;
 
-    filter: blur(45px);
+    filter: blur(40px);
 
-    opacity: 0.18;
+    opacity: 0.12;
 
     animation:
-        showroomOrbFloat 8s ease-in-out infinite alternate;
+        decorationFloat 9s ease-in-out infinite alternate;
 }
 
-.showroom-orb-one {
-    top: 25%;
-    left: -80px;
+.gold-decoration-one {
+    width: 220px;
+    height: 220px;
+
+    top: 20%;
+    left: -100px;
 
     background:
-        radial-gradient(
-            circle,
-            var(--accent),
-            transparent 70%
-        );
+        var(--accent);
 }
 
-.showroom-orb-two {
-    right: -70px;
+.gold-decoration-two {
+    width: 200px;
+    height: 200px;
+
+    right: -80px;
     bottom: 15%;
 
     background:
-        radial-gradient(
-            circle,
-            var(--secondary),
-            transparent 70%
-        );
+        var(--secondary);
 
     animation-delay: 2s;
 }
 
-@keyframes showroomOrbFloat {
+@keyframes decorationFloat {
 
     0% {
         transform:
-            translate(0,0)
+            translate(0, 0)
             scale(0.9);
     }
 
     50% {
         transform:
-            translate(30px,-25px)
-            scale(1.1);
+            translate(30px, -20px)
+            scale(1.08);
     }
 
     100% {
         transform:
-            translate(-20px,30px)
-            scale(0.95);
+            translate(-15px, 25px)
+            scale(0.96);
     }
 }
 
@@ -188,14 +179,66 @@
     position: relative;
 
     width: 100%;
-    height: 145px;
+    height: 150px;
 
     display: flex;
 
-    justify-content: space-between;
     align-items: flex-start;
 
+    justify-content: space-between;
+
     z-index: 5;
+}
+
+/* =========================================================
+   LEFT CONTROLS
+========================================================= */
+
+.gold-controls {
+    position: relative;
+
+    z-index: 20;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+
+    padding-top: 5px;
+}
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.gold-section-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color:
+        var(--primary);
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+.label-line {
+    width: 28px;
+    height: 1px;
+
+    background:
+        var(--secondary);
+
+    opacity: 0.55;
 }
 
 /* =========================================================
@@ -203,15 +246,11 @@
 ========================================================= */
 
 .gold-rate-buttons {
-    width: 100%;
-
     display: flex;
 
-    justify-content: space-between;
+    align-items: center;
 
-    align-items: flex-start;
-
-    gap: 20px;
+    gap: 14px;
 }
 
 /* =========================================================
@@ -221,55 +260,58 @@
 .gold-rate-button {
     position: relative;
 
-    height: 65px;
-    width: 190px;
+    z-index: 30;
+
+    width: 175px;
+    height: 62px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    gap: 10px;
+    gap: 9px;
 
     border: 1px solid transparent;
 
-    border-radius: 18px;
+    border-radius: 16px;
 
-    color: white;
+    color: #ffffff;
 
-    font-size: 17px;
+    font-size: 16px;
 
     font-weight: 800;
-
-    letter-spacing: 0.5px;
 
     cursor: pointer;
 
     overflow: hidden;
 
+    user-select: none;
+
+    -webkit-tap-highlight-color: transparent;
+
     transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease,
-        border 0.4s ease;
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
 }
 
 /* =========================================================
-   BUTTON ICON
+   BUTTON SYMBOL
 ========================================================= */
 
-.button-icon {
-    font-size: 17px;
-
-    opacity: 0.9;
+.button-symbol {
+    font-size: 16px;
 
     transition:
-        transform 0.4s ease;
+        transform 0.35s ease;
 }
 
-.gold-rate-button:hover .button-icon {
+.gold-rate-button:hover
+.button-symbol {
     transform:
         rotate(180deg)
-        scale(1.2);
+        scale(1.1);
 }
 
 /* =========================================================
@@ -282,11 +324,12 @@
             135deg,
             #b8860b,
             #d4af37,
-            #e5c158
+            #e3bd52
         );
 
     box-shadow:
-        0 10px 28px rgba(184,134,11,0.22);
+        0 8px 22px
+        rgba(184,134,11,0.22);
 }
 
 /* =========================================================
@@ -297,13 +340,14 @@
     background:
         linear-gradient(
             135deg,
-            #7c3aed,
+            #8b5cf6,
             #a855f7,
-            #ec4899
+            #d946ef
         );
 
     box-shadow:
-        0 10px 28px rgba(139,92,246,0.22);
+        0 8px 22px
+        rgba(139,92,246,0.18);
 }
 
 /* =========================================================
@@ -318,21 +362,24 @@
     top: 0;
     left: -130%;
 
-    width: 75%;
+    width: 70%;
     height: 100%;
 
     background:
         linear-gradient(
             100deg,
             transparent,
-            rgba(255,255,255,0.45),
+            rgba(255,255,255,0.42),
             transparent
         );
 
-    transform: skewX(-25deg);
+    transform:
+        skewX(-25deg);
 
     transition:
-        left 0.8s ease;
+        left 0.7s ease;
+
+    pointer-events: none;
 }
 
 .gold-rate-button:hover::before {
@@ -345,125 +392,94 @@
 
 .gold-rate-button:hover {
     transform:
-        translateY(-5px)
-        scale(1.025);
-}
-
-/* =========================================================
-   ACTIVE HALLMARK
-========================================================= */
-
-.hallmark-button.active {
-    border-color:
-        rgba(255,255,255,0.8);
+        translateY(-4px);
 
     box-shadow:
-        0 15px 35px rgba(184,134,11,0.32),
-        0 0 30px rgba(212,175,55,0.18);
-
-    animation:
-        hallmarkPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes hallmarkPulse {
-
-    0%,
-    100% {
-        box-shadow:
-            0 15px 35px rgba(184,134,11,0.30);
-    }
-
-    50% {
-        box-shadow:
-            0 18px 45px rgba(184,134,11,0.42),
-            0 0 35px rgba(212,175,55,0.20);
-    }
+        0 13px 28px
+        rgba(120,90,20,0.20);
 }
 
 /* =========================================================
-   ACTIVE KDM
+   BUTTON ACTIVE
 ========================================================= */
 
-.kdm-button.active {
+.gold-rate-button.active {
     border-color:
-        rgba(255,255,255,0.75);
+        rgba(255,255,255,0.9);
+
+    transform:
+        translateY(-2px);
 
     box-shadow:
-        0 15px 35px rgba(139,92,246,0.35),
-        0 0 30px rgba(236,72,153,0.16);
-
-    animation:
-        kdmPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes kdmPulse {
-
-    0%,
-    100% {
-        box-shadow:
-            0 15px 35px rgba(139,92,246,0.30);
-    }
-
-    50% {
-        box-shadow:
-            0 18px 45px rgba(139,92,246,0.44),
-            0 0 35px rgba(236,72,153,0.20);
-    }
+        0 13px 30px
+        rgba(184,134,11,0.28),
+        0 0 0 3px
+        rgba(212,175,55,0.10);
 }
 
 /* =========================================================
-   PREMIUM IMAGE WRAPPER
+   IMAGE WRAPPER
 ========================================================= */
 
 .gold-image-wrapper {
-    position: absolute;
+    position: relative;
 
-    top: -5px;
-    right: 0;
+    z-index: 8;
 
-    width: 245px;
+    width: 235px;
 
     display: flex;
 
     justify-content: flex-end;
+
+    padding-top: 0;
 }
 
 /* =========================================================
    PREMIUM LABEL
 ========================================================= */
 
-.image-label {
+.image-premium-label {
     position: absolute;
 
-    top: 8px;
-    right: 12px;
+    z-index: 10;
 
-    z-index: 8;
+    top: 7px;
+    right: 9px;
 
-    padding: 5px 10px;
+    padding:
+        5px 9px;
 
-    border-radius: 20px;
+    border-radius:
+        20px;
 
     background:
-        rgba(255,255,255,0.84);
+        rgba(255,255,255,0.88);
 
-    backdrop-filter:
-        blur(8px);
+    border:
+        1px solid
+        rgba(212,175,55,0.28);
 
     color:
-        #7a5a08;
+        #80620c;
 
-    font-size: 8px;
+    font-size:
+        7px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    letter-spacing: 1.5px;
+    letter-spacing:
+        1.4px;
 
     box-shadow:
-        0 5px 15px rgba(80,55,20,0.08);
+        0 3px 12px
+        rgba(80,55,20,0.07);
+
+    pointer-events: none;
 }
 
-.image-label-dot {
+.image-premium-label span {
     display: inline-block;
 
     width: 6px;
@@ -476,20 +492,16 @@
     background:
         #d4af37;
 
-    box-shadow:
-        0 0 0 3px
-        rgba(212,175,55,0.15);
-
     animation:
-        liveDot 1.5s infinite;
+        premiumDot 1.7s infinite;
 }
 
-@keyframes liveDot {
+@keyframes premiumDot {
 
     0% {
         box-shadow:
             0 0 0 0
-            rgba(212,175,55,0.45);
+            rgba(212,175,55,0.4);
     }
 
     70% {
@@ -506,48 +518,44 @@
 }
 
 /* =========================================================
-   PREMIUM IMAGE BOX
+   IMAGE BOX
 ========================================================= */
 
 .gold-image-box {
     position: relative;
 
-    width: 235px;
+    width: 225px;
     height: 125px;
 
     overflow: hidden;
 
-    border-radius: 22px;
+    border-radius: 20px;
 
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,0.98),
-            rgba(255,250,240,0.96)
-        );
+        #ffffff;
 
     border:
-        2px solid rgba(212,175,55,0.55);
+        2px solid
+        rgba(212,175,55,0.45);
 
     box-shadow:
-        0 12px 30px rgba(80,55,20,0.14),
-        0 0 0 1px
-        rgba(255,255,255,0.8) inset,
-        0 0 35px
-        rgba(212,175,55,0.10);
+        0 12px 28px
+        rgba(80,55,20,0.11),
+        inset 0 0 0 1px
+        rgba(255,255,255,0.9);
 
     animation:
-        showroomImageIn 0.8s cubic-bezier(.2,.8,.2,1),
-        showroomFloat 5s ease-in-out infinite;
+        imageEntrance 0.7s ease,
+        imageFloat 5s ease-in-out infinite;
 
     transition:
-        transform 0.5s ease,
-        box-shadow 0.5s ease,
-        border-color 0.5s ease;
+        transform 0.45s ease,
+        box-shadow 0.45s ease,
+        border-color 0.45s ease;
 }
 
 /* =========================================================
-   IMAGE INNER FRAME
+   IMAGE INNER BORDER
 ========================================================= */
 
 .gold-image-box::before {
@@ -555,17 +563,18 @@
 
     position: absolute;
 
-    inset: 6px;
+    inset: 5px;
 
-    border-radius: 17px;
+    z-index: 3;
 
     border:
         1px solid
-        rgba(212,175,55,0.38);
+        rgba(212,175,55,0.30);
+
+    border-radius:
+        15px;
 
     pointer-events: none;
-
-    z-index: 3;
 }
 
 /* =========================================================
@@ -580,26 +589,26 @@
     top: 0;
     left: -120%;
 
-    width: 55%;
+    width: 50%;
     height: 100%;
+
+    z-index: 5;
 
     background:
         linear-gradient(
             100deg,
             transparent,
-            rgba(255,255,255,0.42),
+            rgba(255,255,255,0.45),
             transparent
         );
 
     transform:
         skewX(-20deg);
 
-    pointer-events: none;
-
-    z-index: 4;
-
     animation:
-        jewelleryShine 5s ease-in-out infinite;
+        imageShine 5.5s ease-in-out infinite;
+
+    pointer-events: none;
 }
 
 /* =========================================================
@@ -616,51 +625,50 @@
 
     object-position: center;
 
-    transform: scale(1.02);
-
     filter:
-        saturate(1.08)
-        contrast(1.03)
-        brightness(1.02);
+        saturate(1.04)
+        brightness(1.03)
+        contrast(1.02);
 
     transition:
-        transform 0.8s cubic-bezier(.2,.8,.2,1),
+        transform 0.8s ease,
         filter 0.5s ease;
 }
 
 /* =========================================================
-   IMAGE OVERLAY
+   IMAGE BOTTOM LABEL
 ========================================================= */
 
-.image-overlay {
+.image-bottom-label {
     position: absolute;
+
+    z-index: 4;
 
     left: 0;
     right: 0;
     bottom: 0;
 
-    padding: 20px 12px 8px;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(35,25,5,0.58),
-            transparent
-        );
-
-    z-index: 2;
-
-    color: white;
+    padding:
+        17px 10px 7px;
 
     text-align: center;
 
-    font-size: 8px;
+    color: #ffffff;
+
+    font-size: 7px;
 
     font-weight: 900;
 
     letter-spacing: 2px;
 
-    opacity: 0.9;
+    background:
+        linear-gradient(
+            to top,
+            rgba(75,55,10,0.55),
+            transparent
+        );
+
+    pointer-events: none;
 }
 
 /* =========================================================
@@ -669,49 +677,44 @@
 
 .gold-image-box:hover {
     transform:
-        translateY(-5px)
-        scale(1.025);
+        translateY(-4px)
+        scale(1.02);
 
     border-color:
-        rgba(212,175,55,0.9);
+        rgba(212,175,55,0.78);
 
     box-shadow:
-        0 20px 45px rgba(80,55,20,0.18),
-        0 0 45px rgba(212,175,55,0.18);
+        0 18px 38px
+        rgba(80,55,20,0.15),
+        0 0 25px
+        rgba(212,175,55,0.10);
 }
 
 .gold-image-box:hover img {
-    transform: scale(1.09);
+    transform:
+        scale(1.08);
 
     filter:
-        saturate(1.15)
-        contrast(1.05)
-        brightness(1.04);
+        saturate(1.10)
+        brightness(1.05)
+        contrast(1.03);
 }
 
 /* =========================================================
-   IMAGE ANIMATIONS
+   IMAGE ANIMATION
 ========================================================= */
 
-@keyframes showroomImageIn {
+@keyframes imageEntrance {
 
-    0% {
+    from {
         opacity: 0;
 
         transform:
-            translateX(35px)
-            scale(0.88);
+            translateX(25px)
+            scale(0.92);
     }
 
-    60% {
-        opacity: 1;
-
-        transform:
-            translateX(-4px)
-            scale(1.02);
-    }
-
-    100% {
+    to {
         opacity: 1;
 
         transform:
@@ -720,7 +723,7 @@
     }
 }
 
-@keyframes showroomFloat {
+@keyframes imageFloat {
 
     0%,
     100% {
@@ -730,11 +733,11 @@
 
     50% {
         transform:
-            translateY(-4px);
+            translateY(-3px);
     }
 }
 
-@keyframes jewelleryShine {
+@keyframes imageShine {
 
     0% {
         left: -120%;
@@ -756,17 +759,17 @@
 .gold-input-area {
     position: relative;
 
+    z-index: 3;
+
     width: 100%;
 
     display: flex;
 
     flex-direction: column;
 
-    justify-content: center;
-
     align-items: center;
 
-    z-index: 3;
+    justify-content: center;
 }
 
 /* =========================================================
@@ -780,41 +783,28 @@
 
     justify-content: center;
 
-    gap: 12px;
+    gap: 10px;
 
-    margin-bottom: 10px;
+    margin-bottom: 9px;
 
     color:
         var(--primary);
 
-    font-size: 10px;
+    font-size: 9px;
 
     font-weight: 900;
 
     letter-spacing: 2px;
-
-    opacity: 0.8;
 }
 
-.input-heading-line {
-    width: 45px;
+.input-heading span {
+    width: 35px;
     height: 1px;
 
     background:
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--secondary)
-        );
-}
+        var(--secondary);
 
-.input-heading-line:last-child {
-    background:
-        linear-gradient(
-            90deg,
-            var(--secondary),
-            transparent
-        );
+    opacity: 0.5;
 }
 
 /* =========================================================
@@ -826,111 +816,54 @@
 
     width: min(620px, 70vw);
 
-    height: 100px;
+    height: 95px;
 
     display: flex;
 
     align-items: center;
 
-    padding: 0 28px;
+    padding:
+        0 25px;
 
     background:
-        rgba(255,255,255,0.91);
-
-    backdrop-filter:
-        blur(16px);
+        rgba(255,255,255,0.94);
 
     border:
         2px solid
-        rgba(212,175,55,0.35);
+        rgba(212,175,55,0.32);
 
-    border-radius: 24px;
+    border-radius:
+        22px;
 
     box-shadow:
-        0 15px 35px
-        rgba(80,55,20,0.08);
+        0 12px 30px
+        rgba(80,55,20,0.07);
 
     transition:
-        border 0.5s ease,
-        transform 0.35s ease,
-        box-shadow 0.5s ease;
-}
-
-/* =========================================================
-   ANIMATED BORDER
-========================================================= */
-
-.gold-input-box::before {
-    content: "";
-
-    position: absolute;
-
-    inset: -2px;
-
-    border-radius: 25px;
-
-    padding: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--primary),
-            var(--accent),
-            var(--secondary),
-            var(--primary)
-        );
-
-    background-size:
-        300% 100%;
-
-    animation:
-        borderFlow 4s linear infinite;
-
-    z-index: -1;
-
-    opacity: 0;
-
-    transition:
-        opacity 0.4s ease;
-}
-
-.gold-input-box:focus-within::before {
-    opacity: 1;
-}
-
-@keyframes borderFlow {
-
-    0% {
-        background-position:
-            0% 50%;
-    }
-
-    100% {
-        background-position:
-            300% 50%;
-    }
+        transform 0.3s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
 .gold-input-box:focus-within {
-    border-color:
-        transparent;
-
     transform:
-        translateY(-5px)
-        scale(1.015);
+        translateY(-4px);
+
+    border-color:
+        rgba(212,175,55,0.65);
 
     box-shadow:
-        0 20px 50px
-        rgba(184,134,11,0.16);
+        0 18px 40px
+        rgba(184,134,11,0.13);
 }
 
 /* =========================================================
-   INPUT ICON
+   INPUT SYMBOL
 ========================================================= */
 
-.input-side-icon {
-    width: 38px;
-    height: 38px;
+.input-symbol {
+    width: 36px;
+    height: 36px;
 
     flex-shrink: 0;
 
@@ -941,27 +874,22 @@
 
     border-radius: 50%;
 
-    background:
-        rgba(212,175,55,0.12);
-
     color:
         var(--primary);
 
-    font-size: 15px;
+    background:
+        rgba(212,175,55,0.10);
+
+    font-size: 13px;
 
     transition:
-        transform 0.4s ease,
-        background 0.4s ease;
+        transform 0.35s ease;
 }
 
 .gold-input-box:focus-within
-.input-side-icon {
+.input-symbol {
     transform:
-        rotate(45deg)
-        scale(1.08);
-
-    background:
-        rgba(212,175,55,0.18);
+        rotate(45deg);
 }
 
 /* =========================================================
@@ -975,41 +903,24 @@
 
     outline: none;
 
-    background: transparent;
+    background:
+        transparent;
 
     text-align: center;
-
-    font-size: 46px;
-
-    font-weight: 900;
 
     color:
         var(--text);
 
-    transition:
-        color 0.5s ease,
-        transform 0.3s ease;
-}
+    font-size:
+        44px;
 
-.gold-input-box input:focus {
-    transform:
-        scale(1.02);
+    font-weight:
+        900;
 }
 
 .gold-input-box input::placeholder {
     color:
-        #c9c5bc;
-
-    transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
-}
-
-.gold-input-box input:focus::placeholder {
-    opacity: 0.25;
-
-    transform:
-        translateX(10px);
+        #c8c3b8;
 }
 
 /* =========================================================
@@ -1020,20 +931,14 @@
     color:
         var(--primary);
 
-    font-size: 18px;
+    font-size:
+        17px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    white-space: nowrap;
-
-    transition:
-        transform 0.3s ease;
-}
-
-.gold-input-box:focus-within
-.input-unit {
-    transform:
-        scale(1.05);
+    white-space:
+        nowrap;
 }
 
 /* =========================================================
@@ -1041,14 +946,14 @@
 ========================================================= */
 
 .input-hint {
-    margin-top: 8px;
+    margin-top:
+        7px;
 
     color:
-        #a8a29e;
+        #aaa398;
 
-    font-size: 10px;
-
-    letter-spacing: 0.5px;
+    font-size:
+        9px;
 }
 
 .input-hint strong {
@@ -1061,6 +966,10 @@
 ========================================================= */
 
 .gold-result {
+    position: relative;
+
+    z-index: 2;
+
     width: 100%;
 
     display: grid;
@@ -1070,15 +979,30 @@
 
     gap: 16px;
 
-    margin-top: 25px;
+    margin-top:
+        24px;
 
     animation:
-        goldResultIn
-        0.65s cubic-bezier(.17,.67,.35,1.3);
+        resultEntrance 0.6s ease;
+}
 
-    position: relative;
+@keyframes resultEntrance {
 
-    z-index: 2;
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(25px)
+            scale(0.97);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
 }
 
 /* =========================================================
@@ -1086,21 +1010,13 @@
 ========================================================= */
 
 .gold-result-card {
-    min-height: 155px;
+    position: relative;
 
-    background:
-        rgba(255,255,255,0.91);
+    min-height:
+        145px;
 
-    backdrop-filter:
-        blur(14px);
-
-    border:
-        1px solid
-        rgba(212,175,55,0.28);
-
-    border-radius: 20px;
-
-    padding: 22px;
+    padding:
+        22px;
 
     display: flex;
 
@@ -1108,22 +1024,29 @@
 
     justify-content: center;
 
-    box-shadow:
-        0 12px 30px
-        rgba(80,55,20,0.07);
-
-    position: relative;
-
     overflow: hidden;
+
+    background:
+        rgba(255,255,255,0.95);
+
+    border:
+        1px solid
+        rgba(212,175,55,0.25);
+
+    border-radius:
+        18px;
+
+    box-shadow:
+        0 10px 25px
+        rgba(80,55,20,0.06);
 
     transition:
         transform 0.35s ease,
-        box-shadow 0.35s ease,
-        border 0.5s ease;
+        box-shadow 0.35s ease;
 }
 
 /* =========================================================
-   CARD GOLD BAR
+   GOLD SIDE LINE
 ========================================================= */
 
 .gold-result-card::before {
@@ -1143,52 +1066,20 @@
             var(--primary),
             var(--accent)
         );
-
-    border-radius:
-        20px 0 0 20px;
-
-    transition:
-        width 0.35s ease;
-}
-
-/* =========================================================
-   CARD DECORATION
-========================================================= */
-
-.gold-result-card::after {
-    content: "";
-
-    position: absolute;
-
-    width: 110px;
-    height: 110px;
-
-    right: -55px;
-    top: -55px;
-
-    border-radius: 50%;
-
-    background:
-        var(--accent);
-
-    opacity: 0.08;
-
-    transition:
-        transform 0.5s ease;
 }
 
 /* =========================================================
    CARD ICON
 ========================================================= */
 
-.result-card-icon {
+.result-icon {
     position: absolute;
 
-    right: 20px;
-    top: 20px;
+    right: 18px;
+    top: 18px;
 
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
 
     display: flex;
 
@@ -1197,68 +1088,47 @@
 
     border-radius: 50%;
 
-    background:
-        rgba(212,175,55,0.10);
-
     color:
         var(--primary);
 
-    font-size: 13px;
+    background:
+        rgba(212,175,55,0.09);
 
-    font-weight: 900;
-
-    transition:
-        transform 0.4s ease;
-}
-
-.gold-result-card:hover
-.result-card-icon {
-    transform:
-        rotate(15deg)
-        scale(1.12);
+    font-size: 12px;
 }
 
 /* =========================================================
-   CARD HOVER
+   RESULT HOVER
 ========================================================= */
 
 .gold-result-card:hover {
     transform:
-        translateY(-8px)
-        scale(1.02);
+        translateY(-6px);
 
     box-shadow:
-        0 20px 45px
-        rgba(80,55,20,0.13);
-
-    border-color:
-        rgba(212,175,55,0.48);
-}
-
-.gold-result-card:hover::before {
-    width: 9px;
-}
-
-.gold-result-card:hover::after {
-    transform:
-        scale(2.5);
+        0 17px 35px
+        rgba(80,55,20,0.10);
 }
 
 /* =========================================================
-   CARD TEXT
+   RESULT TEXT
 ========================================================= */
 
 .gold-result-card span {
     color:
         var(--primary);
 
-    font-size: 12px;
+    font-size:
+        11px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    letter-spacing: 1.5px;
+    letter-spacing:
+        1.3px;
 
-    margin-bottom: 10px;
+    margin-bottom:
+        9px;
 }
 
 .gold-result-card strong {
@@ -1266,41 +1136,35 @@
         var(--text);
 
     font-size:
-        clamp(30px, 3vw, 44px);
+        clamp(28px, 3vw, 42px);
 
-    font-weight: 900;
-
-    transition:
-        transform 0.3s ease;
-}
-
-.gold-result-card:hover strong {
-    transform:
-        scale(1.04);
+    font-weight:
+        900;
 }
 
 .gold-result-card small {
-    font-size: 18px;
-
     color:
         var(--primary);
+
+    font-size:
+        17px;
 }
 
 /* =========================================================
-   PRICE CARD
+   FINAL PRICE
 ========================================================= */
 
 .gold-price-card {
     background:
         linear-gradient(
             135deg,
-            rgba(255,249,229,0.96),
-            rgba(255,255,255,0.94),
-            rgba(255,250,232,0.96)
+            #fffdf4,
+            #ffffff,
+            #fffaf0
         );
 
     border-color:
-        rgba(212,175,55,0.50);
+        rgba(212,175,55,0.45);
 }
 
 .gold-price-card strong {
@@ -1309,14 +1173,8 @@
 }
 
 /* =========================================================
-   KDM RESULT
+   KDM RESULTS
 ========================================================= */
-
-.gold-page.kdm-theme
-.gold-result-card {
-    border-color:
-        rgba(192,132,252,0.28);
-}
 
 .gold-page.kdm-theme
 .gold-result-card::before {
@@ -1324,7 +1182,7 @@
         linear-gradient(
             180deg,
             #8b5cf6,
-            #ec4899
+            #d946ef
         );
 }
 
@@ -1341,58 +1199,23 @@
 }
 
 .gold-page.kdm-theme
-.gold-result-card small {
-    color:
-        #a855f7;
-}
-
-.gold-page.kdm-theme
 .gold-price-card {
     background:
         linear-gradient(
             135deg,
-            #faf5ff,
             #ffffff,
-            #fdf2f8
+            #fdf8ff,
+            #fffaff
         );
 
     border-color:
-        #d8b4fe;
+        rgba(168,85,247,0.35);
 }
 
 .gold-page.kdm-theme
 .gold-price-card strong {
     color:
-        #9333ea;
-}
-
-/* =========================================================
-   RESULT ANIMATION
-========================================================= */
-
-@keyframes goldResultIn {
-
-    0% {
-        opacity: 0;
-
-        transform:
-            translateY(30px)
-            scale(0.94);
-    }
-
-    60% {
-        transform:
-            translateY(-5px)
-            scale(1.02);
-    }
-
-    100% {
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
+        #8b5cf6;
 }
 
 /* =========================================================
@@ -1404,42 +1227,27 @@
 
     left: 20px;
     right: 20px;
-
     bottom: 10px;
 
     display: flex;
 
-    justify-content: center;
-
     align-items: center;
 
-    gap: 11px;
+    justify-content: center;
+
+    gap: 9px;
 
     color:
         var(--primary);
 
-    font-size: 10px;
+    font-size:
+        9px;
 
-    font-weight: 900;
-
-    letter-spacing: 0.8px;
+    font-weight:
+        900;
 }
 
-/* =========================================================
-   LIVE INDICATOR
-========================================================= */
-
-.live-indicator {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    width: 9px;
-    height: 9px;
-}
-
-.live-indicator span {
+.live-dot {
     width: 7px;
     height: 7px;
 
@@ -1450,7 +1258,7 @@
 
     box-shadow:
         0 0 0 0
-        rgba(34,197,94,0.45);
+        rgba(34,197,94,0.35);
 
     animation:
         livePulse 1.7s infinite;
@@ -1461,12 +1269,12 @@
     0% {
         box-shadow:
             0 0 0 0
-            rgba(34,197,94,0.45);
+            rgba(34,197,94,0.35);
     }
 
     70% {
         box-shadow:
-            0 0 0 7px
+            0 0 0 6px
             rgba(34,197,94,0);
     }
 
@@ -1477,44 +1285,38 @@
     }
 }
 
-.current-rate-label {
-    color:
-        var(--primary);
+.live-text {
+    letter-spacing:
+        1px;
 }
 
-.current-rate-divider {
+.rate-divider {
     width: 1px;
-    height: 15px;
+    height: 14px;
 
     background:
-        rgba(120,53,15,0.18);
+        rgba(120,53,15,0.15);
 }
 
 .gold-current-rate strong {
     color:
         var(--text);
 
-    font-size: 17px;
-
-    transition:
-        transform 0.3s ease;
-}
-
-.gold-current-rate strong:hover {
-    transform:
-        scale(1.08);
+    font-size:
+        16px;
 }
 
 .gold-current-rate small {
-    font-size: 10px;
-
     color:
         var(--primary);
+
+    font-size:
+        9px;
 }
 
-.current-rate-type {
+.rate-type {
     padding:
-        4px 9px;
+        4px 8px;
 
     border-radius:
         20px;
@@ -1522,48 +1324,34 @@
     background:
         rgba(212,175,55,0.10);
 
-    color:
-        var(--primary);
+    font-size:
+        7px;
 
-    font-size: 8px;
-
-    letter-spacing: 1px;
+    letter-spacing:
+        1px;
 }
 
 /* =========================================================
-   BRAND FOOTER
+   BRAND
 ========================================================= */
 
-.gold-brand-footer {
+.gold-brand {
     position: absolute;
 
     left: 20px;
-    bottom: 37px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 8px;
+    bottom: 11px;
 
     color:
-        rgba(120,53,15,0.35);
+        rgba(120,53,15,0.22);
 
-    font-size: 7px;
+    font-size:
+        7px;
 
-    font-weight: 900;
+    font-weight:
+        900;
 
-    letter-spacing: 2.5px;
-
-    pointer-events: none;
-}
-
-.brand-line {
-    width: 22px;
-    height: 1px;
-
-    background:
-        rgba(184,134,11,0.28);
+    letter-spacing:
+        2px;
 }
 
 /* =========================================================
@@ -1571,29 +1359,37 @@
 ========================================================= */
 
 .gold-loading {
-    height: calc(100vh - 72px);
+    height:
+        calc(100vh - 72px);
 
     display: flex;
 
     flex-direction: column;
 
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
-
-    gap: 18px;
+    gap:
+        18px;
 
     background:
-        radial-gradient(
-            circle,
-            #fffaf0,
-            #ffffff
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #fffaf0
         );
 }
 
 .gold-svs-loader {
-    width: 90px;
-    height: 90px;
+    width: 85px;
+    height: 85px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 
     border-radius: 50%;
 
@@ -1601,30 +1397,20 @@
         linear-gradient(
             135deg,
             #b8860b,
-            #d4af37,
-            #e5c158
+            #d4af37
         );
 
-    color: white;
+    color:
+        #ffffff;
 
-    display: flex;
+    font-size:
+        21px;
 
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 22px;
-
-    font-weight: 900;
-
-    position: relative;
+    font-weight:
+        900;
 
     animation:
         loaderPulse 1.5s infinite;
-
-    box-shadow:
-        0 15px 35px
-        rgba(184,134,11,0.22);
 }
 
 .gold-svs-loader::before {
@@ -1634,55 +1420,29 @@
 
     inset: -7px;
 
-    border-radius: 50%;
-
-    border: 4px solid transparent;
+    border:
+        4px solid transparent;
 
     border-top-color:
         #d4af37;
 
     border-right-color:
-        #f0abfc;
+        #f1d77a;
+
+    border-radius: 50%;
 
     animation:
         loaderSpin 0.8s linear infinite;
 }
 
-.gold-svs-loader::after {
-    content: "";
-
-    position: absolute;
-
-    inset: -15px;
-
-    border-radius: 50%;
-
-    border:
-        2px solid
-        rgba(212,175,55,0.15);
-
-    animation:
-        loaderOuter 2s linear infinite;
-}
-
 @keyframes loaderSpin {
-
     to {
         transform:
             rotate(360deg);
     }
 }
 
-@keyframes loaderOuter {
-
-    to {
-        transform:
-            rotate(-360deg);
-    }
-}
-
 @keyframes loaderPulse {
-
     50% {
         transform:
             scale(1.08);
@@ -1690,22 +1450,14 @@
 }
 
 .gold-loading-text {
-    font-size: 17px;
-
-    font-weight: 800;
-
     color:
         #795b0b;
 
-    animation:
-        loadingText 1.5s infinite;
-}
+    font-size:
+        16px;
 
-@keyframes loadingText {
-
-    50% {
-        opacity: 0.45;
-    }
+    font-weight:
+        800;
 }
 
 /* =========================================================
@@ -1713,29 +1465,31 @@
 ========================================================= */
 
 .gold-error {
-    height: calc(100vh - 72px);
+    height:
+        calc(100vh - 72px);
 
     display: flex;
 
     flex-direction: column;
 
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
-
-    gap: 14px;
+    gap:
+        14px;
 
     background:
-        linear-gradient(
-            135deg,
-            #fffaf0,
-            #fff
-        );
+        #ffffff;
 }
 
 .gold-error-logo {
-    width: 80px;
-    height: 80px;
+    width: 75px;
+    height: 75px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 
     border-radius: 50%;
 
@@ -1743,93 +1497,68 @@
         linear-gradient(
             135deg,
             #b8860b,
-            #d4af37,
-            #ec4899
+            #d4af37
         );
 
-    color: white;
+    color:
+        #ffffff;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-weight: 900;
-
-    animation:
-        errorFloat 2s ease-in-out infinite;
+    font-weight:
+        900;
 }
 
 .gold-error-title {
     color:
         #654b08;
 
-    font-size: 17px;
+    font-size:
+        17px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 }
 
 .gold-error-subtitle {
     color:
         #a8a29e;
 
-    font-size: 12px;
+    font-size:
+        12px;
 }
-
-@keyframes errorFloat {
-
-    50% {
-        transform:
-            translateY(-10px)
-            rotate(5deg);
-    }
-}
-
-/* =========================================================
-   RETRY
-========================================================= */
 
 .gold-retry {
-    border: none;
-
     padding:
-        12px 30px;
+        11px 28px;
+
+    border:
+        none;
 
     border-radius:
-        12px;
+        10px;
 
     background:
         linear-gradient(
             135deg,
             #b8860b,
-            #d4af37,
-            #ec4899
+            #d4af37
         );
 
-    color: white;
+    color:
+        #ffffff;
 
-    font-weight: 900;
+    font-weight:
+        800;
 
-    cursor: pointer;
-
-    box-shadow:
-        0 10px 25px
-        rgba(184,134,11,0.20);
+    cursor:
+        pointer;
 
     transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
+        transform 0.3s ease;
 }
 
 .gold-retry:hover {
     transform:
-        translateY(-4px)
-        scale(1.04);
-
-    box-shadow:
-        0 15px 30px
-        rgba(184,134,11,0.30);
+        translateY(-3px);
 }
 
 /* =========================================================
@@ -1839,9 +1568,6 @@
 @media (max-width: 700px) {
 
     .gold-page {
-        height:
-            calc(100vh - 72px);
-
         padding:
             12px;
     }
@@ -1851,52 +1577,69 @@
             112px;
     }
 
-    .gold-rate-buttons {
+    /* LEFT BUTTONS */
+
+    .gold-controls {
         gap:
             8px;
+
+        padding-top:
+            0;
+    }
+
+    .gold-section-label {
+        font-size:
+            7px;
+
+        letter-spacing:
+            1.3px;
+    }
+
+    .label-line {
+        width:
+            18px;
+    }
+
+    .gold-rate-buttons {
+        gap:
+            7px;
     }
 
     .gold-rate-button {
         width:
-            120px;
-
-        min-width:
-            0;
+            105px;
 
         height:
-            52px;
+            50px;
 
-        font-size:
-            13px;
-
-        border-radius:
-            14px;
-    }
-
-    .button-icon {
         font-size:
             12px;
+
+        border-radius:
+            13px;
     }
 
-    /* IMAGE */
+    .button-symbol {
+        font-size:
+            11px;
+    }
+
+    /* RIGHT IMAGE */
 
     .gold-image-wrapper {
         width:
-            135px;
-
-        top:
-            0;
+            125px;
     }
 
     .gold-image-box {
         width:
-            125px;
+            120px;
 
         height:
-            82px;
+            78px;
 
         border-radius:
-            16px;
+            15px;
     }
 
     .gold-image-box::before {
@@ -1904,44 +1647,44 @@
             4px;
 
         border-radius:
-            12px;
+            11px;
     }
 
-    .image-label {
+    .image-premium-label {
         top:
             5px;
 
         right:
-            7px;
+            6px;
 
         font-size:
-            6px;
+            5px;
 
         padding:
-            4px 7px;
+            4px 6px;
     }
 
-    .image-overlay {
+    .image-bottom-label {
         font-size:
-            6px;
+            5px;
 
         letter-spacing:
-            1.5px;
+            1.2px;
     }
 
     /* INPUT */
 
     .input-heading {
         font-size:
-            8px;
+            7px;
 
         gap:
-            7px;
+            6px;
     }
 
-    .input-heading-line {
+    .input-heading span {
         width:
-            25px;
+            22px;
     }
 
     .gold-input-box {
@@ -1949,105 +1692,95 @@
             96%;
 
         height:
-            82px;
+            78px;
 
         padding:
-            0 15px;
+            0 14px;
 
         border-radius:
-            18px;
+            17px;
     }
 
-    .input-side-icon {
+    .input-symbol {
         width:
-            30px;
+            28px;
 
         height:
-            30px;
+            28px;
 
         font-size:
-            11px;
+            10px;
     }
 
     .gold-input-box input {
         font-size:
-            35px;
+            32px;
     }
 
     .input-unit {
         font-size:
-            13px;
-    }
-
-    .input-hint {
-        font-size:
-            8px;
+            12px;
     }
 
     /* RESULT */
 
     .gold-result {
         gap:
-            9px;
+            8px;
 
         margin-top:
-            15px;
+            14px;
     }
 
     .gold-result-card {
         min-height:
-            115px;
+            110px;
 
         padding:
-            14px;
+            12px;
 
         border-radius:
-            14px;
+            13px;
     }
 
-    .result-card-icon {
-        width:
-            25px;
-
-        height:
-            25px;
-
-        right:
-            12px;
-
-        top:
-            12px;
-
-        font-size:
-            10px;
+    .result-icon {
+        display:
+            none;
     }
 
     .gold-result-card span {
         font-size:
-            9px;
+            8px;
     }
 
     .gold-result-card strong {
         font-size:
-            24px;
+            22px;
     }
 
     .gold-result-card small {
         font-size:
-            13px;
+            12px;
     }
 
-    /* RATE */
+    /* CURRENT RATE */
 
     .gold-current-rate {
         bottom:
-            8px;
-
-        font-size:
-            8px;
+            7px;
 
         gap:
             6px;
+    }
+
+    .live-text {
+        display:
+            none;
+    }
+
+    .rate-divider {
+        display:
+            none;
     }
 
     .gold-current-rate strong {
@@ -2060,7 +1793,7 @@
             8px;
     }
 
-    .current-rate-type {
+    .rate-type {
         font-size:
             6px;
 
@@ -2068,7 +1801,7 @@
             3px 6px;
     }
 
-    .gold-brand-footer {
+    .gold-brand {
         display:
             none;
     }
@@ -2092,93 +1825,64 @@
 
     .gold-rate-button {
         width:
-            105px;
+            92px;
 
         height:
-            48px;
+            46px;
 
         font-size:
-            12px;
+            11px;
     }
 
     .gold-image-wrapper {
         width:
-            112px;
+            105px;
     }
 
     .gold-image-box {
         width:
-            105px;
+            100px;
 
         height:
-            72px;
-
-        border-radius:
-            14px;
+            68px;
     }
 
-    .gold-image-box::before {
-        inset:
-            3px;
-
-        border-radius:
-            10px;
+    .image-premium-label {
+        display:
+            none;
     }
 
-    .image-label {
+    .gold-input-box {
+        height:
+            74px;
+    }
+
+    .input-symbol {
         display:
             none;
     }
 
     .gold-input-box input {
         font-size:
-            30px;
-    }
-
-    .input-side-icon {
-        display:
-            none;
+            29px;
     }
 
     .gold-result-card {
         min-height:
-            105px;
+            100px;
 
         padding:
-            11px;
+            10px;
     }
 
     .gold-result-card strong {
         font-size:
-            21px;
-    }
-
-    .result-card-icon {
-        display:
-            none;
-    }
-
-    .gold-current-rate {
-        left:
-            10px;
-
-        right:
-            10px;
-    }
-
-    .current-rate-label {
-        display:
-            none;
-    }
-
-    .current-rate-divider {
-        display:
-            none;
+            19px;
     }
 }
 
 /* =========================================================
-   REDUCE ANIMATION FOR ACCESSIBILITY
+   REDUCE MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
