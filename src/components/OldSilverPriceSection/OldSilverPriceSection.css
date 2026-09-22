@@ -2,32 +2,205 @@
     box-sizing: border-box;
 }
 
+/* =========================================================
+   MAIN PAGE — PREMIUM SHOWROOM BACKGROUND
+========================================================= */
+
 .silver-page {
+    position: relative;
     height: calc(100vh - 72px);
     width: 100vw;
-
     padding: 20px;
-
     overflow: hidden;
 
     background:
         radial-gradient(
-            circle at 85% 15%,
-            rgba(148, 163, 184, 0.18),
-            transparent 25%
+            circle at 12% 18%,
+            rgba(212, 175, 55, 0.18),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 88% 12%,
+            rgba(226, 232, 240, 0.75),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 78% 85%,
+            rgba(245, 221, 170, 0.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 20% 90%,
+            rgba(226, 232, 240, 0.55),
+            transparent 28%
         ),
         linear-gradient(
             135deg,
-            #ffffff,
-            #f8fafc,
-            #f1f5f9
+            #ffffff 0%,
+            #fffdf8 28%,
+            #f8fafc 58%,
+            #fffaf0 100%
         );
 
-    transition: filter 0.3s ease;
+    transition:
+        filter 0.35s ease,
+        transform 0.35s ease;
 }
 
+/* =========================================================
+   ANIMATED LIGHT ORBS
+========================================================= */
+
+.silver-page::before,
+.silver-page::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    filter: blur(8px);
+}
+
+/* Champagne light */
+.silver-page::before {
+    width: 380px;
+    height: 380px;
+
+    left: -120px;
+    top: -150px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.16) 0%,
+            rgba(245, 222, 170, 0.10) 38%,
+            transparent 72%
+        );
+
+    animation: silverLuxuryOrb 12s ease-in-out infinite alternate;
+}
+
+/* Silver light */
+.silver-page::after {
+    width: 420px;
+    height: 420px;
+
+    right: -140px;
+    bottom: -180px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(203, 213, 225, 0.25) 0%,
+            rgba(241, 245, 249, 0.14) 40%,
+            transparent 72%
+        );
+
+    animation: silverLuxuryOrb2 15s ease-in-out infinite alternate;
+}
+
+@keyframes silverLuxuryOrb {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(100px, 70px) scale(1.18);
+    }
+
+    100% {
+        transform: translate(180px, 10px) scale(0.92);
+    }
+}
+
+@keyframes silverLuxuryOrb2 {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-100px, -80px) scale(1.15);
+    }
+
+    100% {
+        transform: translate(-40px, -160px) scale(0.9);
+    }
+}
+
+/* =========================================================
+   MOVING SHIMMER
+========================================================= */
+
+.silver-page {
+    background-size: 180% 180%;
+    animation: silverBackgroundMove 18s ease-in-out infinite;
+}
+
+@keyframes silverBackgroundMove {
+    0% {
+        background-position: 0% 20%;
+    }
+
+    50% {
+        background-position: 100% 80%;
+    }
+
+    100% {
+        background-position: 0% 20%;
+    }
+}
+
+/* =========================================================
+   SUBTLE LUXURY GRID
+========================================================= */
+
+.silver-page > * {
+    position: relative;
+    z-index: 2;
+}
+
+.silver-page .silver-input-area::before {
+    content: "";
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.055),
+            transparent 68%
+        );
+
+    pointer-events: none;
+
+    animation: silverGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes silverGlow {
+    from {
+        opacity: 0.35;
+        transform: translate(-50%, -50%) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.12);
+    }
+}
+
+/* =========================================================
+   FOCUS STATE
+========================================================= */
+
 .silver-unfocused {
-    filter: brightness(0.55);
+    filter: brightness(0.72);
 }
 
 .silver-focused {
@@ -35,7 +208,9 @@
 }
 
 
-/* TOP */
+/* =========================================================
+   TOP
+========================================================= */
 
 .silver-top {
     width: 100%;
@@ -46,10 +221,14 @@
     align-items: flex-start;
 }
 
+
+/* =========================================================
+   TITLE
+========================================================= */
+
 .silver-title-button {
     height: 60px;
     min-width: 190px;
-
     padding: 0 30px;
 
     border-radius: 14px;
@@ -58,19 +237,94 @@
     align-items: center;
     justify-content: center;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8fafc
+        );
 
-    color: white;
+    color: #334155;
 
     font-size: 18px;
     font-weight: 800;
 
+    border: 1px solid rgba(203, 213, 225, 0.8);
+
     box-shadow:
-        0 10px 25px rgba(15, 23, 42, 0.2);
+        0 10px 25px rgba(15, 23, 42, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+
+    animation:
+        silverTitleIn 0.6s ease,
+        silverFloat 5s ease-in-out infinite;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.silver-title-button::before {
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    top: -70px;
+    left: -100px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(212, 175, 55, 0.25),
+            transparent 70%
+        );
+
+    animation: silverTitleGlow 4s ease-in-out infinite;
+}
+
+@keyframes silverTitleIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes silverTitleGlow {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(230px, 40px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes silverFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
 }
 
 
-/* IMAGE */
+/* =========================================================
+   IMAGE
+========================================================= */
 
 .silver-image-box {
     width: 190px;
@@ -80,14 +334,17 @@
 
     border-radius: 18px;
 
-    background: white;
+    background: #ffffff;
 
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(226, 232, 240, 0.9);
 
     box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.12);
+        0 12px 30px rgba(15, 23, 42, 0.10),
+        0 0 30px rgba(212, 175, 55, 0.08);
 
-    animation: silverImageIn 0.4s ease;
+    animation:
+        silverImageIn 0.6s ease,
+        silverImageFloat 6s ease-in-out infinite;
 }
 
 .silver-image-box img {
@@ -95,6 +352,15 @@
     height: 100%;
 
     object-fit: cover;
+
+    transition:
+        transform 0.6s ease,
+        filter 0.6s ease;
+}
+
+.silver-image-box:hover img {
+    transform: scale(1.08);
+    filter: brightness(1.04);
 }
 
 @keyframes silverImageIn {
@@ -109,14 +375,29 @@
     }
 }
 
+@keyframes silverImageFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
 
-/* INPUT */
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
 
 .silver-input-area {
     width: 100%;
 
     display: flex;
     justify-content: center;
+
+    position: relative;
 }
 
 .silver-input-box {
@@ -128,25 +409,75 @@
 
     padding: 0 28px;
 
-    background: white;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 253, 248, 0.96)
+        );
 
-    border: 3px solid #cbd5e1;
+    border: 2px solid rgba(226, 232, 240, 0.95);
 
     border-radius: 22px;
 
     box-shadow:
-        0 15px 35px rgba(15, 23, 42, 0.08);
+        0 15px 35px rgba(15, 23, 42, 0.08),
+        0 0 40px rgba(212, 175, 55, 0.06);
 
-    transition: 0.25s ease;
+    transition:
+        0.3s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* Moving premium shine */
+
+.silver-input-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.75),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    animation: silverInputShine 5s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+@keyframes silverInputShine {
+    0% {
+        left: -120%;
+    }
+
+    45%,
+    100% {
+        left: 150%;
+    }
 }
 
 .silver-input-box:focus-within {
-    border-color: #111827;
+    border-color: rgba(212, 175, 55, 0.65);
 
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 
     box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.15);
+        0 18px 45px rgba(15, 23, 42, 0.12),
+        0 0 35px rgba(212, 175, 55, 0.14);
 }
 
 .silver-input-box input {
@@ -162,7 +493,10 @@
     font-size: 46px;
     font-weight: 900;
 
-    color: #111827;
+    color: #334155;
+
+    position: relative;
+    z-index: 2;
 }
 
 .silver-input-box input::placeholder {
@@ -174,10 +508,15 @@
 
     font-size: 19px;
     font-weight: 800;
+
+    position: relative;
+    z-index: 2;
 }
 
 
-/* RESULT */
+/* =========================================================
+   RESULT
+========================================================= */
 
 .silver-result {
     width: 100%;
@@ -191,15 +530,20 @@
 
     margin-top: 25px;
 
-    animation: silverResultIn 0.4s ease;
+    animation: silverResultIn 0.5s ease;
 }
 
 .silver-result-card {
     min-height: 155px;
 
-    background: white;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.98),
+            rgba(255, 253, 248, 0.95)
+        );
 
-    border: 1px solid #e2e8f0;
+    border: 1px solid rgba(226, 232, 240, 0.9);
 
     border-radius: 20px;
 
@@ -210,9 +554,24 @@
     justify-content: center;
 
     box-shadow:
-        0 12px 30px rgba(15, 23, 42, 0.07);
+        0 12px 30px rgba(15, 23, 42, 0.07),
+        0 0 25px rgba(212, 175, 55, 0.04);
 
     position: relative;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.silver-result-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 20px 40px rgba(15, 23, 42, 0.10),
+        0 0 30px rgba(212, 175, 55, 0.08);
 }
 
 .silver-result-card::before {
@@ -226,7 +585,13 @@
 
     width: 5px;
 
-    background: #64748b;
+    background:
+        linear-gradient(
+            180deg,
+            #d4af37,
+            #e7d18b,
+            #cbd5e1
+        );
 
     border-radius: 20px 0 0 20px;
 }
@@ -235,7 +600,6 @@
     color: #64748b;
 
     font-size: 14px;
-
     font-weight: 900;
 
     letter-spacing: 0.7px;
@@ -244,7 +608,7 @@
 }
 
 .silver-result-card strong {
-    color: #111827;
+    color: #334155;
 
     font-size: clamp(30px, 3vw, 44px);
 
@@ -253,31 +617,43 @@
 
 .silver-result-card small {
     font-size: 18px;
+
     color: #64748b;
 }
 
 
-/* PRICE */
+/* =========================================================
+   PRICE
+========================================================= */
 
 .silver-price-card {
     background:
         linear-gradient(
             135deg,
-            #f8fafc,
-            #ffffff
+            #fffdf5,
+            #ffffff,
+            #f8fafc
         );
 }
 
 .silver-price-card::before {
-    background: #334155;
+    background:
+        linear-gradient(
+            180deg,
+            #d4af37,
+            #e6c968,
+            #cbd5e1
+        );
 }
 
 .silver-price-card strong {
-    color: #1e293b;
+    color: #a47c00;
 }
 
 
-/* 60% BADGE */
+/* =========================================================
+   60% BADGE
+========================================================= */
 
 .silver-percentage {
     position: absolute;
@@ -289,29 +665,37 @@
 
     border-radius: 8px;
 
-    background: #e2e8f0;
+    background:
+        linear-gradient(
+            135deg,
+            #fff7d6,
+            #fef3c7
+        );
 
-    color: #334155;
+    color: #9a7611;
+
+    border: 1px solid rgba(212, 175, 55, 0.20);
 
     font-size: 12px;
-
     font-weight: 900;
 }
 
 @keyframes silverResultIn {
     from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(15px) scale(0.98);
     }
 
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 
-/* CURRENT RATE */
+/* =========================================================
+   CURRENT RATE
+========================================================= */
 
 .silver-current-rate {
     position: absolute;
@@ -330,23 +714,25 @@
     color: #64748b;
 
     font-size: 12px;
-
     font-weight: 800;
 }
 
 .silver-current-rate strong {
-    color: #334155;
+    color: #a47c00;
 
     font-size: 15px;
 }
 
 .silver-current-rate small {
     font-size: 11px;
+
     color: #94a3b8;
 }
 
 
-/* LOADING */
+/* =========================================================
+   LOADING
+========================================================= */
 
 .silver-loading {
     height: calc(100vh - 72px);
@@ -359,7 +745,12 @@
 
     gap: 18px;
 
-    background: #f8fafc;
+    background:
+        radial-gradient(
+            circle at center,
+            #fffdf5,
+            #f8fafc
+        );
 }
 
 .silver-svs-loader {
@@ -368,11 +759,19 @@
 
     border-radius: 50%;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8fafc
+        );
 
-    color: white;
+    color: #a47c00;
+
+    border: 1px solid #e2e8f0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -382,6 +781,9 @@
     position: relative;
 
     animation: silverLoaderPulse 1.5s infinite;
+
+    box-shadow:
+        0 10px 35px rgba(15, 23, 42, 0.08);
 }
 
 .silver-svs-loader::before {
@@ -395,7 +797,9 @@
 
     border: 4px solid transparent;
 
-    border-top-color: #94a3b8;
+    border-top-color: #d4af37;
+
+    border-right-color: #e7d18b;
 
     animation: silverLoaderSpin 0.8s linear infinite;
 }
@@ -414,12 +818,16 @@
 
 .silver-loading-text {
     font-size: 17px;
+
     font-weight: 800;
+
     color: #475569;
 }
 
 
-/* ERROR */
+/* =========================================================
+   ERROR
+========================================================= */
 
 .silver-error {
     height: calc(100vh - 72px);
@@ -432,7 +840,12 @@
 
     gap: 20px;
 
-    background: #f8fafc;
+    background:
+        radial-gradient(
+            circle at center,
+            #fffdf5,
+            #f8fafc
+        );
 }
 
 .silver-error-logo {
@@ -441,35 +854,62 @@
 
     border-radius: 50%;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f8fafc
+        );
 
-    color: white;
+    color: #a47c00;
+
+    border: 1px solid #e2e8f0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     font-weight: 900;
+
+    box-shadow:
+        0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
 .silver-retry {
-    border: none;
+    border: 1px solid rgba(212, 175, 55, 0.35);
 
     padding: 12px 30px;
 
     border-radius: 10px;
 
-    background: #111827;
+    background:
+        linear-gradient(
+            135deg,
+            #fffdf5,
+            #ffffff
+        );
 
-    color: white;
+    color: #9a7611;
 
     font-weight: 800;
 
     cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.silver-retry:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(212, 175, 55, 0.15);
 }
 
 
-/* MOBILE */
+/* =========================================================
+   MOBILE
+========================================================= */
 
 @media (max-width: 700px) {
 
@@ -483,7 +923,6 @@
 
     .silver-title-button {
         min-width: 115px;
-
         height: 52px;
 
         padding: 0 15px;
@@ -518,7 +957,9 @@
 
     .silver-result-card {
         min-height: 115px;
+
         padding: 14px;
+
         border-radius: 14px;
     }
 
@@ -532,5 +973,24 @@
 
     .silver-result-card small {
         font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .silver-page,
+    .silver-page::before,
+    .silver-page::after,
+    .silver-title-button,
+    .silver-image-box,
+    .silver-input-box::before,
+    .silver-page .silver-input-area::before,
+    .silver-svs-loader {
+        animation: none;
     }
 }
