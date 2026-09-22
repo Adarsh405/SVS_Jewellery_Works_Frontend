@@ -1,5 +1,7 @@
 import {Component} from 'react'
 import './GoldPriceSection.css'
+import HallmarkImage from './Hallmark.png'
+import kdmImage from './Kdm.png'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com/api/rates'
@@ -250,10 +252,10 @@ class GoldPriceSection extends Component {
     } = this.state
 
     if (selectedRate === 'hallmark') {
-      return 'https://i.pinimg.com/originals/9a/ca/37/9aca37e75a774508218415133dd98f07.jpg'
+      return {kdmImage}
     }
 
-    return 'https://i.pinimg.com/originals/6c/4e/83/6c4e83d3e48bdeaf4b3dff9f0a0d8b45.jpg'
+    return {HallmarkImage}
   }
 
   // =========================================================
