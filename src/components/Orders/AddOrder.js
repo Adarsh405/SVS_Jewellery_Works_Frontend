@@ -441,7 +441,7 @@ class AddOrder extends Component {
       }
 
       this.props.onSaved()
-    } } catch (error) {
+    }catch (error) {
         console.error('CREATE ORDER ERROR:', error)
 
         console.error('API RESPONSE:', error.response?.data)
