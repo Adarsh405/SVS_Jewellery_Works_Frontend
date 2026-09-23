@@ -416,20 +416,14 @@ class AddOrder extends Component {
       let response
 
       if (this.props.order) {
-        response = await axios.put(
-          `${API_URL}/${this.props.order.id}`,
-          formData,
-          {
-            withCredentials: true,
-          },
+        response = await axios.post(
+        API_URL,
+        formData,
         )
       } else {
         response = await axios.post(
           API_URL,
-          formData,
-          {
-            withCredentials: true,
-          },
+          formData
         )
       }
 
@@ -441,9 +435,9 @@ class AddOrder extends Component {
       }
 
       this.props.onSaved()
-    }catch (error) {
+    }
+    catch (error) {
         console.error('CREATE ORDER ERROR:', error)
-
         console.error('API RESPONSE:', error.response?.data)
 
         this.setState({
