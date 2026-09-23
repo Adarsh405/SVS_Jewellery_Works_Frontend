@@ -459,13 +459,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 
-  animation: titleShine 7s linear infinite;
-}
-
-@keyframes titleShine {
-  to {
-    background-position: 250% center;
-  }
 }
 
 .sales-header p {
