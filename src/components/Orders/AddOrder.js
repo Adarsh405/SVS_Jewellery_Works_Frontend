@@ -442,16 +442,14 @@ class AddOrder extends Component {
 
       this.props.onSaved()
     } catch (error) {
-      console.error(error)
+        console.error('CREATE ORDER ERROR:', error);
 
-      this.setState({
-        submitting: false,
-        error:
-          error.response?.data?.message ||
-          error.message ||
-          'Failed to save order.',
-      })
-    }
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+            error: error.detail || null,
+        });
+        }
   }
 
   renderTypeSelection = () => (
