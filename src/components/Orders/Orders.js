@@ -14,72 +14,167 @@ import {
 import AddOrder from './AddOrder'
 import './Orders.css'
 
-const API_URL ='https://svs-jewellery-works-backend.onrender.com/api/orders';
+const API_URL =
+  'https://svs-jewellery-works-backend.onrender.com/api/orders'
+
+const BACKEND_URL =
+  'https://svs-jewellery-works-backend.onrender.com'
+
+// ============================================================
+// IMAGE URL
+// ============================================================
+
+const getImage = image => {
+  if (!image || typeof image !== 'string') {
+    return null
+  }
+
+  const cleanImage = image.trim()
+
+  if (!cleanImage) {
+    return null
+  }
+
+  // Already complete URL
+  if (
+    cleanImage.startsWith('http://') ||
+    cleanImage.startsWith('https://')
+  ) {
+    return cleanImage
+  }
+
+  // Backend stored path:
+  // /uploads/orders/order-123.jpg
+  if (cleanImage.startsWith('/')) {
+    return `${BACKEND_URL}${cleanImage}`
+  }
+
+  // Backend stored path without /
+  // uploads/orders/order-123.jpg
+  return `${BACKEND_URL}/${cleanImage}`
+}
+
+// ============================================================
+// TOTAL VALUE
+// ============================================================
 
 const calculateTotal = order => {
-  const type = String(order.order_type || order.orderType || '').toLowerCase()
+  const type = String(
+    order.order_type ||
+      order.orderType ||
+      '',
+  ).toLowerCase()
 
-  const makingCost = Number(order.making_cost || order.makingCost || 0)
+  const makingCost = Number(
+    order.making_cost ||
+      order.makingCost ||
+      0,
+  )
 
+  // SILVER
   if (type === 'silver') {
     return (
       Number(order.weight || 0) *
-        Number(order.silver_rate || order.silverRate || 0)
+        Number(
+          order.silver_rate ||
+            order.silverRate ||
+            0,
+        )
     ) + makingCost
   }
 
+  // GOLD
   return (
     (
-      Number(order.net_weight || order.netWeight || 0) +
-      Number(order.charges || 0)
+      Number(
+        order.net_weight ||
+          order.netWeight ||
+          0,
+      ) +
+        Number(order.charges || 0)
     ) *
-      Number(order.gold_rate || order.goldRate || 0)
+      Number(
+        order.gold_rate ||
+          order.goldRate ||
+          0,
+      )
   ) + makingCost
 }
 
-const calculateDue = order =>
-  calculateTotal(order) -
-  Number(order.advance_paid || order.advancePaid || 0)
+// ============================================================
+// DUE
+// ============================================================
+
+const calculateDue = order => {
+  const total = calculateTotal(order)
+
+  const advance = Number(
+    order.advance_paid ||
+      order.advancePaid ||
+      0,
+  )
+
+  return Math.max(
+    0,
+    total - advance,
+  )
+}
+
+// ============================================================
+// MONEY
+// ============================================================
 
 const money = value =>
-  `₹${Number(value || 0).toLocaleString('en-IN', {
+  `₹${Number(
+    value || 0,
+  ).toLocaleString('en-IN', {
     maximumFractionDigits: 2,
   })}`
 
+// ============================================================
+// TYPE NAME
+// ============================================================
+
 const getTypeName = type => {
-  switch (String(type).toLowerCase()) {
+  switch (
+    String(type || '').toLowerCase()
+  ) {
     case 'kdm':
       return 'KDM Gold'
+
     case 'hallmark':
       return 'Hallmark Gold'
+
     case 'silver':
       return 'Silver'
+
     default:
       return type || '-'
   }
 }
 
-const getImage = image => {
-  if (!image) return null
-
-  if (image.startsWith('http')) return image
-
-  if (image.startsWith('/')) return image
-
-  return `/${image}`
-}
+// ============================================================
+// ORDERS COMPONENT
+// ============================================================
 
 class Orders extends Component {
   state = {
     orders: [],
+
     loading: true,
+
     error: '',
+
     search: '',
+
     status: 'pending',
+
     orderType: 'all',
+
     dateFilter: 'all',
 
     showAddOrder: false,
+
     editingOrder: null,
 
     selectedOrder: null,
@@ -89,9 +184,17 @@ class Orders extends Component {
     updatingStatus: null,
   }
 
+  // ==========================================================
+  // MOUNT
+  // ==========================================================
+
   componentDidMount() {
     this.fetchOrders()
   }
+
+  // ==========================================================
+  // FETCH ORDERS
+  // ==========================================================
 
   fetchOrders = async () => {
     try {
@@ -109,43 +212,73 @@ class Orders extends Component {
 
       const params = {}
 
+      // SEARCH
       if (search.trim()) {
-        params.search = search.trim()
+        params.search =
+          search.trim()
       }
 
+      // STATUS
       if (status !== 'all') {
         params.status = status
       }
 
+      // ORDER TYPE
       if (orderType !== 'all') {
-        params.order_type = orderType
+        params.order_type =
+          orderType
       }
 
-      const dates = this.getDateRange(dateFilter)
+      // DATE
+      const dates =
+        this.getDateRange(
+          dateFilter,
+        )
 
-      if (dates.from) params.from_date = dates.from
-      if (dates.to) params.to_date = dates.to
+      if (dates.from) {
+        params.from_date =
+          dates.from
+      }
 
-      const response = await axios.get(API_URL, {
-        params,
-        withCredentials: true,
-      })
+      if (dates.to) {
+        params.to_date =
+          dates.to
+      }
+
+      const response =
+        await axios.get(
+          API_URL,
+          {
+            params,
+            withCredentials: true,
+          },
+        )
 
       this.setState({
-        orders: response.data.orders || [],
+        orders:
+          response.data?.orders ||
+          [],
         loading: false,
       })
     } catch (error) {
-      console.error(error)
+      console.error(
+        'FETCH ORDERS ERROR:',
+        error,
+      )
 
       this.setState({
         loading: false,
         error:
-          error.response?.data?.message ||
+          error.response?.data
+            ?.message ||
           'Failed to load orders',
       })
     }
   }
+
+  // ==========================================================
+  // DATE RANGE
+  // ==========================================================
 
   getDateRange = filter => {
     if (filter === 'all') {
@@ -158,15 +291,24 @@ class Orders extends Component {
     const today = new Date()
 
     const format = date => {
-      const year = date.getFullYear()
-      const month = String(date.getMonth() + 1).padStart(2, '0')
-      const day = String(date.getDate()).padStart(2, '0')
+      const year =
+        date.getFullYear()
+
+      const month = String(
+        date.getMonth() + 1,
+      ).padStart(2, '0')
+
+      const day = String(
+        date.getDate(),
+      ).padStart(2, '0')
 
       return `${year}-${month}-${day}`
     }
 
-    const from = new Date(today)
+    const from =
+      new Date(today)
 
+    // TODAY
     if (filter === 'today') {
       return {
         from: format(today),
@@ -174,11 +316,18 @@ class Orders extends Component {
       }
     }
 
+    // WEEK
     if (filter === 'week') {
-      const day = from.getDay()
-      const difference = day === 0 ? 6 : day - 1
+      const day =
+        from.getDay()
 
-      from.setDate(from.getDate() - difference)
+      const difference =
+        day === 0 ? 6 : day - 1
+
+      from.setDate(
+        from.getDate() -
+          difference,
+      )
 
       return {
         from: format(from),
@@ -186,6 +335,7 @@ class Orders extends Component {
       }
     }
 
+    // MONTH
     if (filter === 'month') {
       from.setDate(1)
 
@@ -201,14 +351,23 @@ class Orders extends Component {
     }
   }
 
+  // ==========================================================
+  // SEARCH
+  // ==========================================================
+
   handleSearch = event => {
     this.setState(
       {
-        search: event.target.value,
+        search:
+          event.target.value,
       },
       this.fetchOrders,
     )
   }
+
+  // ==========================================================
+  // STATUS FILTER
+  // ==========================================================
 
   handleStatusFilter = status => {
     this.setState(
@@ -219,6 +378,10 @@ class Orders extends Component {
     )
   }
 
+  // ==========================================================
+  // TYPE FILTER
+  // ==========================================================
+
   handleTypeFilter = orderType => {
     this.setState(
       {
@@ -227,6 +390,10 @@ class Orders extends Component {
       this.fetchOrders,
     )
   }
+
+  // ==========================================================
+  // DATE FILTER
+  // ==========================================================
 
   handleDateFilter = dateFilter => {
     this.setState(
@@ -237,12 +404,21 @@ class Orders extends Component {
     )
   }
 
+  // ==========================================================
+  // ADD ORDER
+  // ==========================================================
+
   openAdd = () => {
     this.setState({
       showAddOrder: true,
       editingOrder: null,
+      selectedOrder: null,
     })
   }
+
+  // ==========================================================
+  // EDIT ORDER
+  // ==========================================================
 
   openEdit = order => {
     this.setState({
@@ -252,6 +428,10 @@ class Orders extends Component {
     })
   }
 
+  // ==========================================================
+  // CLOSE ADD
+  // ==========================================================
+
   closeAdd = () => {
     this.setState({
       showAddOrder: false,
@@ -259,10 +439,18 @@ class Orders extends Component {
     })
   }
 
+  // ==========================================================
+  // SAVED
+  // ==========================================================
+
   handleSaved = () => {
     this.closeAdd()
     this.fetchOrders()
   }
+
+  // ==========================================================
+  // DETAILS
+  // ==========================================================
 
   openDetails = order => {
     this.setState({
@@ -276,7 +464,14 @@ class Orders extends Component {
     })
   }
 
-  updateStatus = async (id, status) => {
+  // ==========================================================
+  // UPDATE STATUS
+  // ==========================================================
+
+  updateStatus = async (
+    id,
+    status,
+  ) => {
     try {
       this.setState({
         updatingStatus: id,
@@ -296,24 +491,42 @@ class Orders extends Component {
         updatingStatus: null,
       })
 
-      this.fetchOrders()
+      await this.fetchOrders()
 
-      if (this.state.selectedOrder?.id === id) {
-        this.closeDetails()
-      }
+      this.setState(currentState => {
+        if (
+          currentState
+            .selectedOrder?.id ===
+          id
+        ) {
+          return {
+            selectedOrder: null,
+          }
+        }
+
+        return null
+      })
     } catch (error) {
-      console.error(error)
+      console.error(
+        'STATUS ERROR:',
+        error,
+      )
 
       this.setState({
         updatingStatus: null,
       })
 
       alert(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           'Failed to update status',
       )
     }
   }
+
+  // ==========================================================
+  // DELETE CONFIRM
+  // ==========================================================
 
   confirmDelete = id => {
     this.setState({
@@ -327,10 +540,17 @@ class Orders extends Component {
     })
   }
 
-  deleteOrder = async () => {
-    const {deleteId} = this.state
+  // ==========================================================
+  // DELETE
+  // ==========================================================
 
-    if (!deleteId) return
+  deleteOrder = async () => {
+    const {deleteId} =
+      this.state
+
+    if (!deleteId) {
+      return
+    }
 
     try {
       await axios.delete(
@@ -347,107 +567,166 @@ class Orders extends Component {
 
       this.fetchOrders()
     } catch (error) {
-      console.error(error)
+      console.error(
+        'DELETE ORDER ERROR:',
+        error,
+      )
 
       this.setState({
         deleteId: null,
       })
 
       alert(
-        error.response?.data?.message ||
+        error.response?.data
+          ?.message ||
           'Failed to delete order',
       )
     }
   }
 
+  // ==========================================================
+  // SUMMARY
+  // ==========================================================
+
   renderSummary = () => {
     const {orders} = this.state
 
-    const pending = orders.filter(
-      order => order.status === 'pending',
-    ).length
+    const pending =
+      orders.filter(
+        order =>
+          order.status ===
+          'pending',
+      ).length
 
-    const completed = orders.filter(
-      order => order.status === 'completed',
-    ).length
+    const completed =
+      orders.filter(
+        order =>
+          order.status ===
+          'completed',
+      ).length
 
-    const advance = orders.reduce(
-      (sum, order) =>
-        sum +
-        Number(
-          order.advance_paid ||
-            order.advancePaid ||
-            0,
-        ),
-      0,
-    )
+    const advance =
+      orders.reduce(
+        (sum, order) =>
+          sum +
+          Number(
+            order.advance_paid ||
+              order.advancePaid ||
+              0,
+          ),
+        0,
+      )
 
-    const due = orders.reduce(
-      (sum, order) =>
-        sum + Math.max(0, calculateDue(order)),
-      0,
-    )
+    const due =
+      orders.reduce(
+        (sum, order) =>
+          sum +
+          calculateDue(order),
+        0,
+      )
 
     return (
       <div className="orders-summary">
         <div className="summary-card">
-          <span>Total Orders</span>
-          <strong>{orders.length}</strong>
+          <span>
+            Total Orders
+          </span>
+
+          <strong>
+            {orders.length}
+          </strong>
+
           <FiEye />
         </div>
 
         <div className="summary-card pending-card">
-          <span>Pending Orders</span>
-          <strong>{pending}</strong>
+          <span>
+            Pending Orders
+          </span>
+
+          <strong>
+            {pending}
+          </strong>
+
           <FiClock />
         </div>
 
         <div className="summary-card completed-card">
-          <span>Completed</span>
-          <strong>{completed}</strong>
+          <span>
+            Completed
+          </span>
+
+          <strong>
+            {completed}
+          </strong>
+
           <FiCheckCircle />
         </div>
 
         <div className="summary-card">
-          <span>Total Advance</span>
-          <strong>{money(advance)}</strong>
+          <span>
+            Total Advance
+          </span>
+
+          <strong>
+            {money(advance)}
+          </strong>
+
           <FiCheckCircle />
         </div>
 
         <div className="summary-card due-card">
-          <span>Total Due</span>
-          <strong>{money(due)}</strong>
+          <span>
+            Total Due
+          </span>
+
+          <strong>
+            {money(due)}
+          </strong>
+
           <FiClock />
         </div>
       </div>
     )
   }
 
+  // ==========================================================
+  // ORDER CARD
+  // ==========================================================
+
   renderCard = order => {
-    const image = getImage(order.image)
+    const image =
+      getImage(order.image)
 
-    const total = calculateTotal(order)
+    const total =
+      calculateTotal(order)
 
-    const advance = Number(
-      order.advance_paid ||
-        order.advancePaid ||
+    const advance =
+      Number(
+        order.advance_paid ||
+          order.advancePaid ||
+          0,
+      )
+
+    const due =
+      Math.max(
         0,
-    )
-
-    const due = Math.max(
-      0,
-      total - advance,
-    )
+        total - advance,
+      )
 
     const type =
       order.order_type ||
       order.orderType
+
+    const normalizedType =
+      String(type || '').toLowerCase()
 
     return (
       <div
         className="order-card"
         key={order.id}
       >
+        {/* IMAGE */}
         <div
           className="order-image"
           onClick={() =>
@@ -457,12 +736,26 @@ class Orders extends Component {
           {image ? (
             <img
               src={image}
-              alt={order.item_name}
+              alt={
+                order.item_name ||
+                'Jewellery'
+              }
+              onError={event => {
+                console.error(
+                  'IMAGE LOAD ERROR:',
+                  image,
+                )
+
+                event.currentTarget.style.display =
+                  'none'
+              }}
             />
           ) : (
             <div className="image-placeholder">
               <span>SVS</span>
-              <small>Jewellery</small>
+              <small>
+                Jewellery
+              </small>
             </div>
           )}
 
@@ -476,47 +769,68 @@ class Orders extends Component {
           </div>
         </div>
 
+        {/* CONTENT */}
         <div className="order-content">
           <div className="order-heading">
             <div>
-              <h3>{order.item_name}</h3>
-              <p>{order.customer_name}</p>
+              <h3>
+                {order.item_name ||
+                  '-'}
+              </h3>
+
+              <p>
+                {order.customer_name ||
+                  '-'}
+              </p>
             </div>
 
             <span
-              className={`status-badge ${order.status}`}
+              className={`status-badge ${
+                order.status ||
+                'pending'
+              }`}
             >
-              {order.status}
+              {order.status ||
+                'pending'}
             </span>
           </div>
 
           <div className="order-mobile">
-            {order.mobile_number}
+            {order.mobile_number ||
+              '-'}
           </div>
 
           <div className="order-info-grid">
             <div>
               <span>
-                {String(type).toLowerCase() ===
+                {normalizedType ===
                 'silver'
                   ? 'Weight'
                   : 'Net Weight'}
               </span>
 
               <strong>
-                {String(type).toLowerCase() ===
+                {normalizedType ===
                 'silver'
-                  ? `${order.weight || 0} g`
-                  : `${order.net_weight || 0} g`}
+                  ? `${
+                      order.weight ||
+                      0
+                    } g`
+                  : `${
+                      order.net_weight ||
+                      0
+                    } g`}
               </strong>
             </div>
 
             <div>
-              <span>Rate</span>
+              <span>
+                Rate
+              </span>
 
               <strong>
                 {money(
-                  String(type).toLowerCase() ===
+                  normalizedType ===
                     'silver'
                     ? order.silver_rate
                     : order.gold_rate,
@@ -525,46 +839,66 @@ class Orders extends Component {
             </div>
 
             <div>
-              <span>Making Cost</span>
+              <span>
+                Making Cost
+              </span>
+
               <strong>
-                {money(order.making_cost)}
+                {money(
+                  order.making_cost,
+                )}
               </strong>
             </div>
 
-            {String(type).toLowerCase() !==
+            {normalizedType !==
               'silver' && (
               <div>
-                <span>Charges</span>
+                <span>
+                  Charges
+                </span>
+
                 <strong>
-                  {order.charges || 0}
+                  {order.charges ||
+                    0}
                 </strong>
               </div>
             )}
           </div>
 
+          {/* FINANCIAL */}
           <div className="financial-box">
             <div>
-              <span>Total Value</span>
+              <span>
+                Total Value
+              </span>
+
               <strong>
                 {money(total)}
               </strong>
             </div>
 
             <div>
-              <span>Advance Paid</span>
+              <span>
+                Advance Paid
+              </span>
+
               <strong>
                 {money(advance)}
               </strong>
             </div>
 
             <div className="due">
-              <span>Due Amount</span>
+              <span>
+                Due Amount
+              </span>
+
               <strong>
                 {money(due)}
               </strong>
             </div>
           </div>
 
+          {/* FOOTER */}
           <div className="order-footer">
             <span>
               {order.order_date
@@ -578,24 +912,31 @@ class Orders extends Component {
 
             <div className="card-actions">
               <button
+                type="button"
                 title="View"
                 onClick={() =>
-                  this.openDetails(order)
+                  this.openDetails(
+                    order,
+                  )
                 }
               >
                 <FiEye />
               </button>
 
               <button
+                type="button"
                 title="Edit"
                 onClick={() =>
-                  this.openEdit(order)
+                  this.openEdit(
+                    order,
+                  )
                 }
               >
                 <FiEdit3 />
               </button>
 
               <button
+                type="button"
                 className="delete-action"
                 title="Delete"
                 onClick={() =>
@@ -608,11 +949,18 @@ class Orders extends Component {
               </button>
 
               <button
+                type="button"
                 className="status-action"
                 disabled={
                   this.state
                     .updatingStatus ===
                   order.id
+                }
+                title={
+                  order.status ===
+                  'pending'
+                    ? 'Mark completed'
+                    : 'Mark pending'
                 }
                 onClick={() =>
                   this.updateStatus(
@@ -638,41 +986,59 @@ class Orders extends Component {
     )
   }
 
+  // ==========================================================
+  // SKELETON
+  // ==========================================================
+
   renderSkeletons = () => (
     <div className="orders-grid">
-      {[1, 2, 3, 4, 5, 6].map(item => (
-        <div
-          className="order-skeleton"
-          key={item}
-        >
-          <div className="skeleton-image" />
+      {[1, 2, 3, 4, 5, 6].map(
+        item => (
+          <div
+            className="order-skeleton"
+            key={item}
+          >
+            <div className="skeleton-image" />
 
-          <div className="skeleton-content">
-            <div className="skeleton-line large" />
-            <div className="skeleton-line" />
-            <div className="skeleton-line" />
-            <div className="skeleton-box" />
+            <div className="skeleton-content">
+              <div className="skeleton-line large" />
+              <div className="skeleton-line" />
+              <div className="skeleton-line" />
+              <div className="skeleton-box" />
+            </div>
           </div>
-        </div>
-      ))}
+        ),
+      )}
     </div>
   )
 
-  renderDetails = () => {
-    const {selectedOrder} =
-      this.state
+  // ==========================================================
+  // DETAILS
+  // ==========================================================
 
-    if (!selectedOrder) return null
+  renderDetails = () => {
+    const {
+      selectedOrder,
+    } = this.state
+
+    if (!selectedOrder) {
+      return null
+    }
 
     const image =
-      getImage(selectedOrder.image)
+      getImage(
+        selectedOrder.image,
+      )
 
     const total =
-      calculateTotal(selectedOrder)
+      calculateTotal(
+        selectedOrder,
+      )
 
     const advance =
       Number(
         selectedOrder.advance_paid ||
+          selectedOrder.advancePaid ||
           0,
       )
 
@@ -683,16 +1049,19 @@ class Orders extends Component {
       )
 
     const type =
-      selectedOrder.order_type
+      selectedOrder.order_type ||
+      selectedOrder.orderType
 
     const silver =
-      String(type).toLowerCase() ===
+      String(type || '').toLowerCase() ===
       'silver'
 
     return (
       <div
         className="details-backdrop"
-        onClick={this.closeDetails}
+        onClick={
+          this.closeDetails
+        }
       >
         <div
           className="details-modal"
@@ -701,8 +1070,11 @@ class Orders extends Component {
           }
         >
           <button
+            type="button"
             className="modal-close"
-            onClick={this.closeDetails}
+            onClick={
+              this.closeDetails
+            }
           >
             <FiX />
           </button>
@@ -712,8 +1084,18 @@ class Orders extends Component {
               <img
                 src={image}
                 alt={
-                  selectedOrder.item_name
+                  selectedOrder.item_name ||
+                  'Jewellery'
                 }
+                onError={event => {
+                  console.error(
+                    'DETAIL IMAGE ERROR:',
+                    image,
+                  )
+
+                  event.currentTarget.style.display =
+                    'none'
+                }}
               />
             ) : (
               <div className="image-placeholder">
@@ -730,39 +1112,52 @@ class Orders extends Component {
                 </span>
 
                 <h2>
-                  {selectedOrder.item_name}
+                  {selectedOrder.item_name ||
+                    '-'}
                 </h2>
 
                 <p>
-                  {selectedOrder.customer_name}
+                  {selectedOrder.customer_name ||
+                    '-'}
                 </p>
               </div>
 
               <span
-                className={`status-badge ${selectedOrder.status}`}
+                className={`status-badge ${
+                  selectedOrder.status ||
+                  'pending'
+                }`}
               >
-                {selectedOrder.status}
+                {selectedOrder.status ||
+                  'pending'}
               </span>
             </div>
 
             <div className="details-grid">
               <div>
-                <span>Mobile</span>
+                <span>
+                  Mobile
+                </span>
+
                 <strong>
-                  {
-                    selectedOrder.mobile_number
-                  }
+                  {selectedOrder.mobile_number ||
+                    '-'}
                 </strong>
               </div>
 
               <div>
-                <span>Order Date</span>
+                <span>
+                  Order Date
+                </span>
+
                 <strong>
-                  {new Date(
-                    selectedOrder.order_date,
-                  ).toLocaleDateString(
-                    'en-IN',
-                  )}
+                  {selectedOrder.order_date
+                    ? new Date(
+                        selectedOrder.order_date,
+                      ).toLocaleDateString(
+                        'en-IN',
+                      )
+                    : '-'}
                 </strong>
               </div>
 
@@ -775,13 +1170,21 @@ class Orders extends Component {
 
                 <strong>
                   {silver
-                    ? `${selectedOrder.weight} g`
-                    : `${selectedOrder.net_weight} g`}
+                    ? `${
+                        selectedOrder.weight ||
+                        0
+                      } g`
+                    : `${
+                        selectedOrder.net_weight ||
+                        0
+                      } g`}
                 </strong>
               </div>
 
               <div>
-                <span>Rate</span>
+                <span>
+                  Rate
+                </span>
 
                 <strong>
                   {money(
@@ -794,15 +1197,22 @@ class Orders extends Component {
 
               {!silver && (
                 <div>
-                  <span>Charges</span>
+                  <span>
+                    Charges
+                  </span>
+
                   <strong>
-                    {selectedOrder.charges}
+                    {selectedOrder.charges ||
+                      0}
                   </strong>
                 </div>
               )}
 
               <div>
-                <span>Making Cost</span>
+                <span>
+                  Making Cost
+                </span>
+
                 <strong>
                   {money(
                     selectedOrder.making_cost,
@@ -813,21 +1223,30 @@ class Orders extends Component {
 
             <div className="details-financial">
               <div>
-                <span>Total Value</span>
+                <span>
+                  Total Value
+                </span>
+
                 <strong>
                   {money(total)}
                 </strong>
               </div>
 
               <div>
-                <span>Advance Paid</span>
+                <span>
+                  Advance Paid
+                </span>
+
                 <strong>
                   {money(advance)}
                 </strong>
               </div>
 
               <div>
-                <span>Due Amount</span>
+                <span>
+                  Due Amount
+                </span>
+
                 <strong>
                   {money(due)}
                 </strong>
@@ -836,6 +1255,7 @@ class Orders extends Component {
 
             <div className="details-actions">
               <button
+                type="button"
                 className="secondary-button"
                 onClick={() =>
                   this.openEdit(
@@ -848,7 +1268,13 @@ class Orders extends Component {
               </button>
 
               <button
+                type="button"
                 className="primary-button"
+                disabled={
+                  this.state
+                    .updatingStatus ===
+                  selectedOrder.id
+                }
                 onClick={() =>
                   this.updateStatus(
                     selectedOrder.id,
@@ -879,6 +1305,10 @@ class Orders extends Component {
     )
   }
 
+  // ==========================================================
+  // RENDER
+  // ==========================================================
+
   render() {
     const {
       orders,
@@ -895,6 +1325,7 @@ class Orders extends Component {
 
     return (
       <div className="orders-page">
+        {/* HEADER */}
         <div className="orders-header">
           <div>
             <span className="page-eyebrow">
@@ -906,13 +1337,15 @@ class Orders extends Component {
             </h1>
 
             <p>
-              Manage jewellery orders,
-              advances and pending
-              customer balances.
+              Manage jewellery
+              orders, advances and
+              pending customer
+              balances.
             </p>
           </div>
 
           <button
+            type="button"
             className="add-order-button"
             onClick={this.openAdd}
           >
@@ -921,15 +1354,19 @@ class Orders extends Component {
           </button>
         </div>
 
+        {/* SUMMARY */}
         {this.renderSummary()}
 
+        {/* TOOLBAR */}
         <div className="orders-toolbar">
           <div className="search-box">
             <FiSearch />
 
             <input
               value={search}
-              onChange={this.handleSearch}
+              onChange={
+                this.handleSearch
+              }
               placeholder="Search customer, mobile or item..."
             />
           </div>
@@ -938,24 +1375,30 @@ class Orders extends Component {
             {[
               ['pending', 'Pending'],
               ['all', 'All'],
-              ['completed', 'Completed'],
-            ].map(([value, label]) => (
-              <button
-                key={value}
-                className={
-                  status === value
-                    ? 'active'
-                    : ''
-                }
-                onClick={() =>
-                  this.handleStatusFilter(
-                    value,
-                  )
-                }
-              >
-                {label}
-              </button>
-            ))}
+              [
+                'completed',
+                'Completed',
+              ],
+            ].map(
+              ([value, label]) => (
+                <button
+                  type="button"
+                  key={value}
+                  className={
+                    status === value
+                      ? 'active'
+                      : ''
+                  }
+                  onClick={() =>
+                    this.handleStatusFilter(
+                      value,
+                    )
+                  }
+                >
+                  {label}
+                </button>
+              ),
+            )}
           </div>
 
           <select
@@ -969,12 +1412,15 @@ class Orders extends Component {
             <option value="all">
               All Types
             </option>
+
             <option value="kdm">
               KDM Gold
             </option>
+
             <option value="hallmark">
               Hallmark Gold
             </option>
+
             <option value="silver">
               Silver
             </option>
@@ -991,31 +1437,40 @@ class Orders extends Component {
             <option value="all">
               All Dates
             </option>
+
             <option value="today">
               Today
             </option>
+
             <option value="week">
               This Week
             </option>
+
             <option value="month">
               This Month
             </option>
           </select>
 
           <button
+            type="button"
             className="refresh-button"
-            onClick={this.fetchOrders}
+            onClick={
+              this.fetchOrders
+            }
+            title="Refresh"
           >
             <FiRefreshCw />
           </button>
         </div>
 
+        {/* ERROR */}
         {error && (
           <div className="error-box">
             {error}
           </div>
         )}
 
+        {/* CONTENT */}
         {loading ? (
           this.renderSkeletons()
         ) : orders.length === 0 ? (
@@ -1026,7 +1481,8 @@ class Orders extends Component {
 
             <h2>
               No{' '}
-              {status === 'pending'
+              {status ===
+              'pending'
                 ? 'Pending '
                 : status ===
                     'completed'
@@ -1042,8 +1498,11 @@ class Orders extends Component {
             </p>
 
             <button
+              type="button"
               className="add-order-button"
-              onClick={this.openAdd}
+              onClick={
+                this.openAdd
+              }
             >
               <FiPlus />
               Add New Order
@@ -1057,16 +1516,23 @@ class Orders extends Component {
           </div>
         )}
 
+        {/* DETAILS MODAL */}
         {this.renderDetails()}
 
+        {/* ADD / EDIT */}
         {showAddOrder && (
           <AddOrder
             order={editingOrder}
-            onClose={this.closeAdd}
-            onSaved={this.handleSaved}
+            onClose={
+              this.closeAdd
+            }
+            onSaved={
+              this.handleSaved
+            }
           />
         )}
 
+        {/* DELETE CONFIRMATION */}
         {deleteId && (
           <div className="confirm-backdrop">
             <div className="confirm-modal">
@@ -1079,12 +1545,13 @@ class Orders extends Component {
               </h2>
 
               <p>
-                This action cannot be
-                undone.
+                This action cannot
+                be undone.
               </p>
 
               <div className="confirm-actions">
                 <button
+                  type="button"
                   onClick={
                     this.cancelDelete
                   }
@@ -1094,6 +1561,7 @@ class Orders extends Component {
                 </button>
 
                 <button
+                  type="button"
                   onClick={
                     this.deleteOrder
                   }
