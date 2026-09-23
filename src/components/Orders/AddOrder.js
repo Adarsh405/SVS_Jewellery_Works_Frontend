@@ -441,14 +441,18 @@ class AddOrder extends Component {
       }
 
       this.props.onSaved()
-    } catch (error) {
-        console.error('CREATE ORDER ERROR:', error);
+    } } catch (error) {
+        console.error('CREATE ORDER ERROR:', error)
 
-        return res.status(500).json({
-            success: false,
-            message: error.message,
-            error: error.detail || null,
-        });
+        console.error('API RESPONSE:', error.response?.data)
+
+        this.setState({
+            error:
+            error.response?.data?.message ||
+            error.message ||
+            'Failed to save order.',
+            submitting: false,
+        })
         }
   }
 
