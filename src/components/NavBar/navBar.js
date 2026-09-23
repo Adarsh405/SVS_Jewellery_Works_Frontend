@@ -8,6 +8,7 @@ import {
   FaBars,
   FaTimes,
   FaCashRegister,
+  FaClipboardList
 } from "react-icons/fa";
 import { MdQrCode2 } from "react-icons/md";
 import { Gem, Recycle } from 'lucide-react'
@@ -34,6 +35,11 @@ const Navbar = () => {
       path: "/payment",
       icon: <MdQrCode2 />,
       label: "QR"
+    },
+    {
+      path: "/orders",
+      icon: <FaClipboardList />,
+      label: "Orders"
     },
     {
       path: "/goldPriceSection",

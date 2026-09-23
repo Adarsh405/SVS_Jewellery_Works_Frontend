@@ -11,6 +11,7 @@ import Sales from "./components/Sales/sales.js"
 import Inventory from "./components/Inventory/Inventory"
 import GoldPriceSection from './components/GoldPriceSection/GoldPriceSection'
 import OldSilverPriceSection from './components/OldSilverPriceSection/OldSilverPriceSection'
+import Orders from './components/Orders/Orders';
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
               <Inventory />
           }
         />
+        <Route path="/orders" element={<Orders />} />
         <Route
             path="/goldPriceSection"
             element={<GoldPriceSection />}
