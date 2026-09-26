@@ -1,5 +1,5 @@
 /* =========================================================
-   SCREEN
+   MAIN SCREEN PAGE
 ========================================================= */
 
 .jewellery-bill-page {
@@ -10,6 +10,7 @@
   box-sizing: border-box;
 }
 
+
 /* =========================================================
    TOOLBAR
 ========================================================= */
@@ -18,9 +19,7 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto 25px;
-
   padding: 22px 30px;
-
   background: #15100b;
   border-radius: 16px;
 
@@ -52,12 +51,9 @@
 .bill-toolbar button {
   border: none;
   border-radius: 10px;
-
   padding: 14px 25px;
-
   font-size: 17px;
   font-weight: 700;
-
   cursor: pointer;
 }
 
@@ -71,8 +67,9 @@
   color: white;
 }
 
+
 /* =========================================================
-   PRINT PAGE
+   A4 LANDSCAPE PRINT PAGE
 ========================================================= */
 
 .print-page {
@@ -90,8 +87,9 @@
   box-sizing: border-box;
 }
 
+
 /* =========================================================
-   ACTUAL A4 TEMPLATE IMAGE
+   BILL TEMPLATE IMAGE
 ========================================================= */
 
 .bill-template-image {
@@ -110,6 +108,7 @@
   z-index: 1;
 }
 
+
 /* =========================================================
    DATA LAYER
 ========================================================= */
@@ -122,35 +121,41 @@
   width: 50%;
   height: 100%;
 
-  z-index: 5;
+  z-index: 10;
 
   color: #111;
 
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
   pointer-events: none;
 
   box-sizing: border-box;
 }
 
+
 /* =========================================================
-   ORIGINAL = LEFT HALF
+   LEFT COPY
 ========================================================= */
 
 .copy-details.original {
   left: 0;
 }
 
+
 /* =========================================================
-   DUPLICATE = RIGHT HALF
+   RIGHT COPY
 ========================================================= */
 
 .copy-details.duplicate {
   left: 50%;
 }
 
+
 /* =========================================================
-   GENERAL DETAIL
+   GENERAL TEXT
 ========================================================= */
 
 .detail {
@@ -167,76 +172,61 @@
   box-sizing: border-box;
 }
 
+
 /* =========================================================
    BILL NUMBER
-   Adjust these positions if necessary
 ========================================================= */
 
-.copy-details.original .bill-number {
-  left: 13.5%;
-  top: 34.2%;
-}
-
+.copy-details.original .bill-number,
 .copy-details.duplicate .bill-number {
   left: 13.5%;
   top: 34.2%;
 }
 
+
 /* =========================================================
    DATE
 ========================================================= */
 
-.copy-details.original .bill-date {
-  left: 70%;
-  top: 34.2%;
-}
-
+.copy-details.original .bill-date,
 .copy-details.duplicate .bill-date {
   left: 70%;
   top: 34.2%;
 }
 
+
 /* =========================================================
    CUSTOMER NAME
 ========================================================= */
 
-.copy-details.original .customer-name {
-  left: 19%;
-  top: 37.8%;
-}
-
+.copy-details.original .customer-name,
 .copy-details.duplicate .customer-name {
   left: 19%;
   top: 37.8%;
 }
 
+
 /* =========================================================
-   MOBILE
+   MOBILE NUMBER
 ========================================================= */
 
-.copy-details.original .customer-mobile {
-  left: 13.5%;
-  top: 41.2%;
-}
-
+.copy-details.original .customer-mobile,
 .copy-details.duplicate .customer-mobile {
   left: 13.5%;
   top: 41.2%;
 }
 
+
 /* =========================================================
    PAYMENT MODE
 ========================================================= */
 
-.copy-details.original .payment-mode {
-  left: 69%;
-  top: 41.2%;
-}
-
+.copy-details.original .payment-mode,
 .copy-details.duplicate .payment-mode {
   left: 69%;
   top: 41.2%;
 }
+
 
 /* =========================================================
    ITEMS AREA
@@ -249,13 +239,14 @@
   top: 44.7%;
 
   width: 89%;
-
   height: 29%;
 
   display: flex;
-
   flex-direction: column;
+
+  box-sizing: border-box;
 }
+
 
 /* =========================================================
    ITEM ROW
@@ -273,10 +264,13 @@
   font-size: 10px;
 
   font-weight: 600;
+
+  box-sizing: border-box;
 }
 
+
 /* =========================================================
-   ITEM COLUMNS
+   ITEM COLUMN TEXT
 ========================================================= */
 
 .print-item span {
@@ -289,76 +283,87 @@
   white-space: nowrap;
 
   text-align: center;
+
+  box-sizing: border-box;
 }
 
-/* S.NO */
+
+/* =========================================================
+   S.NO
+========================================================= */
 
 .print-item .sno {
   left: 2%;
   width: 7%;
 }
 
-/* ITEM NAME */
+
+/* =========================================================
+   ITEM NAME
+========================================================= */
 
 .print-item .item-name {
   left: 15%;
   width: 28%;
 }
 
-/* CATEGORY */
+
+/* =========================================================
+   CATEGORY
+========================================================= */
 
 .print-item .category {
   left: 45%;
   width: 16%;
 }
 
-/* WEIGHT */
+
+/* =========================================================
+   WEIGHT
+========================================================= */
 
 .print-item .weight {
   left: 62%;
   width: 13%;
 }
 
-/* CHARGES */
+
+/* =========================================================
+   CHARGES
+========================================================= */
 
 .print-item .charges {
   left: 76%;
   width: 11%;
 }
 
-/* PRICE */
+
+/* =========================================================
+   PRICE
+========================================================= */
 
 .print-item .price {
   left: 88%;
   width: 12%;
 }
 
+
 /* =========================================================
    TOTAL WEIGHT
 ========================================================= */
 
-.copy-details.original .total-weight {
-  left: 40%;
-  top: 84.8%;
-}
-
+.copy-details.original .total-weight,
 .copy-details.duplicate .total-weight {
   left: 40%;
   top: 84.8%;
 }
 
+
 /* =========================================================
    GRAND TOTAL
 ========================================================= */
 
-.copy-details.original .grand-total {
-  left: 73%;
-  top: 84.8%;
-
-  font-size: 12px;
-  font-weight: 700;
-}
-
+.copy-details.original .grand-total,
 .copy-details.duplicate .grand-total {
   left: 73%;
   top: 84.8%;
@@ -367,8 +372,9 @@
   font-weight: 700;
 }
 
+
 /* =========================================================
-   SCREEN PREVIEW
+   SCREEN
 ========================================================= */
 
 @media screen {
@@ -378,23 +384,33 @@
   }
 }
 
+
 /* =========================================================
    PRINT
+   IMPORTANT:
+   A4 LANDSCAPE = 297mm x 210mm
 ========================================================= */
 
 @media print {
 
-  /* VERY IMPORTANT */
+  /* -----------------------------------------
+     EXACT A4 LANDSCAPE
+  ----------------------------------------- */
 
   @page {
-    size: A4 landscape;
+    size: 297mm 210mm;
     margin: 0;
   }
 
+
+  /* -----------------------------------------
+     REMOVE ALL BROWSER DEFAULT SPACE
+  ----------------------------------------- */
+
   html,
   body {
-    width: 297mm;
-    height: 210mm;
+    width: 297mm !important;
+    height: 210mm !important;
 
     margin: 0 !important;
     padding: 0 !important;
@@ -404,23 +420,43 @@
     overflow: hidden !important;
   }
 
-  /* Hide EVERYTHING */
 
-  body * {
-    visibility: hidden !important;
+  /* -----------------------------------------
+     REMOVE SCREEN PAGE SPACING
+  ----------------------------------------- */
+
+  .jewellery-bill-page {
+    width: 297mm !important;
+    height: 210mm !important;
+
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: white !important;
+
+    overflow: hidden !important;
   }
 
-  /* Show ONLY our print page */
 
-  .print-page,
-  .print-page * {
-    visibility: visible !important;
+  /* -----------------------------------------
+     HIDE TOOLBAR
+  ----------------------------------------- */
+
+  .bill-toolbar {
+    display: none !important;
   }
 
-  /* Position print page */
+
+  /* -----------------------------------------
+     PRINT PAGE
+  ----------------------------------------- */
 
   .print-page {
-    position: absolute !important;
+    display: block !important;
+
+    position: fixed !important;
 
     left: 0 !important;
     top: 0 !important;
@@ -431,16 +467,19 @@
     margin: 0 !important;
     padding: 0 !important;
 
-    overflow: hidden !important;
-
     background: white !important;
+
+    overflow: hidden !important;
 
     transform: none !important;
 
     box-sizing: border-box !important;
   }
 
-  /* Template image MUST print */
+
+  /* -----------------------------------------
+     TEMPLATE IMAGE
+  ----------------------------------------- */
 
   .bill-template-image {
     position: absolute !important;
@@ -451,24 +490,51 @@
     width: 297mm !important;
     height: 210mm !important;
 
+    margin: 0 !important;
+    padding: 0 !important;
+
     display: block !important;
 
-    visibility: visible !important;
-
     object-fit: fill !important;
+
+    visibility: visible !important;
 
     z-index: 1 !important;
   }
 
-  /* Details above image */
+
+  /* -----------------------------------------
+     DATA LAYERS
+  ----------------------------------------- */
 
   .copy-details {
-    visibility: visible !important;
-
     position: absolute !important;
+
+    top: 0 !important;
+
+    height: 210mm !important;
+
+    visibility: visible !important;
 
     z-index: 10 !important;
   }
+
+
+  .copy-details.original {
+    left: 0 !important;
+    width: 148.5mm !important;
+  }
+
+
+  .copy-details.duplicate {
+    left: 148.5mm !important;
+    width: 148.5mm !important;
+  }
+
+
+  /* -----------------------------------------
+     DETAILS
+  ----------------------------------------- */
 
   .detail,
   .items-area,
@@ -477,7 +543,34 @@
     visibility: visible !important;
   }
 
-  /* Remove screen controls */
+
+  /* -----------------------------------------
+     PREVENT PRINT SCALING
+  ----------------------------------------- */
+
+  * {
+    box-sizing: border-box !important;
+  }
+
+
+  /* -----------------------------------------
+     REMOVE ANY TRANSFORM
+  ----------------------------------------- */
+
+  .print-page,
+  .print-page * {
+    transform-origin: initial;
+  }
+
+
+  .print-item span {
+    transform: translateY(-50%) !important;
+  }
+
+
+  /* -----------------------------------------
+     NO SCREEN CONTROLS
+  ----------------------------------------- */
 
   .no-print {
     display: none !important;

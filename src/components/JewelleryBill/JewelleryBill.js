@@ -12,49 +12,68 @@ const JewelleryBill = ({
   items = [],
   onClose,
 }) => {
-  // =========================================================
-  // NUMBER CLEANER
-  // =========================================================
+
+  /* =========================================================
+     CLEAN NUMBER
+  ========================================================= */
 
   const cleanNumber = (value) => {
     return (
-      Number(String(value ?? "0").replace(/,/g, "").trim()) || 0
+      Number(
+        String(value ?? "0")
+          .replace(/,/g, "")
+          .trim()
+      ) || 0
     );
   };
 
-  // =========================================================
-  // MONEY FORMAT
-  // =========================================================
+
+  /* =========================================================
+     MONEY FORMAT
+  ========================================================= */
 
   const formatMoney = (value) => {
     return cleanNumber(value).toLocaleString("en-IN");
   };
 
-  // =========================================================
-  // TOTAL WEIGHT
-  // =========================================================
+
+  /* =========================================================
+     TOTAL WEIGHT
+  ========================================================= */
 
   const totalWeight = items.reduce(
-    (sum, item) => sum + cleanNumber(item.weight),
+    (sum, item) => {
+      return sum + cleanNumber(item?.weight);
+    },
     0
   );
 
-  // =========================================================
-  // GRAND TOTAL
-  // =========================================================
+
+  /* =========================================================
+     GRAND TOTAL
+  ========================================================= */
 
   const grandTotal = items.reduce(
-    (sum, item) => sum + cleanNumber(item.totalPrice),
+    (sum, item) => {
+      return sum + cleanNumber(item?.totalPrice);
+    },
     0
   );
 
-  // =========================================================
-  // SILVER CHECK
-  // =========================================================
+
+  /* =========================================================
+     SILVER CHECK
+  ========================================================= */
 
   const isSilverItem = (item) => {
-    const category = String(item?.category || "").toLowerCase();
-    const itemType = String(item?.itemType || "").toLowerCase();
+
+    const category = String(
+      item?.category || ""
+    ).toLowerCase();
+
+    const itemType = String(
+      item?.itemType || ""
+    ).toLowerCase();
 
     return (
       category.includes("silver") ||
@@ -62,28 +81,38 @@ const JewelleryBill = ({
     );
   };
 
-  // =========================================================
-  // PRINT
-  // =========================================================
+
+  /* =========================================================
+     PRINT
+  ========================================================= */
 
   const printBill = () => {
     window.print();
   };
 
-  // =========================================================
-  // KEYBOARD
-  // ENTER = PRINT
-  // ESC = CLOSE
-  // =========================================================
+
+  /* =========================================================
+     KEYBOARD
+  ========================================================= */
 
   useEffect(() => {
+
     const handleKeyDown = (event) => {
+
+      /* ENTER = PRINT */
+
       if (event.key === "Enter") {
+
         event.preventDefault();
+
         printBill();
       }
 
+
+      /* ESC = CLOSE */
+
       if (event.key === "Escape") {
+
         event.preventDefault();
 
         if (onClose) {
@@ -92,129 +121,209 @@ const JewelleryBill = ({
       }
     };
 
-    window.addEventListener("keydown", handleKeyDown);
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
+
   }, [onClose]);
 
-  // =========================================================
-  // COPY DETAILS
-  // =========================================================
+
+  /* =========================================================
+     COPY DETAILS
+  ========================================================= */
 
   const CopyDetails = ({ type }) => {
-    return (
-      <div className={`copy-details ${type}`}>
 
-        {/* ==============================
-            HEADER DETAILS
-        ============================== */}
+    return (
+
+      <div
+        className={`copy-details ${type}`}
+      >
+
+        {/* =========================================
+            BILL NUMBER
+        ========================================= */}
 
         <div className="detail bill-number">
           {billNo || ""}
         </div>
 
+
+        {/* =========================================
+            DATE
+        ========================================= */}
+
         <div className="detail bill-date">
           {date || ""}
         </div>
+
+
+        {/* =========================================
+            CUSTOMER NAME
+        ========================================= */}
 
         <div className="detail customer-name">
           {customerName || ""}
         </div>
 
+
+        {/* =========================================
+            MOBILE
+        ========================================= */}
+
         <div className="detail customer-mobile">
           {customerMobile || ""}
         </div>
+
+
+        {/* =========================================
+            PAYMENT MODE
+        ========================================= */}
 
         <div className="detail payment-mode">
           {paymentMode || ""}
         </div>
 
-        {/* ==============================
+
+        {/* =========================================
             ITEMS
-        ============================== */}
+        ========================================= */}
 
         <div className="items-area">
 
-          {items.slice(0, 8).map((item, index) => {
-            const silver = isSilverItem(item);
+          {items
+            .slice(0, 8)
+            .map((item, index) => {
 
-            return (
-              <div
-                className="print-item"
-                key={item?.id || index}
-              >
-                <span className="sno">
-                  {index + 1}
-                </span>
+              const silver =
+                isSilverItem(item);
 
-                <span className="item-name">
-                  {item?.itemName || ""}
-                </span>
+              return (
 
-                <span className="category">
-                  {item?.category || ""}
-                </span>
+                <div
+                  className="print-item"
+                  key={
+                    item?.id ??
+                    item?.itemId ??
+                    index
+                  }
+                >
 
-                <span className="weight">
-                  {item?.weight ?? ""}
-                </span>
+                  {/* S.NO */}
 
-                <span className="charges">
-                  {silver
-                    ? ""
-                    : item?.charges ?? ""}
-                </span>
+                  <span className="sno">
+                    {index + 1}
+                  </span>
 
-                <span className="price">
-                  {item?.totalPrice ?? ""}
-                </span>
-              </div>
-            );
-          })}
+
+                  {/* ITEM NAME */}
+
+                  <span className="item-name">
+                    {item?.itemName || ""}
+                  </span>
+
+
+                  {/* CATEGORY */}
+
+                  <span className="category">
+                    {item?.category || ""}
+                  </span>
+
+
+                  {/* WEIGHT */}
+
+                  <span className="weight">
+                    {item?.weight ?? ""}
+                  </span>
+
+
+                  {/* CHARGES */}
+
+                  <span className="charges">
+
+                    {silver
+                      ? ""
+                      : item?.charges ?? ""}
+
+                  </span>
+
+
+                  {/* PRICE */}
+
+                  <span className="price">
+                    {item?.totalPrice ?? ""}
+                  </span>
+
+                </div>
+              );
+            })}
 
         </div>
 
-        {/* ==============================
+
+        {/* =========================================
             TOTAL WEIGHT
-        ============================== */}
+        ========================================= */}
 
         <div className="detail total-weight">
+
           {totalWeight.toFixed(3)}
+
         </div>
 
-        {/* ==============================
+
+        {/* =========================================
             GRAND TOTAL
-        ============================== */}
+        ========================================= */}
 
         <div className="detail grand-total">
+
           ₹ {formatMoney(grandTotal)}
+
         </div>
+
       </div>
     );
   };
 
-  // =========================================================
-  // SCREEN
-  // =========================================================
+
+  /* =========================================================
+     SCREEN + PRINT
+  ========================================================= */
 
   return (
+
     <div className="jewellery-bill-page">
 
-      {/* ============================================
-          SCREEN ONLY
-      ============================================ */}
+      {/* =====================================================
+          SCREEN TOOLBAR
+      ===================================================== */}
 
       <div className="bill-toolbar no-print">
 
         <div>
-          <h3>SVS Jewellery Bill</h3>
+
+          <h3>
+            SVS Jewellery Bill
+          </h3>
 
           <span>
             A4 Original + Duplicate
           </span>
+
         </div>
+
 
         <div className="bill-toolbar-actions">
 
@@ -224,6 +333,7 @@ const JewelleryBill = ({
           >
             🖨 Print Bill
           </button>
+
 
           <button
             type="button"
@@ -237,29 +347,46 @@ const JewelleryBill = ({
 
       </div>
 
-      {/* ============================================
-          PRINT PAGE
-      ============================================ */}
+
+      {/* =====================================================
+          A4 PRINT PAGE
+      ===================================================== */}
 
       <div className="print-page">
 
-        {/* REAL IMAGE - NOT BACKGROUND */}
+        {/* ===================================================
+            ORIGINAL BILL TEMPLATE
+        =================================================== */}
+
         <img
           src={billTemplate}
           alt="SVS Jewellery Bill Template"
           className="bill-template-image"
         />
 
-        {/* DATA OVER ORIGINAL */}
-        <CopyDetails type="original" />
 
-        {/* DATA OVER DUPLICATE */}
-        <CopyDetails type="duplicate" />
+        {/* ===================================================
+            LEFT — ORIGINAL / CUSTOMER COPY
+        =================================================== */}
+
+        <CopyDetails
+          type="original"
+        />
+
+
+        {/* ===================================================
+            RIGHT — DUPLICATE / SHOP COPY
+        =================================================== */}
+
+        <CopyDetails
+          type="duplicate"
+        />
 
       </div>
 
     </div>
   );
 };
+
 
 export default JewelleryBill;
