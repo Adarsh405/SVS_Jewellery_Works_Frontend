@@ -4,10 +4,7 @@ import React, {
   useEffect
 } from 'react'
 
-import JewelleryBill from '../JewelleryBill/JewelleryBill'
-
-import './SilverItem.css'
-
+import JewelleryBill from './JewelleryBill'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
@@ -58,22 +55,17 @@ const SilverItem = ({
 
 
   // ==========================================
-  // SOLD CUSTOMER
-  // ==========================================
-
-  const [soldCustomer, setSoldCustomer] =
-    useState({
-      name: '',
-      phone: ''
-    })
-
-
-  // ==========================================
   // BILL POPUP
   // ==========================================
 
   const [showBill, setShowBill] =
     useState(false)
+
+  const [billCustomerName, setBillCustomerName] =
+    useState('')
+
+  const [billCustomerPhone, setBillCustomerPhone] =
+    useState('')
 
 
   const mobileInputRef =
@@ -81,7 +73,7 @@ const SilverItem = ({
 
 
   // ==========================================
-  // AUTO FOCUS MOBILE
+  // AUTO FOCUS MOBILE NUMBER
   // ==========================================
 
   useEffect(() => {
@@ -100,16 +92,16 @@ const SilverItem = ({
 
 
   // ==========================================
-  // AUTO FETCH CUSTOMER
+  // AUTO FETCH CUSTOMER BY MOBILE
   // ==========================================
 
   useEffect(() => {
 
     const fetchCustomer = async () => {
 
+      // Do not search until 10 digits
       if (customerPhone.length !== 10) {
 
-        setCustomerName('')
         setCustomerFound(false)
         setCustomerLoading(false)
 
@@ -143,18 +135,16 @@ const SilverItem = ({
           data.customer
         ) {
 
+          // Customer exists
           setCustomerName(
-            data.customer.customer_name ||
-            ''
+            data.customer.customer_name || ''
           )
 
           setCustomerFound(true)
 
         } else {
 
-          // Customer not found
-          // Name remains empty
-
+          // Customer doesn't exist
           setCustomerName('')
           setCustomerFound(false)
 
@@ -295,12 +285,14 @@ const SilverItem = ({
         0.20
       )
 
+
       playNote(
         523.25,
         now + 0.12,
         0.35,
         0.20
       )
+
 
       playNote(
         659.25,
@@ -309,12 +301,14 @@ const SilverItem = ({
         0.20
       )
 
+
       playNote(
         783.99,
         now + 0.36,
         0.50,
         0.18
       )
+
 
       playNote(
         1046.50,
@@ -350,6 +344,7 @@ const SilverItem = ({
     setCustomerPhone('')
 
     setCustomerFound(false)
+
     setCustomerLoading(false)
 
     setShowCustomerPopup(true)
@@ -368,29 +363,51 @@ const SilverItem = ({
     }
 
 
+    // ========================================
+    // VALIDATE CUSTOMER MOBILE
+    // ========================================
+
+    if (
+      customerPhone.length > 0 &&
+      customerPhone.length !== 10
+    ) {
+
+      alert(
+        'Please enter a valid 10-digit mobile number.'
+      )
+
+      return
+
+    }
+
+
     setSelling(true)
 
 
     try {
 
       // ========================================
-      // CUSTOMER DETAILS
+      // ACTUAL CUSTOMER DETAILS FOR BILL
       // ========================================
 
-      // If no number entered,
-      // use default number.
+      const billName =
+        customerName.trim()
+
+      const billPhone =
+        customerPhone.trim()
+
+
+      // ========================================
+      // DEFAULT DETAILS
+      // ONLY FOR SOLD ITEMS
+      // ========================================
 
       const finalCustomerPhone =
-        customerPhone.trim() ||
-        '9908622405'
+        billPhone || '9908622405'
 
-
-      // IMPORTANT:
-      // Name remains EMPTY if customer
-      // wasn't found and user didn't enter one.
 
       const finalCustomerName =
-        customerName.trim()
+        billName || 'Adarsh'
 
 
       console.log(
@@ -398,10 +415,8 @@ const SilverItem = ({
         {
           itemId: item.id,
           itemName: item.name,
-          customerName:
-            finalCustomerName,
-          customerPhone:
-            finalCustomerPhone
+          customerName: finalCustomerName,
+          customerPhone: finalCustomerPhone
         }
       )
 
@@ -439,6 +454,12 @@ const SilverItem = ({
         )
 
       }
+
+
+      console.log(
+        'Silver item marked as sold:',
+        data
+      )
 
 
       // ========================================
@@ -479,6 +500,7 @@ const SilverItem = ({
               soldPrice:
                 price,
 
+              // DEFAULTS ONLY HERE
               customerName:
                 finalCustomerName,
 
@@ -504,19 +526,14 @@ const SilverItem = ({
       }
 
 
+      console.log(
+        'Sold item saved:',
+        soldData
+      )
+
+
       // ========================================
       // STEP 3
-      // SAVE CUSTOMER FOR BILL
-      // ========================================
-
-      setSoldCustomer({
-        name: finalCustomerName,
-        phone: finalCustomerPhone
-      })
-
-
-      // ========================================
-      // STEP 4
       // UPDATE CARD
       // ========================================
 
@@ -524,8 +541,22 @@ const SilverItem = ({
 
 
       // ========================================
+      // STEP 4
+      // SAVE ACTUAL DETAILS FOR BILL
+      // ========================================
+
+      setBillCustomerName(
+        billName
+      )
+
+      setBillCustomerPhone(
+        billPhone
+      )
+
+
+      // ========================================
       // STEP 5
-      // CLOSE POPUP
+      // CLOSE CUSTOMER POPUP
       // ========================================
 
       setShowCustomerPopup(false)
@@ -533,7 +564,15 @@ const SilverItem = ({
 
       // ========================================
       // STEP 6
-      // RESET CUSTOMER FIELDS
+      // OPEN BILL
+      // ========================================
+
+      setShowBill(true)
+
+
+      // ========================================
+      // STEP 7
+      // RESET CUSTOMER INPUT
       // ========================================
 
       setCustomerName('')
@@ -542,15 +581,15 @@ const SilverItem = ({
 
 
       // ========================================
-      // STEP 7
-      // PLAY SOUND
+      // STEP 8
+      // SOLD SOUND
       // ========================================
 
       playSoldSound()
 
 
       // ========================================
-      // STEP 8
+      // STEP 9
       // UPDATE PARENT
       // ========================================
 
@@ -577,6 +616,7 @@ const SilverItem = ({
             soldPrice:
               price,
 
+            // SOLD RECORD DETAILS
             customerName:
               finalCustomerName,
 
@@ -586,6 +626,7 @@ const SilverItem = ({
         )
 
       }
+
 
     } catch (error) {
 
@@ -647,7 +688,8 @@ const SilverItem = ({
 
 
     if (
-      item.status?.toLowerCase() === 'sold' ||
+      item.status?.toLowerCase() ===
+        'sold' ||
       status === 'sold'
     ) {
 
@@ -666,11 +708,12 @@ const SilverItem = ({
 
 
   // ==========================================
-  // POPUP KEYBOARD
+  // CUSTOMER POPUP KEYBOARD
   // ==========================================
 
   const handlePopupKeyDown = (e) => {
 
+    // ESC
     if (e.key === 'Escape') {
 
       if (!selling) {
@@ -684,6 +727,7 @@ const SilverItem = ({
     }
 
 
+    // ENTER
     if (e.key === 'Enter') {
 
       e.preventDefault()
@@ -696,32 +740,15 @@ const SilverItem = ({
 
 
   // ==========================================
-  // BILL DATA
+  // CLOSE BILL
   // ==========================================
 
-  const billItems = [
-    {
-      itemName:
-        item.name,
+  const closeBill = () => {
 
-      category:
-        'SILVER',
+    setShowBill(false)
 
-      weight:
-        weight.toFixed(3),
+  }
 
-      charges:
-        makingCost,
-
-      totalPrice:
-        price
-    }
-  ]
-
-
-  // ==========================================
-  // RENDER
-  // ==========================================
 
   return (
 
@@ -957,32 +984,12 @@ const SilverItem = ({
         </div>
 
 
-        {/* =================================
-            SOLD MESSAGE
-        ================================= */}
-
         {isSold && (
 
           <div className="sold-message">
 
             🎉 Silver jewellery item
             successfully sold!
-
-
-            {/* MOBILE NUMBER */}
-            <button
-              type="button"
-              className="sold-customer-mobile"
-              onClick={() => {
-                setShowBill(true)
-              }}
-            >
-
-              📱
-              {soldCustomer.phone ||
-                '9908622405'}
-
-            </button>
 
           </div>
 
@@ -1004,7 +1011,7 @@ const SilverItem = ({
 
             if (
               e.target ===
-              e.currentTarget &&
+                e.currentTarget &&
               !selling
             ) {
 
@@ -1017,6 +1024,7 @@ const SilverItem = ({
 
           <div
             className="customer-popup"
+
             onKeyDown={
               handlePopupKeyDown
             }
@@ -1067,7 +1075,11 @@ const SilverItem = ({
 
             {/* MOBILE */}
 
-            <div className="customer-field mobile-field">
+            <div
+              className={
+                'customer-field mobile-field'
+              }
+            >
 
               <label>
                 Mobile Number
@@ -1105,6 +1117,8 @@ const SilverItem = ({
                 />
 
 
+                {/* LOADING SPINNER */}
+
                 {customerLoading && (
 
                   <span className="customer-loading">
@@ -1118,6 +1132,8 @@ const SilverItem = ({
               </div>
 
 
+              {/* SEARCHING */}
+
               {customerLoading && (
 
                 <span className="customer-hint customer-searching">
@@ -1129,47 +1145,44 @@ const SilverItem = ({
               )}
 
 
+              {/* FOUND */}
+
               {!customerLoading &&
                 customerFound && (
 
-                <span className="customer-hint customer-found">
+                  <span className="customer-hint customer-found">
 
-                  ✓ Customer found
+                    ✓ Customer found
 
-                </span>
+                  </span>
 
-              )}
+                )}
 
+
+              {/* NOT FOUND */}
 
               {!customerLoading &&
                 customerPhone.length === 10 &&
                 !customerFound && (
 
-                <span className="customer-hint">
+                  <span className="customer-hint">
 
-                  Customer not found — enter name if required
+                    Customer not found — enter name
 
-                </span>
+                  </span>
 
-              )}
-
-
-              {customerPhone.length === 0 && (
-
-                <span className="customer-hint">
-
-                  Leave empty to use 9908622405
-
-                </span>
-
-              )}
+                )}
 
             </div>
 
 
             {/* NAME */}
 
-            <div className="customer-field name-field">
+            <div
+              className={
+                'customer-field name-field'
+              }
+            >
 
               <label>
                 Name
@@ -1208,7 +1221,7 @@ const SilverItem = ({
 
                 {customerFound
                   ? '✓ Name loaded from customer database'
-                  : 'Name is optional'}
+                  : 'Enter customer name'}
 
               </span>
 
@@ -1221,7 +1234,10 @@ const SilverItem = ({
 
               <button
                 type="button"
-                className="customer-cancel-btn"
+
+                className={
+                  'customer-cancel-btn'
+                }
 
                 onClick={() => {
 
@@ -1245,7 +1261,10 @@ const SilverItem = ({
 
               <button
                 type="button"
-                className="customer-sold-btn"
+
+                className={
+                  'customer-sold-btn'
+                }
 
                 onClick={
                   confirmMarkAsSold
@@ -1278,30 +1297,70 @@ const SilverItem = ({
 
       {showBill && (
 
-        <JewelleryBill
+        <div className="bill-modal-overlay">
 
-          billNo={
-            item.id
-          }
+          <div className="bill-modal">
 
-          customerName={
-            soldCustomer.name
-          }
+            <button
+              type="button"
+              className="bill-modal-close no-print"
 
-          customerMobile={
-            soldCustomer.phone ||
-            '9908622405'
-          }
+              onClick={closeBill}
+            >
+              ×
+            </button>
 
-          items={
-            billItems
-          }
 
-          onClose={() => {
-            setShowBill(false)
-          }}
+            <JewelleryBill
 
-        />
+              billNo={
+                item.id
+              }
+
+              date={
+                new Date().toLocaleDateString(
+                  'en-IN'
+                )
+              }
+
+              customerName={
+                billCustomerName
+              }
+
+              customerMobile={
+                billCustomerPhone
+              }
+
+              paymentMode=""
+              
+              items={[
+                {
+                  itemName:
+                    item.name,
+
+                  category:
+                    'SILVER',
+
+                  weight:
+                    weight.toFixed(3),
+
+                  charges:
+                    makingCost,
+
+                  totalPrice:
+                    price
+                }
+              ]}
+
+              onClose={
+                closeBill
+              }
+
+            />
+
+          </div>
+
+        </div>
 
       )}
 
