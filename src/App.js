@@ -12,7 +12,7 @@ import Inventory from "./components/Inventory/Inventory"
 import GoldPriceSection from './components/GoldPriceSection/GoldPriceSection'
 import OldSilverPriceSection from './components/OldSilverPriceSection/OldSilverPriceSection'
 import Orders from './components/Orders/Orders';
-
+import JewelleryBill from './components/JewelleryBill/JewelleryBill.js'
 const App = () => {
   return (
     <BrowserRouter>
@@ -76,6 +76,7 @@ const App = () => {
           }
         />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/invoice" element={<JewelleryBill/>}/>
       </Routes>
 
     </BrowserRouter>
