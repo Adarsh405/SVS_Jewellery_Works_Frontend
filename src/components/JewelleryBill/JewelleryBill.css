@@ -704,34 +704,37 @@ body {
 
   .a4-paper {
     transform-origin: top center;
-
-    transform:
-      scale(
-        min(
-          1,
-          calc(
-            (100vw - 40px) / 1122
-          )
-        )
-      );
-
-    margin-bottom:
-      calc(
-        -210mm *
-        (
-          1 -
-          min(
-            1,
-            calc(
-              (100vw - 40px) / 1122
-            )
-          )
-        )
-      );
+    transform: scale(0.85);
   }
 
 }
 
+
+@media screen and (max-width: 1000px) {
+
+  .a4-paper {
+    transform: scale(0.70);
+  }
+
+}
+
+
+@media screen and (max-width: 800px) {
+
+  .a4-paper {
+    transform: scale(0.55);
+  }
+
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .a4-paper {
+    transform: scale(0.42);
+  }
+
+}
 
 @media screen and (max-width: 700px) {
 
