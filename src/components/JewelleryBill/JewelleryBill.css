@@ -786,168 +786,61 @@ body {
 
 
 /* =========================================================
-   PRINT
+   PRINT SETTINGS
    ========================================================= */
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
 
 @media print {
 
-  /*
-    ========================================================
-    PAGE
-    ========================================================
-  */
+  /* -----------------------------------------
+     PAGE
+     ----------------------------------------- */
 
   html,
   body {
-
     width: 297mm !important;
-
     height: 210mm !important;
 
     margin: 0 !important;
-
     padding: 0 !important;
-
-    overflow: hidden !important;
 
     background: white !important;
-  }
-
-
-  /*
-    ========================================================
-    HIDE EVERYTHING
-    ========================================================
-  */
-
-  body * {
-    visibility: hidden !important;
-  }
-
-
-  /*
-    ========================================================
-    SHOW ONLY BILL
-    ========================================================
-  */
-
-  .a4-paper,
-  .a4-paper * {
-
-    visibility: visible !important;
-  }
-
-
-  /*
-    ========================================================
-    A4 PRINT AREA
-    ========================================================
-  */
-
-  .a4-paper {
-
-    position: absolute !important;
-
-    left: 0 !important;
-
-    top: 0 !important;
-
-    width: 297mm !important;
-
-    height: 210mm !important;
-
-    margin: 0 !important;
-
-    padding: 0 !important;
-
-    display: flex !important;
 
     overflow: hidden !important;
-
-    box-shadow: none !important;
-
-    /*
-      IMPORTANT:
-      Physical paper already contains
-      the printed template.
-    */
-
-    background: transparent !important;
-
-    background-image: none !important;
   }
 
 
-  /*
-    ========================================================
-    BILL COPIES
-    ========================================================
-  */
+  /* -----------------------------------------
+     HIDE SCREEN UI
+     ----------------------------------------- */
 
-  .bill-copy {
-
-    width: 148.5mm !important;
-
-    height: 210mm !important;
-
-    min-width: 148.5mm !important;
-
-    max-width: 148.5mm !important;
-
-    flex: 0 0 148.5mm !important;
-
-    position: relative !important;
-
-    overflow: hidden !important;
-
-    background: transparent !important;
-
-    border: none !important;
-
-    /*
-      Move printed data slightly down.
-    */
-
-    transform:
-      translateY(4mm) !important;
-  }
-
-
-  /*
-    ========================================================
-    HIDE SCREEN ELEMENTS
-    ========================================================
-  */
-
+  .no-print,
   .bill-toolbar,
   .bill-modal-close,
-  .no-print {
-
+  .customer-popup-overlay,
+  button {
     display: none !important;
   }
 
 
-  /*
-    ========================================================
-    MODAL BECOMES PRINT AREA
-    ========================================================
-  */
+  /* -----------------------------------------
+     BILL MODAL
+     ----------------------------------------- */
 
   .bill-modal-overlay {
-
     position: static !important;
 
     display: block !important;
 
-    width: 100% !important;
-
-    height: auto !important;
-
-    min-height: 0 !important;
-
-    padding: 0 !important;
+    width: 297mm !important;
+    height: 210mm !important;
 
     margin: 0 !important;
+    padding: 0 !important;
 
     background: transparent !important;
 
@@ -956,80 +849,125 @@ body {
 
 
   .bill-modal {
+    position: static !important;
 
-    width: 100% !important;
+    display: block !important;
+
+    width: 297mm !important;
+    height: 210mm !important;
 
     max-width: none !important;
-
     max-height: none !important;
 
-    overflow: visible !important;
-
     margin: 0 !important;
-
     padding: 0 !important;
 
     background: transparent !important;
 
-    box-shadow: none !important;
+    border: none !important;
 
     border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    overflow: visible !important;
   }
 
 
-  .jewellery-bill-page {
+  /* -----------------------------------------
+     BILL PAGE
+     ----------------------------------------- */
 
-    width: 100% !important;
+  .jewellery-bill-page {
+    display: block !important;
+
+    width: 297mm !important;
+    height: 210mm !important;
 
     min-height: 0 !important;
 
     margin: 0 !important;
-
     padding: 0 !important;
 
     background: transparent !important;
+
+    overflow: visible !important;
   }
 
 
-  /*
-    ========================================================
-    DON'T CREATE EXTRA PAGE
-    ========================================================
-  */
+  /* -----------------------------------------
+     A4 PAPER
+     ----------------------------------------- */
 
-  .a4-paper,
-  .bill-copy {
+  .a4-paper {
+    position: relative !important;
 
-    page-break-before: avoid !important;
+    display: flex !important;
 
-    page-break-after: avoid !important;
+    width: 297mm !important;
+    height: 210mm !important;
 
-    break-before: avoid !important;
+    margin: 0 !important;
+    padding: 0 !important;
 
-    break-after: avoid !important;
-  }
+    overflow: hidden !important;
 
-
-  /*
-    ========================================================
-    PRINT QUALITY
-    ========================================================
-  */
-
-  .field,
-  .item-row {
+    background: transparent !important;
 
     box-shadow: none !important;
 
-    text-shadow: none !important;
+    transform: none !important;
+
+    visibility: visible !important;
   }
 
 
-  /*
-    ========================================================
-    KEEP TEXT CRISP
-    ========================================================
-  */
+  /* -----------------------------------------
+     BOTH BILL COPIES
+     ----------------------------------------- */
+
+  .bill-copy {
+    position: relative !important;
+
+    display: block !important;
+
+    width: 148.5mm !important;
+    height: 210mm !important;
+
+    min-width: 148.5mm !important;
+    max-width: 148.5mm !important;
+
+    flex: 0 0 148.5mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    visibility: visible !important;
+
+    transform: none !important;
+
+    overflow: hidden !important;
+  }
+
+
+  /* -----------------------------------------
+     ALL BILL CONTENT
+     ----------------------------------------- */
+
+  .bill-copy *,
+  .a4-paper *,
+  .jewellery-bill-page *,
+  .bill-modal *,
+  .bill-modal-overlay * {
+    visibility: visible !important;
+  }
+
+
+  /* -----------------------------------------
+     TEXT
+     ----------------------------------------- */
 
   .field,
   .item-row,
@@ -1037,15 +975,71 @@ body {
   .item-category,
   .item-weight,
   .item-charges,
-  .item-price {
+  .item-price,
+  .total-weight,
+  .grand-total {
+    visibility: visible !important;
 
+    color: #000000 !important;
+
+    opacity: 1 !important;
+
+    text-shadow: none !important;
+
+    box-shadow: none !important;
+  }
+
+
+  /* -----------------------------------------
+     ITEM CONTAINER
+     ----------------------------------------- */
+
+  .items-container {
+    visibility: visible !important;
+
+    display: block !important;
+  }
+
+
+  .item-row {
+    display: flex !important;
+  }
+
+
+  /* -----------------------------------------
+     IMPORTANT:
+     DON'T PRINT SCREEN BACKGROUND
+     ----------------------------------------- */
+
+  .a4-paper {
+    background-image: none !important;
+  }
+
+
+  /* -----------------------------------------
+     NO PAGE BREAK
+     ----------------------------------------- */
+
+  .a4-paper,
+  .bill-copy {
+    page-break-before: avoid !important;
+    page-break-after: avoid !important;
+
+    break-before: avoid !important;
+    break-after: avoid !important;
+  }
+
+
+  /* -----------------------------------------
+     PRINT COLORS
+     ----------------------------------------- */
+
+  * {
     -webkit-print-color-adjust: exact !important;
-
     print-color-adjust: exact !important;
   }
 
 }
-
 
 /* =========================================================
    PRINT SAFETY
