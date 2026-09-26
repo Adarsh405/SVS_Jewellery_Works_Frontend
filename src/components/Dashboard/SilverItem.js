@@ -4,7 +4,7 @@ import React, {
   useEffect
 } from 'react'
 
-import JewelleryBill from './JewelleryBill'
+import JewelleryBill from '../JewelleryBill/JewelleryBill'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
