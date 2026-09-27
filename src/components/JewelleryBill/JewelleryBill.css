@@ -1,7 +1,8 @@
 /* =========================================================
    SVS JEWELLERY BILL
-   PRE-PRINTED A4 PAPER + DETAILS ONLY
-   SCREEN PREVIEW + A4 LANDSCAPE PRINT
+   PRE-PRINTED A4 PAPER
+   SMALL LANDSCAPE POPUP
+   A4 LANDSCAPE PRINT
 ========================================================= */
 
 
@@ -16,8 +17,185 @@
   background: #ffffff;
 
   padding: 0;
+  margin: 0;
 
   box-sizing: border-box;
+}
+
+
+/* =========================================================
+   =========================================================
+   SMALL BILL POPUP
+   =========================================================
+========================================================= */
+
+.bill-modal-overlay {
+  position: fixed !important;
+
+  inset: 0 !important;
+
+  width: 100vw !important;
+  height: 100vh !important;
+
+  z-index: 999999 !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  padding: 20px !important;
+
+  box-sizing: border-box !important;
+
+  background: rgba(0, 0, 0, 0.58) !important;
+
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+
+/* =========================================================
+   SMALL LANDSCAPE MODAL
+========================================================= */
+
+.bill-modal {
+  position: relative !important;
+
+  /*
+     LANDSCAPE POPUP
+
+     Width  = 900px
+     Height = 560px
+  */
+
+  width: min(900px, 92vw) !important;
+
+  height: min(560px, 82vh) !important;
+
+  max-width: 92vw !important;
+  max-height: 82vh !important;
+
+  min-width: 600px !important;
+  min-height: 380px !important;
+
+  background: #ffffff !important;
+
+  border-radius: 18px !important;
+
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.40),
+    0 10px 30px rgba(0, 0, 0, 0.18) !important;
+
+  animation:
+    billModalOpen 0.22s ease-out;
+}
+
+
+/* =========================================================
+   POPUP OPEN ANIMATION
+========================================================= */
+
+@keyframes billModalOpen {
+
+  from {
+    opacity: 0;
+
+    transform:
+      scale(0.92)
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scale(1)
+      translateY(0);
+  }
+
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.bill-modal-close {
+  position: absolute !important;
+
+  right: 12px !important;
+  top: 10px !important;
+
+  z-index: 9999999 !important;
+
+  width: 34px !important;
+  height: 34px !important;
+
+  padding: 0 !important;
+
+  border: none !important;
+
+  border-radius: 50% !important;
+
+  background: #ef4444 !important;
+
+  color: #ffffff !important;
+
+  font-size: 22px !important;
+
+  font-weight: 700 !important;
+
+  line-height: 34px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+  justify-content: center !important;
+
+  cursor: pointer !important;
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.20) !important;
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease !important;
+}
+
+
+.bill-modal-close:hover {
+  background: #dc2626 !important;
+
+  transform: scale(1.08) !important;
+}
+
+
+.bill-modal-close:active {
+  transform: scale(0.94) !important;
+}
+
+
+/* =========================================================
+   BILL PAGE INSIDE POPUP
+========================================================= */
+
+.bill-modal .jewellery-bill-page {
+  width: 100% !important;
+  height: 100% !important;
+
+  min-height: 0 !important;
+
+  margin: 0 !important;
+  padding: 0 !important;
+
+  background: #ffffff !important;
+
+  overflow: hidden !important;
 }
 
 
@@ -26,123 +204,166 @@
 ========================================================= */
 
 .bill-toolbar {
-  width: 100%;
+  position: absolute !important;
 
-  padding: 12px 16px;
+  left: 0 !important;
+  top: 0 !important;
 
-  background: #ffffff;
+  z-index: 1000 !important;
 
-  border-bottom: 1px solid #e5e7eb;
+  width: 100% !important;
 
-  display: flex;
+  height: 48px !important;
 
-  justify-content: space-between;
+  padding:
+    6px
+    58px
+    6px
+    14px !important;
 
-  align-items: center;
+  background: #ffffff !important;
 
-  gap: 15px;
+  border-bottom:
+    1px solid #e5e7eb !important;
 
-  box-sizing: border-box;
+  display: flex !important;
+
+  justify-content: space-between !important;
+  align-items: center !important;
+
+  gap: 15px !important;
+
+  box-sizing: border-box !important;
 }
 
 
 .bill-toolbar h3 {
-  margin: 0;
+  margin: 0 !important;
 
-  color: #111827;
+  color: #111827 !important;
 
-  font-size: 18px;
+  font-size: 14px !important;
 
-  font-weight: 700;
+  line-height: 1.2 !important;
+
+  font-weight: 700 !important;
 }
 
 
 .bill-toolbar span {
-  display: block;
+  display: block !important;
 
-  margin-top: 3px;
+  margin-top: 2px !important;
 
-  color: #6b7280;
+  color: #6b7280 !important;
 
-  font-size: 11px;
+  font-size: 9px !important;
 }
 
 
 .bill-toolbar-actions {
-  display: flex;
+  display: flex !important;
 
-  gap: 8px;
+  gap: 6px !important;
 }
 
 
 .bill-toolbar button {
-  border: none;
+  border: none !important;
 
-  border-radius: 7px;
+  border-radius: 6px !important;
 
-  padding: 8px 13px;
+  padding:
+    6px 10px !important;
 
-  font-size: 12px;
+  font-size: 10px !important;
 
-  font-weight: 700;
+  font-weight: 700 !important;
 
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 
 .bill-toolbar-actions button:first-child {
-  background: #f2c84b;
+  background: #f2c84b !important;
 
-  color: #111;
+  color: #111111 !important;
 }
 
 
 .bill-close-button {
-  background: #666;
+  background: #555555 !important;
 
-  color: white;
+  color: #ffffff !important;
 }
 
 
 /* =========================================================
-   A4 WORKING AREA
+   A4 WORKING PAGE
+   REAL SIZE = 297mm × 210mm
+
+   This remains A4 internally.
+   We only scale it visually for popup.
 ========================================================= */
 
 .print-page {
-  position: relative;
+  position: absolute !important;
 
-  width: 297mm;
+  left: 50% !important;
 
-  height: 210mm;
+  top: 48px !important;
 
-  margin: 0 auto;
+  width: 297mm !important;
 
-  background: #ffffff;
+  height: 210mm !important;
 
-  overflow: hidden;
+  margin: 0 !important;
 
-  box-sizing: border-box;
+  padding: 0 !important;
+
+  background: #ffffff !important;
+
+  overflow: hidden !important;
+
+  box-sizing: border-box !important;
+
+  transform-origin: top center !important;
+
+  /*
+     A4:
+     297mm × 210mm
+     ≈ 1122px × 794px
+
+     Popup:
+     approximately 820 × 480
+
+     Scale ≈ 0.60
+  */
+
+  transform:
+    translateX(-50%)
+    scale(0.60) !important;
 }
 
 
 /* =========================================================
-   PREVIEW TEMPLATE
+   TEMPLATE IMAGE
 ========================================================= */
 
 .bill-template-image {
-  position: absolute;
+  position: absolute !important;
 
-  left: 0;
-  top: 0;
+  left: 0 !important;
+  top: 0 !important;
 
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
 
-  display: block;
+  display: block !important;
 
-  object-fit: fill;
+  object-fit: fill !important;
 
-  z-index: 1;
+  z-index: 1 !important;
 }
 
 
@@ -151,25 +372,26 @@
 ========================================================= */
 
 .copy-details {
-  position: absolute;
+  position: absolute !important;
 
-  top: 0;
+  top: 0 !important;
 
-  width: 50%;
-  height: 100%;
+  width: 50% !important;
 
-  z-index: 10;
+  height: 100% !important;
 
-  color: #111;
+  z-index: 10 !important;
+
+  color: #111111 !important;
 
   font-family:
     Arial,
     Helvetica,
-    sans-serif;
+    sans-serif !important;
 
-  pointer-events: none;
+  pointer-events: none !important;
 
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 
@@ -178,7 +400,7 @@
 ========================================================= */
 
 .copy-details.original {
-  left: 0;
+  left: 0 !important;
 }
 
 
@@ -187,7 +409,7 @@
 ========================================================= */
 
 .copy-details.duplicate {
-  left: 50%;
+  left: 50% !important;
 }
 
 
@@ -214,9 +436,6 @@
 
 /* =========================================================
    BILL NUMBER
-   TEMPLATE POSITION:
-   LEFT COPY ≈ X 136px
-   Y ≈ 552px
 ========================================================= */
 
 .copy-details.original .bill-number,
@@ -234,8 +453,6 @@
 
 /* =========================================================
    DATE
-   TEMPLATE POSITION:
-   LEFT COPY ≈ X 527px
 ========================================================= */
 
 .copy-details.original .bill-date,
@@ -269,7 +486,7 @@
 
 
 /* =========================================================
-   MOBILE NUMBER
+   CUSTOMER MOBILE
 ========================================================= */
 
 .copy-details.original .customer-mobile,
@@ -287,11 +504,6 @@
 
 /* =========================================================
    PAYMENT MODE
-
-   Your current physical template does not have a visible
-   payment-mode box in the customer information section.
-
-   Keep this hidden unless you add one later.
 ========================================================= */
 
 .copy-details.original .payment-mode,
@@ -303,26 +515,19 @@
 
 /* =========================================================
    ITEMS AREA
-
-   Physical table:
-   Header + 3 item rows
-
-   Approx:
-   X = 31px → 735px
-   Y = 668px → 819px
 ========================================================= */
 
 .items-area {
 
   position: absolute;
 
-  left: 4.0%;
+  left: 4%;
 
   top: 65.3%;
 
   width: 91.7%;
 
-  height: 15.0%;
+  height: 15%;
 
   display: flex;
 
@@ -334,8 +539,6 @@
 
 /* =========================================================
    ITEM ROW
-
-   3 physical rows
 ========================================================= */
 
 .print-item {
@@ -357,7 +560,7 @@
 
 
 /* =========================================================
-   ITEM COLUMN TEXT
+   ITEM TEXT
 ========================================================= */
 
 .print-item span {
@@ -410,7 +613,6 @@
   left: 35%;
 
   width: 16%;
-
 }
 
 
@@ -423,7 +625,6 @@
   left: 51%;
 
   width: 14%;
-
 }
 
 
@@ -436,7 +637,6 @@
   left: 65%;
 
   width: 17%;
-
 }
 
 
@@ -449,17 +649,11 @@
   left: 82%;
 
   width: 18%;
-
 }
 
 
 /* =========================================================
    TOTAL WEIGHT
-
-   Your physical template currently does NOT have a
-   separate "Total Weight" printed field.
-
-   Hide it.
 ========================================================= */
 
 .copy-details.original .total-weight,
@@ -471,16 +665,12 @@
 
 /* =========================================================
    GRAND TOTAL
-
-   Physical box approximately:
-   X = 440px → 685px
-   Y = 827px → 870px
 ========================================================= */
 
 .copy-details.original .grand-total,
 .copy-details.duplicate .grand-total {
 
-  left: 58.0%;
+  left: 58%;
 
   top: 81.8%;
 
@@ -497,38 +687,109 @@
 
 
 /* =========================================================
-   SCREEN PREVIEW
+   RESPONSIVE POPUP
 ========================================================= */
 
-@media screen {
+@media screen and (max-width: 900px) {
 
-  .jewellery-bill-page {
-    width: 100%;
+  .bill-modal {
+
+    width: 94vw !important;
+
+    height: 72vh !important;
+
+    min-width: 0 !important;
+
+    min-height: 320px !important;
   }
 
 
-  /*
-     A4 is maintained internally.
+  .print-page {
 
-     It is simply scaled down for the
-     small popup preview.
-  */
+    transform:
+      translateX(-50%)
+      scale(0.52) !important;
+  }
+
+}
+
+
+@media screen and (max-width: 650px) {
+
+  .bill-modal-overlay {
+
+    padding: 10px !important;
+  }
+
+
+  .bill-modal {
+
+    width: 96vw !important;
+
+    height: 62vh !important;
+
+    min-width: 0 !important;
+
+    min-height: 280px !important;
+
+    border-radius: 14px !important;
+  }
+
+
+  .bill-toolbar {
+
+    height: 42px !important;
+
+    padding:
+      5px
+      45px
+      5px
+      9px !important;
+  }
+
+
+  .bill-toolbar h3 {
+
+    font-size: 11px !important;
+  }
+
+
+  .bill-toolbar span {
+
+    display: none !important;
+  }
+
+
+  .bill-toolbar button {
+
+    padding:
+      5px 7px !important;
+
+    font-size: 9px !important;
+  }
+
 
   .print-page {
 
-    width: 297mm;
-
-    height: 210mm;
-
-    transform-origin: top left;
+    top: 42px !important;
 
     transform:
-      scale(
-        min(
-          calc((100vw - 40px) / 1122),
-          calc((100vh - 160px) / 794)
-        )
-      );
+      translateX(-50%)
+      scale(0.40) !important;
+  }
+
+
+  .bill-modal-close {
+
+    width: 30px !important;
+
+    height: 30px !important;
+
+    top: 6px !important;
+
+    right: 7px !important;
+
+    font-size: 19px !important;
   }
 
 }
@@ -536,8 +797,8 @@
 
 /* =========================================================
    PRINT
-   PRINT ONLY DETAILS
-   DO NOT PRINT JPEG TEMPLATE
+   ONLY DETAILS
+   NO TEMPLATE IMAGE
 ========================================================= */
 
 @media print {
@@ -576,24 +837,102 @@
 
 
   /* =======================================================
-     MAIN PAGE
+     HIDE EVERYTHING
   ======================================================= */
 
-  .jewellery-bill-page {
+  body * {
+
+    visibility: hidden !important;
+  }
+
+
+  /* =======================================================
+     SHOW ONLY BILL
+  ======================================================= */
+
+  .bill-modal-overlay,
+  .bill-modal,
+  .bill-modal .jewellery-bill-page,
+  .bill-modal .print-page,
+  .bill-modal .print-page * {
+
+    visibility: visible !important;
+  }
+
+
+  /* =======================================================
+     OVERLAY
+  ======================================================= */
+
+  .bill-modal-overlay {
+
+    position: static !important;
+
+    inset: auto !important;
+
+    width: auto !important;
+
+    height: auto !important;
+
+    display: block !important;
+
+    padding: 0 !important;
+
+    margin: 0 !important;
+
+    background: transparent !important;
+
+    backdrop-filter: none !important;
+
+    -webkit-backdrop-filter: none !important;
+
+    overflow: visible !important;
+  }
+
+
+  /* =======================================================
+     MODAL
+  ======================================================= */
+
+  .bill-modal {
+
+    position: static !important;
 
     width: 297mm !important;
 
     height: 210mm !important;
 
-    min-height: 0 !important;
+    max-width: none !important;
 
-    margin: 0 !important;
+    max-height: none !important;
+
+    min-width: 0 !important;
+
+    min-height: 0 !important;
 
     padding: 0 !important;
 
+    margin: 0 !important;
+
+    border-radius: 0 !important;
+
     background: transparent !important;
 
-    overflow: hidden !important;
+    box-shadow: none !important;
+
+    overflow: visible !important;
+
+    animation: none !important;
+  }
+
+
+  /* =======================================================
+     HIDE CLOSE
+  ======================================================= */
+
+  .bill-modal-close {
+
+    display: none !important;
   }
 
 
@@ -608,7 +947,7 @@
 
 
   /* =======================================================
-     A4 PRINT POSITION
+     REAL A4 PRINT PAGE
   ======================================================= */
 
   .print-page {
@@ -638,11 +977,11 @@
 
 
   /* =======================================================
-     VERY IMPORTANT
+     IMPORTANT
 
-     YOUR PAPER ALREADY HAS THE DESIGN.
+     THE PHYSICAL PAPER ALREADY HAS THE DESIGN.
 
-     DO NOT PRINT JPEG.
+     DO NOT PRINT THE PNG TEMPLATE.
   ======================================================= */
 
   .bill-template-image {
@@ -698,84 +1037,28 @@
 
 
   /* =======================================================
-     DATA
+     DETAILS
   ======================================================= */
 
-  .detail {
-
-    background: transparent !important;
-
-    color: #111 !important;
-
-    visibility: visible !important;
-  }
-
-
-  /* =======================================================
-     ITEMS
-  ======================================================= */
-
-  .items-area {
-
-    background: transparent !important;
-
-    visibility: visible !important;
-  }
-
-
-  .print-item {
-
-    background: transparent !important;
-
-    visibility: visible !important;
-  }
-
-
+  .detail,
+  .items-area,
+  .print-item,
   .print-item span {
 
-    background: transparent !important;
-
-    color: #111 !important;
-
     visibility: visible !important;
-
-    transform:
-      translateY(-50%) !important;
   }
 
 
   /* =======================================================
-     HIDE PAYMENT MODE
-  ======================================================= */
-
-  .payment-mode {
-
-    display: none !important;
-  }
-
-
-  /* =======================================================
-     HIDE TOTAL WEIGHT
-  ======================================================= */
-
-  .total-weight {
-
-    display: none !important;
-  }
-
-
-  /* =======================================================
-     REMOVE ALL TRANSFORMS
+     REMOVE SCREEN TRANSFORM
   ======================================================= */
 
   .print-page,
   .print-page * {
 
-    transform-origin: initial;
+    transform-origin: initial !important;
   }
 
-
-  /* Restore item vertical centering */
 
   .print-item span {
 
@@ -785,7 +1068,7 @@
 
 
   /* =======================================================
-     NO SCREEN ELEMENTS
+     NO SCREEN CONTROLS
   ======================================================= */
 
   .no-print {
