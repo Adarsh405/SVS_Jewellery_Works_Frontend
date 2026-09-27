@@ -1,73 +1,104 @@
 /* =========================================================
-   FINAL SILVER CARD HEIGHT OVERRIDE
-   Put this at the VERY END of SilverItem.css
+   SILVER ITEM CARD - FINAL HEIGHT
+   MATCHES ACTUAL SilverItem.js CLASS NAMES
 ========================================================= */
 
 .silver-item-card {
-  min-height: 235px !important;
+  width: 100% !important;
+
   height: 235px !important;
+  min-height: 235px !important;
+
+  box-sizing: border-box !important;
 
   padding: 18px 22px !important;
 
-  border-radius: 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  border-radius: 22px !important;
 
-  box-sizing: border-box;
+  position: relative !important;
+  overflow: hidden !important;
 }
 
 
 /* =========================================================
-   TOP BAR
+   ACTUAL JS CLASS
+   gold-card-top
 ========================================================= */
 
-.silver-card-top {
-  min-height: 46px !important;
+.silver-item-card .gold-card-top {
+  width: 100% !important;
 
-  height: 46px !important;
+  min-height: 45px !important;
+  height: 45px !important;
 
-  flex-shrink: 0;
+  display: flex !important;
 
-  display: flex;
-  align-items: center;
+  align-items: center !important;
+
+  justify-content: space-between !important;
+
+  flex-shrink: 0 !important;
+
+  position: relative !important;
+
+  z-index: 10 !important;
 }
 
 
 /* =========================================================
-   BADGE
+   SILVER TYPE
 ========================================================= */
 
-.item-type {
+.silver-item-card .item-type {
   min-height: 36px !important;
 
-  padding: 6px 16px !important;
+  padding: 7px 16px !important;
+
+  display: inline-flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  border-radius: 999px !important;
 
   font-size: 13px !important;
 
-  border-radius: 999px !important;
+  font-weight: 900 !important;
 }
 
 
 /* =========================================================
-   ACTION BUTTONS
+   ACTIONS
 ========================================================= */
 
-.item-actions {
+.silver-item-card .item-actions {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: flex-end !important;
+
   gap: 10px !important;
 }
 
 
-.available-button,
-.add-button {
+.silver-item-card .available-button,
+.silver-item-card .add-button {
   height: 40px !important;
+
+  min-height: 40px !important;
 
   padding: 0 18px !important;
 
-  border-radius: 11px !important;
+  border-radius: 10px !important;
 
   font-size: 12px !important;
+
+  font-weight: 900 !important;
 }
 
 
@@ -75,12 +106,14 @@
    MAIN CONTENT
 ========================================================= */
 
-.item-content {
-  flex: 1;
+.silver-item-card .item-content {
+  width: 100% !important;
 
-  min-height: 155px !important;
+  flex: 1 !important;
 
-  height: 155px !important;
+  min-height: 150px !important;
+
+  height: 150px !important;
 
   margin-top: 8px !important;
 
@@ -89,21 +122,27 @@
   align-items: center !important;
 
   gap: 20px !important;
+
+  position: relative !important;
+
+  z-index: 5 !important;
 }
 
 
 /* =========================================================
-   BIGGER PRODUCT IMAGE
+   IMAGE
 ========================================================= */
 
-.item-image {
-  width: 115px !important;
+.silver-item-card .item-image {
+  width: 110px !important;
 
-  height: 115px !important;
+  height: 110px !important;
 
-  min-width: 115px !important;
+  min-width: 110px !important;
 
-  min-height: 115px !important;
+  min-height: 110px !important;
+
+  flex-shrink: 0 !important;
 
   object-fit: contain !important;
 }
@@ -113,34 +152,37 @@
    DETAILS
 ========================================================= */
 
-.item-details {
-  flex: 1;
+.silver-item-card .item-details {
+  flex: 1 !important;
 
-  height: 100%;
+  min-width: 0 !important;
 
-  display: flex;
+  height: 100% !important;
 
-  flex-direction: column;
+  display: flex !important;
 
-  justify-content: center;
+  flex-direction: column !important;
+
+  justify-content: center !important;
 }
 
 
 /* =========================================================
-   TITLE
+   ITEM NAME
+
+   Your JS currently renders h2 directly
 ========================================================= */
 
-.item-title-line {
-  margin-bottom: 14px !important;
+.silver-item-card .item-details h2 {
+  margin: 0 0 10px 0 !important;
 
-  gap: 10px !important;
-}
-
-
-.item-details h2 {
   font-size: 22px !important;
 
   line-height: 1.2 !important;
+
+  font-weight: 900 !important;
+
+  color: #172033 !important;
 }
 
 
@@ -148,17 +190,41 @@
    ID
 ========================================================= */
 
-.silver-id {
-  padding: 6px 11px !important;
+.silver-item-card .silver-id {
+  width: fit-content !important;
 
-  border-radius: 9px !important;
+  padding: 5px 11px !important;
+
+  margin-bottom: 12px !important;
+
+  border-radius: 8px !important;
 
   font-size: 11px !important;
 }
 
 
-.silver-id span {
-  font-size: 13px !important;
+.silver-item-card .silver-id span {
+  font-size: 14px !important;
+}
+
+
+/* =========================================================
+   DETAILS ROW
+========================================================= */
+
+.silver-item-card .silver-details {
+  width: 100% !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    0.9fr
+    0.9fr
+    1.5fr !important;
+
+  gap: 12px !important;
+
+  align-items: stretch !important;
 }
 
 
@@ -166,130 +232,179 @@
    DETAIL BOXES
 ========================================================= */
 
-.silver-details {
-  width: 100%;
-
-  gap: 12px !important;
-
-  grid-template-columns:
-    0.8fr
-    0.9fr
-    1.5fr !important;
-}
-
-
-.silver-details > div {
-  min-height: 68px !important;
+.silver-item-card .silver-details > div {
+  min-width: 0 !important;
 
   height: 68px !important;
+
+  min-height: 68px !important;
 
   padding: 10px 14px !important;
 
-  border-radius: 13px !important;
+  box-sizing: border-box !important;
+
+  border-radius: 12px !important;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  justify-content: center !important;
 }
 
 
-.silver-details span {
+/* =========================================================
+   LABELS
+
+   Your CSS uses <p> for these
+========================================================= */
+
+.silver-item-card .silver-details p {
+  margin: 0 0 5px 0 !important;
+
   font-size: 11px !important;
 
-  margin-bottom: 6px !important;
+  line-height: 1 !important;
 }
 
 
-.silver-details strong {
+/* =========================================================
+   VALUES
+========================================================= */
+
+.silver-item-card .silver-details strong {
   font-size: 20px !important;
 
-  line-height: 1.15 !important;
+  line-height: 1.1 !important;
+
+  font-weight: 900 !important;
+
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
 }
 
 
 /* =========================================================
-   PRICE BOX
+   PRICE
 ========================================================= */
 
-.silver-price {
-  min-height: 68px !important;
-
+.silver-item-card .silver-price {
   height: 68px !important;
 
-  padding-left: 16px !important;
+  min-height: 68px !important;
 
-  padding-right: 18px !important;
+  padding: 10px 16px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: space-between !important;
 }
 
 
-.silver-price span {
+.silver-item-card .silver-price p {
+  margin: 0 !important;
+
   font-size: 11px !important;
 }
 
 
-.silver-price strong {
-  font-size: 25px !important;
+.silver-item-card .silver-price strong {
+  font-size: 27px !important;
+
+  font-weight: 900 !important;
 }
 
 
 /* =========================================================
-   EXTRA DEPTH / PREMIUM EFFECT
+   SOLD BADGE
 ========================================================= */
 
-.silver-item-card {
-  box-shadow:
-    0 12px 35px rgba(15, 23, 42, 0.13),
-    0 3px 10px rgba(14, 165, 233, 0.08) !important;
-}
+.silver-item-card .sold-status-badge {
+  min-width: 110px !important;
 
+  height: 40px !important;
 
-.silver-item-card:hover {
-  transform:
-    translateY(-5px) !important;
+  padding: 0 16px !important;
 
-  box-shadow:
-    0 20px 45px rgba(15, 23, 42, 0.18),
-    0 5px 20px rgba(14, 165, 233, 0.12) !important;
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: center !important;
+
+  border-radius: 10px !important;
+
+  font-size: 12px !important;
 }
 
 
 /* =========================================================
-   TABLET
+   DESKTOP LARGE SCREEN
 ========================================================= */
 
-@media screen and (max-width: 900px) {
+@media screen and (min-width: 1200px) {
 
   .silver-item-card {
-    min-height: 220px !important;
+    height: 250px !important;
 
-    height: 220px !important;
+    min-height: 250px !important;
 
-    padding: 15px !important;
+    padding: 20px 24px !important;
   }
 
-  .item-content {
-    min-height: 145px !important;
+  .silver-item-card .gold-card-top {
+    height: 48px !important;
 
-    height: 145px !important;
+    min-height: 48px !important;
   }
 
-  .item-image {
-    width: 100px !important;
+  .silver-item-card .item-content {
+    height: 165px !important;
 
-    height: 100px !important;
-
-    min-width: 100px !important;
+    min-height: 165px !important;
   }
 
-  .silver-details > div {
-    min-height: 62px !important;
+  .silver-item-card .item-image {
+    width: 125px !important;
 
-    height: 62px !important;
+    height: 125px !important;
+
+    min-width: 125px !important;
+
+    min-height: 125px !important;
   }
 
-  .silver-details strong {
-    font-size: 17px !important;
+  .silver-item-card .silver-details > div {
+    height: 75px !important;
+
+    min-height: 75px !important;
   }
 
-  .silver-price strong {
-    font-size: 21px !important;
+  .silver-item-card .silver-price {
+    height: 75px !important;
+
+    min-height: 75px !important;
   }
+
+  .silver-item-card .silver-price strong {
+    font-size: 30px !important;
+  }
+}
+
+
+/* =========================================================
+   IMPORTANT:
+   YOUR JS USES gold-card-top
+   NOT silver-card-top
+========================================================= */
+
+.silver-card-top {
+  /* kept only for compatibility */
 }
 
 
@@ -300,106 +415,59 @@
 @media screen and (max-width: 768px) {
 
   .silver-item-card {
-    min-height: 245px !important;
-
     height: auto !important;
 
-    padding: 13px !important;
+    min-height: 250px !important;
+
+    padding: 14px !important;
   }
 
-  .silver-card-top {
-    height: 38px !important;
+  .silver-item-card .gold-card-top {
+    height: 40px !important;
 
-    min-height: 38px !important;
+    min-height: 40px !important;
   }
 
-  .item-content {
+  .silver-item-card .item-content {
     height: auto !important;
 
-    min-height: 180px !important;
-
-    align-items: center !important;
+    min-height: 185px !important;
 
     gap: 12px !important;
   }
 
-  .item-image {
-    width: 80px !important;
-
-    height: 80px !important;
-
-    min-width: 80px !important;
-  }
-
-  .item-details h2 {
-    font-size: 18px !important;
-  }
-
-  .silver-details {
-    gap: 7px !important;
-  }
-
-  .silver-details > div {
-    min-height: 55px !important;
-
-    height: 55px !important;
-
-    padding: 7px !important;
-  }
-
-  .silver-details span {
-    font-size: 8px !important;
-  }
-
-  .silver-details strong {
-    font-size: 14px !important;
-  }
-
-  .silver-price strong {
-    font-size: 17px !important;
-  }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media screen and (max-width: 480px) {
-
-  .silver-item-card {
-    min-height: 300px !important;
-
-    height: auto !important;
-  }
-
-  .item-content {
-    flex-direction: column !important;
-
-    align-items: stretch !important;
-
-    min-height: 230px !important;
-  }
-
-  .item-image {
+  .silver-item-card .item-image {
     width: 85px !important;
 
     height: 85px !important;
 
-    align-self: center !important;
+    min-width: 85px !important;
+
+    min-height: 85px !important;
   }
 
-  .item-details {
-    width: 100% !important;
+  .silver-item-card .item-details h2 {
+    font-size: 18px !important;
   }
 
-  .silver-details {
-    grid-template-columns:
-      1fr 1fr !important;
+  .silver-item-card .silver-details {
+    gap: 7px !important;
   }
 
-  .silver-price {
-    grid-column: 1 / -1 !important;
+  .silver-item-card .silver-details > div {
+    height: 58px !important;
+
+    min-height: 58px !important;
+
+    padding: 7px !important;
+  }
+
+  .silver-item-card .silver-details strong {
+    font-size: 14px !important;
+  }
+
+  .silver-item-card .silver-price strong {
+    font-size: 18px !important;
   }
 }
 
