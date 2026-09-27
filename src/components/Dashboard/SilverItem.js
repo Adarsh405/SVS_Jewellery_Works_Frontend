@@ -1056,147 +1056,120 @@ const SilverItem = ({
       ==================================================== */}
 
       <div
-        className={`silver-item-card ${
-          isSold
-            ? 'item-sold'
-            : ''
-        }`}
-      >
+          className={`silver-item-card ${
+            isSold ? 'item-sold' : ''
+          }`}
+        >
+          {/* ==================================================
+              TOP
+          ================================================== */}
 
-        {/* ==================================================
-            CONFETTI
-        ================================================== */}
+          <div className="silver-card-top">
 
-        {isSold && (
+            {/* TYPE */}
+            <div
+              className={`item-type ${
+                isSold
+                  ? 'sold-type'
+                  : 'silver-type'
+              }`}
+            >
+              {isSold
+                ? '✓ SOLD'
+                : '⚪ SILVER ITEM'}
+            </div>
 
-          <div className="sold-confetti">
 
-            {Array.from({
-              length: 35,
-            }).map(
-              (_, index) => (
+            {/* AVAILABLE / ACTION BUTTONS */}
+            {!isSold && (
+              <div className="item-actions">
 
-                <span
-                  key={index}
-                  className="confetti-piece"
-                  style={{
-                    '--i': index,
+                {/* SALE */}
+                <button
+                  type="button"
+                  className="available-button"
+                  onClick={() => {
+                    markAsSold();
+
+                    setTimeout(() => {
+                      focusItemId?.();
+                    }, 0);
                   }}
-                />
+                  disabled={
+                    selling ||
+                    printing
+                  }
+                >
+                  {selling
+                    ? 'UPDATING...'
+                    : '✓ AVAILABLE'}
+                </button>
 
-              )
+
+                {/* ADD */}
+                <button
+                  type="button"
+                  className="add-button"
+                  onClick={() => {
+                    onAdd(
+                      item,
+                      price
+                    );
+
+                    setTimeout(() => {
+                      document
+                        .getElementById(
+                          'item-id-input'
+                        )
+                        ?.focus();
+                    }, 0);
+                  }}
+                  disabled={
+                    selling ||
+                    printing
+                  }
+                >
+                  + ADD
+                </button>
+
+              </div>
+            )}
+
+
+            {/* SOLD */}
+            {isSold && (
+              <div className="sold-status-badge">
+                ✓ SOLD
+              </div>
             )}
 
           </div>
 
-        )}
+
+          {/* ==================================================
+              ITEM CONTENT
+          ================================================== */}
+
+          <div className="item-content">
+
+            {/* IMAGE */}
+            <img
+              src="https://res.cloudinary.com/dhuby3rax/image/upload/v1787657531/silver_model_klpdob.png"
+              alt={item.name}
+              className="item-image"
+            />
 
 
-        {/* ==================================================
-            TOP
-        ================================================== */}
+            {/* DETAILS */}
+            <div className="item-details">
 
-        <div className="silver-card-top">
-
-          <div
-            className={`item-type ${
-              isSold
-                ? 'sold-type'
-                : 'silver-type'
-            }`}
-          >
-
-            {isSold
-              ? '✓ SOLD'
-              : '⚪ SILVER'}
-
-          </div>
-
-
-          {!isSold && (
-
-            <div className="item-actions">
-
-              {/* SALE */}
-
-              <button
-                type="button"
-                className="available-button"
-                onClick={() => {
-
-                  markAsSold()
-
-                  setTimeout(() => {
-
-                    focusItemId?.()
-
-                  }, 0)
-
-                }}
-                disabled={
-                  selling ||
-                  printing
-                }
-              >
-
-                {selling
-                  ? 'PROCESSING...'
-                  : '✓ SALE'}
-
-              </button>
-
-
-              {/* ADD */}
-
-              <button
-                type="button"
-                className="add-button"
-                onClick={handleAdd}
-                disabled={
-                  selling ||
-                  printing
-                }
-              >
-                + ADD
-              </button>
-
-            </div>
-
-          )}
-
-
-          {isSold && (
-
-            <div className="sold-status-badge">
-              ✓ SOLD
-            </div>
-
-          )}
-
-        </div>
-
-
-        {/* ==================================================
-            COMPACT CONTENT
-        ================================================== */}
-
-        <div className="item-content">
-
-          <img
-            src="https://res.cloudinary.com/dhuby3rax/image/upload/v1787657531/silver_model_klpdob.png"
-            alt={item.name}
-            className="item-image"
-          />
-
-
-          <div className="item-details">
-
-            <div className="item-title-line">
-
+              {/* ITEM NAME */}
               <h2>
                 {item.name}
               </h2>
 
+
+              {/* ITEM ID */}
               <div className="silver-id">
                 ID:
                 <span>
@@ -1204,88 +1177,82 @@ const SilverItem = ({
                 </span>
               </div>
 
-            </div>
+
+              {/* DETAILS */}
+              <div className="silver-details">
+
+                {/* WEIGHT */}
+                <div className="silver-weight-box">
+
+                  <p>
+                    Weight
+                  </p>
+
+                  <strong>
+                    {weight.toFixed(3)} g
+                  </strong>
+
+                </div>
 
 
-            <div className="silver-details">
+                {/* MAKING COST */}
+                <div className="silver-making-box">
 
-              {/* WEIGHT */}
+                  <p>
+                    Making Cost
+                  </p>
 
-              <div className="silver-weight-box">
+                  <strong>
+                    ₹
+                    {makingCost.toLocaleString(
+                      'en-IN'
+                    )}
+                  </strong>
 
-                <span>
-                  Weight
-                </span>
-
-                <strong>
-                  {weight.toFixed(3)} g
-                </strong>
-
-              </div>
-
-
-              {/* MAKING */}
-
-              <div className="silver-making-box">
-
-                <span>
-                  Making
-                </span>
-
-                <strong>
-                  ₹
-                  {makingCost.toLocaleString(
-                    'en-IN'
-                  )}
-                </strong>
-
-              </div>
+                </div>
 
 
-              {/* PRICE */}
+                {/* PRICE */}
+                <div className="silver-price">
 
-              <div className="silver-price">
+                  <p>
+                    {isSold
+                      ? 'SOLD PRICE'
+                      : 'PRICE'}
+                  </p>
 
-                <span>
-                  {isSold
-                    ? 'SOLD PRICE'
-                    : 'PRICE'}
-                </span>
+                  <strong>
+                    {price.toLocaleString(
+                      'en-IN',
+                      {
+                        style: 'currency',
+                        currency: 'INR',
+                        maximumFractionDigits: 0
+                      }
+                    )}
+                  </strong>
 
-                <strong>
-                  {price.toLocaleString(
-                    'en-IN',
-                    {
-                      style: 'currency',
-                      currency: 'INR',
-                      maximumFractionDigits: 0,
-                    }
-                  )}
-                </strong>
+                </div>
 
               </div>
 
             </div>
 
           </div>
+
+
+          {/* ==================================================
+              SOLD MESSAGE
+          ================================================== */}
+
+          {isSold && (
+            <div className="sold-message">
+              🎉 Silver jewellery item
+              successfully sold!
+            </div>
+          )}
 
         </div>
-
-
-        {/* ==================================================
-            SOLD MESSAGE
-        ================================================== */}
-
-        {isSold && (
-
-          <div className="sold-message">
-            🎉 Silver jewellery item
-            successfully sold!
-          </div>
-
-        )}
-
-      </div>
 
 
       {/* ====================================================
