@@ -49,13 +49,17 @@ class Customers extends Component {
     transliterating: false,
   };
 
+  // ============================================================
+  // COMPONENT DID MOUNT
+  // ============================================================
+
   componentDidMount() {
     this.fetchCustomers();
   }
 
-  /* =========================================================
-     FETCH CUSTOMERS
-  ========================================================= */
+  // ============================================================
+  // FETCH CUSTOMERS
+  // ============================================================
 
   fetchCustomers = async () => {
     try {
@@ -88,9 +92,9 @@ class Customers extends Component {
     }
   };
 
-  /* =========================================================
-     SEARCH
-  ========================================================= */
+  // ============================================================
+  // SEARCH
+  // ============================================================
 
   handleSearch = (event) => {
     const search = event.target.value;
@@ -121,12 +125,15 @@ class Customers extends Component {
         String(customer.customer_name || "")
           .toLowerCase()
           .includes(value) ||
+
         String(customer.telugu_name || "")
           .toLowerCase()
           .includes(value) ||
+
         String(customer.mobile_number || "")
           .toLowerCase()
           .includes(value) ||
+
         String(customer.address || "")
           .toLowerCase()
           .includes(value)
@@ -138,13 +145,14 @@ class Customers extends Component {
     });
   };
 
-  /* =========================================================
-     OPEN ADD MODAL
-  ========================================================= */
+  // ============================================================
+  // OPEN ADD MODAL
+  // ============================================================
 
   openAddModal = () => {
     this.setState({
       showModal: true,
+
       editingCustomer: null,
 
       form: {
@@ -156,16 +164,18 @@ class Customers extends Component {
 
       error: "",
       success: "",
+      transliterating: false,
     });
   };
 
-  /* =========================================================
-     OPEN EDIT MODAL
-  ========================================================= */
+  // ============================================================
+  // OPEN EDIT MODAL
+  // ============================================================
 
   openEditModal = (customer) => {
     this.setState({
       showModal: true,
+
       editingCustomer: customer,
 
       form: {
@@ -177,30 +187,46 @@ class Customers extends Component {
 
       error: "",
       success: "",
+      transliterating: false,
     });
   };
 
-  /* =========================================================
-     CLOSE MODAL
-  ========================================================= */
+  // ============================================================
+  // CLOSE MODAL
+  // ============================================================
 
   closeModal = () => {
-    if (this.state.saving) return;
+    if (this.state.saving) {
+      return;
+    }
 
     this.setState({
       showModal: false,
       editingCustomer: null,
+
+      form: {
+        customer_name: "",
+        mobile_number: "",
+        address: "",
+        telugu_name: "",
+      },
+
       error: "",
       success: "",
+      transliterating: false,
     });
   };
 
-  /* =========================================================
-     FORM INPUT
-  ========================================================= */
+  // ============================================================
+  // HANDLE INPUT
+  // ============================================================
 
   handleChange = (event) => {
     const { name, value } = event.target;
+
+    // ----------------------------------------------------------
+    // MOBILE NUMBER
+    // ----------------------------------------------------------
 
     if (name === "mobile_number") {
       const onlyNumbers = value.replace(/\D/g, "");
@@ -209,13 +235,17 @@ class Customers extends Component {
         this.setState({
           form: {
             ...this.state.form,
-            [name]: onlyNumbers,
+            mobile_number: onlyNumbers,
           },
         });
       }
 
       return;
     }
+
+    // ----------------------------------------------------------
+    // NORMAL INPUT
+    // ----------------------------------------------------------
 
     this.setState({
       form: {
@@ -225,14 +255,9 @@ class Customers extends Component {
     });
   };
 
-  /* =========================================================
-     TELUGU TRANSLITERATION
-     
-     Example:
-     Kothagattu Adarsh
-     ↓
-     తెలుగు phonetic output
-  ========================================================= */
+  // ============================================================
+  // TELUGU TRANSLITERATION
+  // ============================================================
 
   transliterateTelugu = () => {
     const { customer_name } = this.state.form;
@@ -252,7 +277,7 @@ class Customers extends Component {
       });
 
       const telugu = Sanscript.t(
-        customer_name,
+        customer_name.trim(),
         "itrans",
         "telugu",
         {
@@ -269,22 +294,27 @@ class Customers extends Component {
         transliterating: false,
       });
     } catch (error) {
-      console.error("Transliteration error:", error);
+      console.error("Telugu transliteration error:", error);
 
       this.setState({
         transliterating: false,
+
         error:
           "Unable to convert automatically. You can type Telugu manually.",
       });
     }
   };
 
-  /* =========================================================
-     SUBMIT
-  ========================================================= */
+  // ============================================================
+  // SUBMIT CUSTOMER
+  // ============================================================
 
   handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (this.state.saving) {
+      return;
+    }
 
     const {
       customer_name,
@@ -295,9 +325,9 @@ class Customers extends Component {
 
     const { editingCustomer } = this.state;
 
-    /* -----------------------------------------
-       VALIDATION
-    ----------------------------------------- */
+    // ----------------------------------------------------------
+    // VALIDATE NAME
+    // ----------------------------------------------------------
 
     if (!customer_name.trim()) {
       this.setState({
@@ -307,6 +337,10 @@ class Customers extends Component {
       return;
     }
 
+    // ----------------------------------------------------------
+    // VALIDATE MOBILE
+    // ----------------------------------------------------------
+
     if (!mobile_number.trim()) {
       this.setState({
         error: "Please enter mobile number.",
@@ -315,13 +349,17 @@ class Customers extends Component {
       return;
     }
 
-    if (mobile_number.length !== 10) {
+    if (!/^[0-9]{10}$/.test(mobile_number)) {
       this.setState({
-        error: "Mobile number must contain 10 digits.",
+        error: "Mobile number must contain exactly 10 digits.",
       });
 
       return;
     }
+
+    // ----------------------------------------------------------
+    // ADDRESS
+    // ----------------------------------------------------------
 
     if (!address.trim()) {
       this.setState({
@@ -331,6 +369,20 @@ class Customers extends Component {
       return;
     }
 
+    // ----------------------------------------------------------
+    // PAYLOAD
+    // ----------------------------------------------------------
+
+    const payload = {
+      customer_name: customer_name.trim(),
+
+      mobile_number: mobile_number.trim(),
+
+      address: address.trim(),
+
+      telugu_name: telugu_name.trim() || null,
+    };
+
     try {
       this.setState({
         saving: true,
@@ -338,51 +390,65 @@ class Customers extends Component {
         success: "",
       });
 
-      const payload = {
-        customer_name: customer_name.trim(),
-        mobile_number: mobile_number.trim(),
-        address: address.trim(),
-        telugu_name: telugu_name.trim(),
-      };
-
-      /* -----------------------------------------
-         EDIT CUSTOMER
-      ----------------------------------------- */
+      // ========================================================
+      // UPDATE
+      // ========================================================
 
       if (editingCustomer) {
-        await axios.put(
+        const response = await axios.put(
           `${API_URL}/${editingCustomer.id}`,
           payload
         );
 
-        this.setState({
-          success: "Customer updated successfully.",
-        });
+        if (response.data?.success) {
+          this.setState({
+            success: "Customer updated successfully.",
+          });
+        }
       }
 
-      /* -----------------------------------------
-         ADD CUSTOMER
-      ----------------------------------------- */
+      // ========================================================
+      // ADD
+      // ========================================================
 
       else {
-        await axios.post(API_URL, payload);
+        const response = await axios.post(
+          API_URL,
+          payload
+        );
 
-        this.setState({
-          success: "Customer added successfully.",
-        });
+        if (response.data?.success) {
+          this.setState({
+            success: "Customer added successfully.",
+          });
+        }
       }
 
-      /* -----------------------------------------
-         REFRESH LIST
-      ----------------------------------------- */
+      // ========================================================
+      // REFRESH CUSTOMERS
+      // ========================================================
 
       await this.fetchCustomers();
+
+      // ========================================================
+      // CLOSE MODAL
+      // ========================================================
 
       setTimeout(() => {
         this.setState({
           showModal: false,
+
           editingCustomer: null,
+
+          form: {
+            customer_name: "",
+            mobile_number: "",
+            address: "",
+            telugu_name: "",
+          },
+
           success: "",
+          error: "",
         });
       }, 900);
     } catch (error) {
@@ -390,6 +456,7 @@ class Customers extends Component {
 
       this.setState({
         saving: false,
+
         error:
           error.response?.data?.message ||
           "Unable to save customer. Please try again.",
@@ -403,27 +470,32 @@ class Customers extends Component {
     });
   };
 
-  /* =========================================================
-     FORMAT DATE
-  ========================================================= */
+  // ============================================================
+  // FORMAT DATE
+  // ============================================================
 
   formatDate = (date) => {
-    if (!date) return "-";
+    if (!date) {
+      return "-";
+    }
 
     try {
-      return new Date(date).toLocaleDateString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      });
+      return new Date(date).toLocaleDateString(
+        "en-IN",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+        }
+      );
     } catch {
       return "-";
     }
   };
 
-  /* =========================================================
-     RENDER
-  ========================================================= */
+  // ============================================================
+  // RENDER
+  // ============================================================
 
   render() {
     const {
@@ -443,17 +515,19 @@ class Customers extends Component {
     return (
       <div className="customers-page">
 
-        {/* =====================================================
-            BACKGROUND EFFECTS
-        ===================================================== */}
+        {/* ====================================================
+            BACKGROUND
+        ==================================================== */}
 
         <div className="customer-orb customer-orb-one"></div>
+
         <div className="customer-orb customer-orb-two"></div>
+
         <div className="customer-grid"></div>
 
-        {/* =====================================================
+        {/* ====================================================
             HEADER
-        ===================================================== */}
+        ==================================================== */}
 
         <div className="customers-header">
 
@@ -464,15 +538,19 @@ class Customers extends Component {
             </div>
 
             <div>
+
               <div className="customers-small-title">
                 SVS JEWELLERY
               </div>
 
-              <h1>Customers</h1>
+              <h1>
+                Customers
+              </h1>
 
               <p>
                 Manage your customer information beautifully
               </p>
+
             </div>
 
           </div>
@@ -482,14 +560,17 @@ class Customers extends Component {
             onClick={this.openAddModal}
           >
             <FiPlus />
-            <span>Add Customer</span>
+
+            <span>
+              Add Customer
+            </span>
           </button>
 
         </div>
 
-        {/* =====================================================
+        {/* ====================================================
             STATISTICS
-        ===================================================== */}
+        ==================================================== */}
 
         <div className="customer-stats">
 
@@ -500,8 +581,15 @@ class Customers extends Component {
             </div>
 
             <div>
-              <span>Total Customers</span>
-              <strong>{customers.length}</strong>
+
+              <span>
+                Total Customers
+              </span>
+
+              <strong>
+                {customers.length}
+              </strong>
+
             </div>
 
           </div>
@@ -513,21 +601,30 @@ class Customers extends Component {
             </div>
 
             <div>
-              <span>Search Results</span>
-              <strong>{filteredCustomers.length}</strong>
+
+              <span>
+                Search Results
+              </span>
+
+              <strong>
+                {filteredCustomers.length}
+              </strong>
+
             </div>
 
           </div>
 
         </div>
 
-        {/* =====================================================
+        {/* ====================================================
             SEARCH
-        ===================================================== */}
+        ==================================================== */}
 
         <div className="customer-search-container">
 
-          <FiSearch className="customer-search-icon" />
+          <FiSearch
+            className="customer-search-icon"
+          />
 
           <input
             type="text"
@@ -538,15 +635,16 @@ class Customers extends Component {
 
           {search && (
             <button
+              type="button"
               className="clear-search"
-              onClick={() =>
+              onClick={() => {
                 this.setState(
                   {
                     search: "",
                   },
                   this.filterCustomers
-                )
-              }
+                );
+              }}
             >
               <FiX />
             </button>
@@ -554,34 +652,43 @@ class Customers extends Component {
 
         </div>
 
-        {/* =====================================================
-            ERROR
-        ===================================================== */}
+        {/* ====================================================
+            PAGE ERROR
+        ==================================================== */}
 
         {error && !showModal && (
           <div className="customer-alert customer-alert-error">
+
             <FiAlertCircle />
-            <span>{error}</span>
+
+            <span>
+              {error}
+            </span>
+
           </div>
         )}
 
-        {/* =====================================================
+        {/* ====================================================
             LOADING
-        ===================================================== */}
+        ==================================================== */}
 
         {loading ? (
+
           <div className="customer-loading">
 
             <div className="customer-spinner"></div>
 
-            <p>Loading customers...</p>
+            <p>
+              Loading customers...
+            </p>
 
           </div>
+
         ) : filteredCustomers.length === 0 ? (
 
-          /* ===================================================
+          /* ==================================================
              EMPTY
-          =================================================== */
+          ================================================== */
 
           <div className="customer-empty">
 
@@ -603,10 +710,12 @@ class Customers extends Component {
 
             {!search && (
               <button
+                type="button"
                 className="empty-add-btn"
                 onClick={this.openAddModal}
               >
                 <FiPlus />
+
                 Add Customer
               </button>
             )}
@@ -615,143 +724,176 @@ class Customers extends Component {
 
         ) : (
 
-          /* ===================================================
+          /* ==================================================
              CUSTOMER GRID
-          =================================================== */
+          ================================================== */
 
           <div className="customers-grid">
 
-            {filteredCustomers.map((customer, index) => (
+            {filteredCustomers.map(
+              (customer, index) => (
 
-              <div
-                className="customer-card"
-                key={customer.id}
-                style={{
-                  "--delay": `${index * 70}ms`,
-                }}
-              >
+                <div
+                  className="customer-card"
+                  key={customer.id}
+                  style={{
+                    "--delay": `${index * 70}ms`,
+                  }}
+                >
 
-                <div className="customer-card-top">
+                  {/* CARD TOP */}
 
-                  <div className="customer-avatar">
-                    {customer.customer_name
-                      ? customer.customer_name
-                          .charAt(0)
-                          .toUpperCase()
-                      : "C"}
-                  </div>
+                  <div className="customer-card-top">
 
-                  <button
-                    className="customer-edit-btn"
-                    onClick={() =>
-                      this.openEditModal(customer)
-                    }
-                    title="Edit customer"
-                  >
-                    <FiEdit3 />
-                  </button>
+                    <div className="customer-avatar">
 
-                </div>
+                      {customer.customer_name
+                        ? customer.customer_name
+                            .charAt(0)
+                            .toUpperCase()
+                        : "C"}
 
-                <div className="customer-card-body">
-
-                  <h2>
-                    {customer.customer_name}
-                  </h2>
-
-                  {customer.telugu_name && (
-                    <div className="customer-telugu-name">
-                      {customer.telugu_name}
-                    </div>
-                  )}
-
-                  <div className="customer-info-row">
-
-                    <div className="info-icon">
-                      <FiPhone />
                     </div>
 
-                    <div>
-                      <small>Mobile Number</small>
-                      <strong>
-                        {customer.mobile_number}
-                      </strong>
-                    </div>
+                    <button
+                      type="button"
+                      className="customer-edit-btn"
+                      onClick={() =>
+                        this.openEditModal(customer)
+                      }
+                      title="Edit customer"
+                    >
+                      <FiEdit3 />
+                    </button>
 
                   </div>
 
-                  <div className="customer-info-row">
+                  {/* CARD BODY */}
 
-                    <div className="info-icon">
-                      <FiMapPin />
+                  <div className="customer-card-body">
+
+                    <h2>
+                      {customer.customer_name}
+                    </h2>
+
+                    {customer.telugu_name && (
+                      <div className="customer-telugu-name">
+                        {customer.telugu_name}
+                      </div>
+                    )}
+
+                    {/* MOBILE */}
+
+                    <div className="customer-info-row">
+
+                      <div className="info-icon">
+                        <FiPhone />
+                      </div>
+
+                      <div>
+
+                        <small>
+                          Mobile Number
+                        </small>
+
+                        <strong>
+                          {customer.mobile_number}
+                        </strong>
+
+                      </div>
+
                     </div>
 
-                    <div>
-                      <small>Address</small>
-                      <strong>
-                        {customer.address || "Not provided"}
-                      </strong>
+                    {/* ADDRESS */}
+
+                    <div className="customer-info-row">
+
+                      <div className="info-icon">
+                        <FiMapPin />
+                      </div>
+
+                      <div>
+
+                        <small>
+                          Address
+                        </small>
+
+                        <strong>
+                          {customer.address ||
+                            "Not provided"}
+                        </strong>
+
+                      </div>
+
                     </div>
 
                   </div>
 
+                  {/* CARD FOOTER */}
+
+                  <div className="customer-card-footer">
+
+                    <span>
+                      Customer #{customer.id}
+                    </span>
+
+                    <span>
+                      {this.formatDate(
+                        customer.created_at
+                      )}
+                    </span>
+
+                  </div>
+
                 </div>
-
-                <div className="customer-card-footer">
-
-                  <span>
-                    Customer #{customer.id}
-                  </span>
-
-                  <span>
-                    {this.formatDate(customer.created_at)}
-                  </span>
-
-                </div>
-
-              </div>
-
-            ))}
+              )
+            )}
 
           </div>
-
         )}
 
-        {/* =====================================================
-            MODAL
-        ===================================================== */}
+        {/* ====================================================
+            ADD / EDIT MODAL
+        ==================================================== */}
 
         {showModal && (
 
           <div
             className="customer-modal-overlay"
             onMouseDown={(event) => {
+
               if (
                 event.target.className ===
                 "customer-modal-overlay"
               ) {
                 this.closeModal();
               }
+
             }}
           >
 
             <div className="customer-modal">
 
-              {/* Modal Header */}
+              {/* ==================================================
+                  MODAL HEADER
+              ================================================== */}
 
               <div className="customer-modal-header">
 
                 <div className="modal-heading">
 
                   <div className="modal-icon">
+
                     {editingCustomer ? (
                       <FiEdit3 />
                     ) : (
                       <FiPlus />
                     )}
+
                   </div>
 
                   <div>
+
                     <span>
                       {editingCustomer
                         ? "CUSTOMER MANAGEMENT"
@@ -763,11 +905,13 @@ class Customers extends Component {
                         ? "Edit Customer"
                         : "Add Customer"}
                     </h2>
+
                   </div>
 
                 </div>
 
                 <button
+                  type="button"
                   className="modal-close-btn"
                   onClick={this.closeModal}
                   disabled={saving}
@@ -777,29 +921,45 @@ class Customers extends Component {
 
               </div>
 
-              {/* Modal Body */}
+              {/* ==================================================
+                  FORM
+              ================================================== */}
 
               <form
                 className="customer-form"
                 onSubmit={this.handleSubmit}
               >
 
-                {/* Error */}
+                {/* ERROR */}
 
                 {error && (
+
                   <div className="customer-alert customer-alert-error">
+
                     <FiAlertCircle />
-                    <span>{error}</span>
+
+                    <span>
+                      {error}
+                    </span>
+
                   </div>
+
                 )}
 
-                {/* Success */}
+                {/* SUCCESS */}
 
                 {success && (
+
                   <div className="customer-alert customer-alert-success">
+
                     <FiCheckCircle />
-                    <span>{success}</span>
+
+                    <span>
+                      {success}
+                    </span>
+
                   </div>
+
                 )}
 
                 {/* =================================================
@@ -809,8 +969,11 @@ class Customers extends Component {
                 <div className="form-group">
 
                   <label>
+
                     <FiUser />
+
                     Customer Name
+
                   </label>
 
                   <div className="input-wrapper">
@@ -840,30 +1003,47 @@ class Customers extends Component {
                   <div className="label-with-action">
 
                     <label>
+
                       <FiType />
+
                       Telugu Name
+
                     </label>
 
                     <button
                       type="button"
                       className="transliterate-btn"
-                      onClick={this.transliterateTelugu}
+                      onClick={
+                        this.transliterateTelugu
+                      }
                       disabled={
                         transliterating ||
                         !form.customer_name.trim()
                       }
                     >
+
                       {transliterating ? (
+
                         <>
-                          <FiRefreshCw className="spin" />
+                          <FiRefreshCw
+                            className="spin"
+                          />
+
                           Converting...
                         </>
+
                       ) : (
+
                         <>
-                          <span>అ</span>
+                          <span>
+                            అ
+                          </span>
+
                           English → తెలుగు
                         </>
+
                       )}
+
                     </button>
 
                   </div>
@@ -884,9 +1064,17 @@ class Customers extends Component {
                   </div>
 
                   <div className="input-hint">
-                    Enter the English name above and press
-                    <strong> English → తెలుగు</strong>.
-                    You can edit the Telugu result manually.
+
+                    Enter the English name above and
+                    press{" "}
+
+                    <strong>
+                      English → తెలుగు
+                    </strong>
+
+                    . You can edit the Telugu result
+                    manually.
+
                   </div>
 
                 </div>
@@ -898,8 +1086,11 @@ class Customers extends Component {
                 <div className="form-group">
 
                   <label>
+
                     <FiPhone />
+
                     Mobile Number
+
                   </label>
 
                   <div className="input-wrapper">
@@ -918,7 +1109,9 @@ class Customers extends Component {
                     />
 
                     <span className="input-counter">
+
                       {form.mobile_number.length}/10
+
                     </span>
 
                   </div>
@@ -932,8 +1125,11 @@ class Customers extends Component {
                 <div className="form-group">
 
                   <label>
+
                     <FiMapPin />
+
                     Address
+
                   </label>
 
                   <div className="input-wrapper textarea-wrapper">
@@ -953,7 +1149,7 @@ class Customers extends Component {
                 </div>
 
                 {/* =================================================
-                    BUTTONS
+                    ACTIONS
                 ================================================= */}
 
                 <div className="customer-form-actions">
@@ -974,17 +1170,25 @@ class Customers extends Component {
                   >
 
                     {saving ? (
+
                       <>
-                        <FiRefreshCw className="spin" />
+                        <FiRefreshCw
+                          className="spin"
+                        />
+
                         Saving...
                       </>
+
                     ) : (
+
                       <>
                         <FiSave />
+
                         {editingCustomer
                           ? "Update Customer"
                           : "Save Customer"}
                       </>
+
                     )}
 
                   </button>
