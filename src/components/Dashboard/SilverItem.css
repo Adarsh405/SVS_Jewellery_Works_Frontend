@@ -455,6 +455,7 @@
   padding: 9px 16px !important;
 
   display: flex !important;
+  flex-direction: row;
 
   align-items: center !important;
 
