@@ -49,6 +49,7 @@
 }
 
 /* Large golden circle */
+
 .dashboard::before {
   width: 280px;
   height: 280px;
@@ -69,6 +70,7 @@
 }
 
 /* Soft pearl circle */
+
 .dashboard::after {
   width: 230px;
   height: 230px;
@@ -172,7 +174,6 @@
   flex-shrink: 0;
 }
 
-
 .price-section h2,
 .search-section h2 {
   margin: 0 0 4px;
@@ -181,13 +182,11 @@
    line-height:1.1;
 }
 
-
 .price-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
 }
-
 
 .rate-card {
   position: relative;
@@ -209,7 +208,6 @@
   animation: cardAppear 0.7s ease both;
 }
 
-
 /* Different entrance delays */
 
 .rate-card:nth-child(1) {
@@ -223,7 +221,6 @@
 .rate-card:nth-child(3) {
   animation-delay: 0.3s;
 }
-
 
 /* Shine */
 
@@ -243,7 +240,6 @@
   animation: cardShine 5s ease-in-out infinite;
 }
 
-
 .rate-card:hover {
   transform: translateY(-5px);
 
@@ -251,20 +247,17 @@
     0 10px 22px rgba(0, 0, 0, 0.12);
 }
 
-
 .rate-card p {
   margin: 0;
   font-size: 11px;
   font-weight: 600;
 }
 
-
 .rate-card h3 {
   margin: 1px 0;
   font-size: 18px;
    line-height:1.1;
 }
-
 
 .rate-card span {
   font-size: 11px;
@@ -283,14 +276,12 @@
   border-left: 6px solid #8c8c8c !important;
 }
 
-
 /* Gold price subtle pulse */
 
 .hallmark h3,
 .kdm h3 {
   animation: goldPriceGlow 2.5s ease-in-out infinite;
 }
-
 
 /* =========================================================
    SEARCH
@@ -314,7 +305,6 @@
   animation: cardAppear 0.8s ease both;
 }
 
-
 .search-section:focus-within {
   box-shadow:
     0 8px 25px rgba(184, 134, 11, 0.15);
@@ -322,20 +312,17 @@
   transform: translateY(-1px);
 }
 
-
 .search-section > p {
   margin: 0 0 8px;
   font-size: 12px;
   color: #777;
 }
 
-
 .search-container {
   display: flex;
   max-width: 650px;
   gap: 8px;
 }
-
 
 .search-container input {
   flex: 1;
@@ -358,7 +345,6 @@
     transform 0.2s ease;
 }
 
-
 .search-container input:focus {
   border-color: #b8860b;
 
@@ -367,7 +353,6 @@
 
   transform: scale(1.01);
 }
-
 
 .search-container button {
   position: relative;
@@ -402,7 +387,6 @@
   animation: buttonGradient 4s ease infinite;
 }
 
-
 .search-container button:hover {
   transform: translateY(-2px);
 
@@ -410,11 +394,9 @@
     0 6px 15px rgba(184, 134, 11, 0.3);
 }
 
-
 .search-container button:active {
   transform: scale(0.96);
 }
-
 
 .search-container button::after {
   content: "";
@@ -439,7 +421,6 @@
   animation: buttonShine 3.5s infinite;
 }
 
-
 .scanner-info {
   margin: 5px 0 0 !important;
   font-size: 11px !important;
@@ -447,14 +428,12 @@
   animation: scannerPulse 2s ease-in-out infinite;
 }
 
-
 .error-message {
   color: #d62828 !important;
   font-weight: 600;
 
   animation: errorShake 0.35s ease;
 }
-
 
 /* =========================================================
    RESULT
@@ -471,6 +450,7 @@
 }
 
 /* Moving shine across the result container */
+
 .result-section::after {
   content: "";
   position: absolute;
@@ -508,12 +488,12 @@
     left: 150%;
   }
 }
+
 /* =========================================================
    GOLD / SILVER CARD
 ========================================================= */
 
-.gold-item-card,
-.silver-item-card {
+.gold-item-card {
   height: 100%;
 
   box-sizing: border-box;
@@ -528,7 +508,6 @@
   position: relative;
   overflow: hidden;
 }
-
 
 /* =========================================================
    GOLD CARD
@@ -560,7 +539,6 @@
     goldCardGlow 4s ease-in-out infinite;
 }
 
-
 /* Gold moving shine */
 
 .gold-item-card::after {
@@ -586,377 +564,6 @@
   animation: goldShine 6s ease-in-out infinite;
 }
 
-
-/* =========================================================
-   SILVER CARD
-========================================================= */
-
-.silver-item-card {
-  background:
-    linear-gradient(
-      135deg,
-      #ffffff,
-      #e9edf1,
-      #ffffff
-    );
-
-  background-size: 200% 200%;
-
-  border: 2px solid #9da4aa;
-
-  box-shadow:
-    0 10px 30px rgba(80, 90, 100, 0.12);
-
-  animation:
-    resultAppear 0.6s ease,
-    silverCardGlow 5s ease-in-out infinite;
-}
-
-
-.silver-item-card::after {
-  content: "";
-
-  position: absolute;
-
-  top: -50%;
-  left: -100%;
-
-  width: 45%;
-  height: 200%;
-
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.7),
-    transparent
-  );
-
-  transform: rotate(20deg);
-
-  animation: silverShine 7s ease-in-out infinite;
-}
-
-/* =========================================================
-   SILVER WEIGHT
-========================================================= */
-
-.silver-weight-box {
-  background: #e8f0f7 !important;
-
-  border: 2px solid #8da4b8;
-
-  text-align: center;
-}
-
-.silver-weight-box p {
-  color: #526575 !important;
-
-  font-size: 14px !important;
-
-  font-weight: 700;
-}
-
-.silver-weight-box strong {
-  display: block;
-
-  margin-top: 5px;
-
-  font-size: 30px !important;
-
-  font-weight: 900;
-
-  color: #263746;
-}
-
-
-/* =========================================================
-   SILVER MAKING COST
-========================================================= */
-
-.silver-making-box {
-  background: #fff4d6 !important;
-
-  border: 2px solid #d4af37;
-
-  text-align: center;
-}
-
-.silver-making-box p {
-  color: #8a6500 !important;
-
-  font-size: 14px !important;
-
-  font-weight: 700;
-}
-
-.silver-making-box strong {
-  display: block;
-
-  margin-top: 5px;
-
-  font-size: 24px !important;
-
-  font-weight: 900;
-
-  color: #8a6500;
-}
-/*popup*/
-/* =========================================================
-   CUSTOMER DETAILS POPUP
-========================================================= */
-
-.customer-popup-overlay {
-  position: fixed;
-  inset: 0;
-
-  background: rgba(0, 0, 0, 0.58);
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-
-  z-index: 99999;
-
-  backdrop-filter: blur(5px);
-}
-
-
-/* =========================================================
-   POPUP
-========================================================= */
-
-.customer-popup {
-  width: 100%;
-  max-width: 430px;
-
-  background: #ffffff;
-
-  border-radius: 20px;
-
-  padding: 26px;
-
-  box-sizing: border-box;
-
-  box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.28);
-
-  animation:
-    customerPopupIn 0.18s ease-out;
-}
-
-
-@keyframes customerPopupIn {
-
-  from {
-    opacity: 0;
-    transform:
-      scale(0.94)
-      translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform:
-      scale(1)
-      translateY(0);
-  }
-
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.customer-popup-header {
-  display: flex;
-
-  align-items: flex-start;
-
-  justify-content: space-between;
-
-  margin-bottom: 25px;
-}
-
-
-.customer-popup-header h2 {
-  margin: 0;
-
-  font-size: 22px;
-
-  font-weight: 700;
-
-  color: #222;
-}
-
-
-.customer-popup-header p {
-  margin: 5px 0 0;
-
-  font-size: 13px;
-
-  color: #888;
-}
-
-
-.customer-popup-close {
-  border: none;
-
-  background: transparent;
-
-  font-size: 30px;
-
-  line-height: 1;
-
-  color: #888;
-
-  cursor: pointer;
-
-  padding: 0 4px;
-}
-
-
-.customer-popup-close:hover {
-  color: #222;
-}
-
-
-/* =========================================================
-   FIELD
-========================================================= */
-
-.customer-field {
-  margin-bottom: 20px;
-}
-
-
-.customer-field label {
-  display: block;
-
-  margin-bottom: 8px;
-
-  font-weight: 600;
-
-  color: #333;
-}
-
-
-/* =========================================================
-   MOBILE NUMBER — LARGE
-========================================================= */
-
-.mobile-field label {
-  font-size: 14px;
-}
-
-
-.mobile-field input {
-  width: 100%;
-
-  height: 68px;
-
-  box-sizing: border-box;
-
-  border: 2px solid #d8d8d8;
-
-  border-radius: 13px;
-
-  padding: 0 18px;
-
-  font-size: 27px;
-
-  font-weight: 600;
-
-  letter-spacing: 1px;
-
-  color: #222;
-
-  outline: none;
-
-  transition: 0.2s;
-}
-
-
-.mobile-field input:focus {
-  border-color: #c99a3b;
-
-  box-shadow:
-    0 0 0 4px
-    rgba(201, 154, 59, 0.12);
-}
-
-
-/* =========================================================
-   NAME — SMALL
-========================================================= */
-
-.name-field label {
-  font-size: 13px;
-}
-
-
-.name-field input {
-  width: 100%;
-
-  height: 44px;
-
-  box-sizing: border-box;
-
-  border: 1.5px solid #d8d8d8;
-
-  border-radius: 10px;
-
-  padding: 0 13px;
-
-  font-size: 16px;
-
-  color: #222;
-
-  outline: none;
-
-  transition: 0.2s;
-}
-
-
-.name-field input:focus {
-  border-color: #c99a3b;
-
-  box-shadow:
-    0 0 0 3px
-    rgba(201, 154, 59, 0.10);
-}
-
-
-/* =========================================================
-   HINT
-========================================================= */
-
-.customer-hint {
-  display: block;
-
-  margin-top: 6px;
-
-  font-size: 11px;
-
-  color: #999;
-}
-
-
-/* =========================================================
-   ACTIONS
-========================================================= */
-
-.customer-popup-actions {
-  display: flex;
-
-  gap: 10px;
-
-  margin-top: 25px;
-}
-
-
 .customer-cancel-btn,
 .customer-sold-btn {
   height: 48px;
@@ -974,7 +581,6 @@
   transition: 0.15s;
 }
 
-
 .customer-cancel-btn {
   flex: 1;
 
@@ -983,11 +589,9 @@
   color: #555;
 }
 
-
 .customer-cancel-btn:hover {
   background: #e8e8e8;
 }
-
 
 .customer-sold-btn {
   flex: 2;
@@ -1001,40 +605,12 @@
     rgba(201, 154, 59, 0.25);
 }
 
-
 .customer-sold-btn:hover {
   background: #b8892e;
 }
 
-
-.customer-sold-btn:disabled,
-.customer-cancel-btn:disabled,
-.customer-popup-close:disabled {
-  opacity: 0.6;
-
-  cursor: not-allowed;
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 500px) {
-
-  .customer-popup {
-    padding: 20px;
-
-    border-radius: 17px;
-  }
-
-
-  .mobile-field input {
-    font-size: 24px;
-  }
-
-}
 /*popup end*/
+
 /* =========================================================
    ITEM TYPE
 ========================================================= */
@@ -1055,7 +631,6 @@
   z-index: 2;
 }
 
-
 .gold-type {
   background:
     linear-gradient(
@@ -1075,24 +650,6 @@
   animation: goldBadge 3s ease infinite;
 }
 
-
-.silver-type {
-  background:
-    linear-gradient(
-      135deg,
-      #68737d,
-      #9da4aa,
-      #68737d
-    );
-
-  background-size: 200% 200%;
-
-  color: white;
-
-  animation: silverBadge 4s ease infinite;
-}
-
-
 /* =========================================================
    ITEM CONTENT
 ========================================================= */
@@ -1110,7 +667,6 @@
   z-index: 2;
    padding-bottom:10px;
 }
-
 
 .item-image {
   width: 180px;
@@ -1134,7 +690,6 @@
   animation: imageAppear 0.8s ease;
 }
 
-
 .item-image:hover {
   transform:
     scale(1.06)
@@ -1144,14 +699,12 @@
     0 12px 25px rgba(0, 0, 0, 0.18);
 }
 
-
 .item-details {
   flex: 1;
   min-width: 0;
 
   animation: detailsAppear 0.7s ease;
 }
-
 
 .item-details h2 {
   margin: 0 0 8px;
@@ -1161,13 +714,11 @@
   color: #333;
 }
 
-
 /* =========================================================
    BIG ID
 ========================================================= */
 
-.item-id,
-.silver-id {
+.item-id {
   display: inline-block;
 
   padding: 7px 14px;
@@ -1179,7 +730,6 @@
   font-weight: 600;
 }
 
-
 .item-id {
   background-color: #fff1a8;
 
@@ -1187,23 +737,12 @@
     0 3px 8px rgba(212, 175, 55, 0.15);
 }
 
-
-.silver-id {
-  background-color: #d9dee3;
-
-  box-shadow:
-    0 3px 8px rgba(80, 90, 100, 0.12);
-}
-
-
-.item-id span,
-.silver-id span {
+.item-id span {
   font-size: 25px;
   font-weight: 900;
 
   margin-left: 7px;
 }
-
 
 /* =========================================================
    GOLD DETAILS
@@ -1217,9 +756,7 @@
   gap: 8px;
 }
 
-
-.gold-details-grid > div,
-.silver-details > div {
+.gold-details-grid > div {
   background-color: rgba(255, 255, 255, 0.8);
 
   padding: 15px;
@@ -1231,18 +768,14 @@
     box-shadow 0.25s ease;
 }
 
-
-.gold-details-grid > div:hover,
-.silver-details > div:hover {
+.gold-details-grid > div:hover {
   transform: translateY(-3px);
 
   box-shadow:
     0 6px 15px rgba(0, 0, 0, 0.08);
 }
 
-
-.gold-details-grid p,
-.silver-details p {
+.gold-details-grid p {
   margin: 0 0 4px;
 
   color: #777;
@@ -1250,11 +783,10 @@
   font-size: 15px;
 }
 
-
-.gold-details-grid strong,
-.silver-details strong {
+.gold-details-grid strong {
   font-size: 20px;
 }
+
 /* =========================================================
    GOLD WEIGHT BOX
 ========================================================= */
@@ -1288,7 +820,6 @@
 
   color: #765600;
 }
-
 
 /* =========================================================
    GOLD CHARGES BOX
@@ -1324,7 +855,6 @@
   color: #6b21a8;
 }
 
-
 /* =========================================================
    GOLD TOTAL WEIGHT BOX
 ========================================================= */
@@ -1358,7 +888,6 @@
 
   color: #166534;
 }
-
 
 /* =========================================================
    ANIMATION
@@ -1414,13 +943,11 @@
     priceBoxPulse 2.5s ease-in-out infinite;
 }
 
-
 .price-box p {
   color: #f3d675 !important;
 
   font-weight: 700;
 }
-
 
 .price-box strong {
   font-size: 38px;
@@ -1434,80 +961,6 @@
 
   animation: priceGlow 2s ease-in-out infinite;
 }
-
-
-/* =========================================================
-   SILVER
-========================================================= */
-
-.silver-details {
-  display: flex;
-
-  flex-direction: row;
-
-  justify-content: space-between;
-
-  gap: 10px;
-}
-
-
-.silver-details > div {
-  min-width: 140px;
-}
-
-
-.silver-price {
-  background:
-    linear-gradient(
-      135deg,
-      #075e54,
-      #0f766e,
-      #075e54
-    ) !important;
-
-  background-size: 200% 200%;
-
-  color: white;
-
-  display: flex;
-
-  flex-direction: row;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-  border: 1px solid #34d399;
-
-  box-shadow:
-    0 5px 15px rgba(15, 118, 110, 0.25);
-
-  animation:
-    silverPriceGradient 5s ease infinite,
-    silverPricePulse 3s ease-in-out infinite;
-}
-
-
-.silver-price p {
-  color: #d1fae5 !important;
-
-  font-weight: 600;
-
-  margin: 10px;
-}
-
-
-.silver-price strong {
-  font-size: 50px;
-
-  font-weight: 800;
-
-  color: #fff;
-
-  text-shadow:
-    0 0 10px rgba(255, 255, 255, 0.2);
-}
-
 
 /* =========================================================
    ANIMATIONS
@@ -1527,7 +980,6 @@
   }
 }
 
-
 @keyframes headerShine {
   0% {
     left: -120%;
@@ -1542,7 +994,6 @@
   }
 }
 
-
 @keyframes diamondFloat {
   0%,
   100% {
@@ -1553,7 +1004,6 @@
     transform: translateY(-7px) rotate(5deg);
   }
 }
-
 
 @keyframes diamondGlow {
   from {
@@ -1569,7 +1019,6 @@
   }
 }
 
-
 @keyframes cardAppear {
   from {
     opacity: 0;
@@ -1581,7 +1030,6 @@
     transform: translateY(0);
   }
 }
-
 
 @keyframes cardShine {
   0% {
@@ -1597,7 +1045,6 @@
   }
 }
 
-
 @keyframes goldPriceGlow {
   0%,
   100% {
@@ -1609,7 +1056,6 @@
       0 0 8px rgba(212, 175, 55, 0.45);
   }
 }
-
 
 @keyframes buttonGradient {
   0% {
@@ -1625,7 +1071,6 @@
   }
 }
 
-
 @keyframes buttonShine {
   0% {
     left: -100%;
@@ -1640,7 +1085,6 @@
   }
 }
 
-
 @keyframes scannerPulse {
   0%,
   100% {
@@ -1651,7 +1095,6 @@
     opacity: 1;
   }
 }
-
 
 @keyframes errorShake {
   0% {
@@ -1688,6 +1131,7 @@
   }
 }
  */
+
 @keyframes itemScanAppear {
   0% {
     opacity: 0;
@@ -1708,6 +1152,7 @@
     transform: scale(1);
   }
 }
+
 @keyframes goldCardGlow {
   0%,
   100% {
@@ -1720,21 +1165,6 @@
       0 12px 35px rgba(184, 134, 11, 0.25);
   }
 }
-
-
-@keyframes silverCardGlow {
-  0%,
-  100% {
-    box-shadow:
-      0 10px 30px rgba(80, 90, 100, 0.12);
-  }
-
-  50% {
-    box-shadow:
-      0 12px 35px rgba(80, 90, 100, 0.22);
-  }
-}
-
 
 @keyframes goldShine {
   0% {
@@ -1750,22 +1180,6 @@
   }
 }
 
-
-@keyframes silverShine {
-  0% {
-    left: -100%;
-  }
-
-  45% {
-    left: 150%;
-  }
-
-  100% {
-    left: 150%;
-  }
-}
-
-
 @keyframes imageAppear {
   from {
     opacity: 0;
@@ -1777,7 +1191,6 @@
     transform: scale(1);
   }
 }
-
 
 @keyframes detailsAppear {
   from {
@@ -1791,7 +1204,6 @@
   }
 }
 
-
 @keyframes goldBadge {
   0%,
   100% {
@@ -1802,19 +1214,6 @@
     background-position: 100% 50%;
   }
 }
-
-
-@keyframes silverBadge {
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
 
 @keyframes priceBoxGradient {
   0% {
@@ -1830,7 +1229,6 @@
   }
 }
 
-
 @keyframes priceBoxPulse {
   0%,
   100% {
@@ -1841,7 +1239,6 @@
     transform: scale(1.015);
   }
 }
-
 
 @keyframes priceGlow {
   0%,
@@ -1856,43 +1253,12 @@
   }
 }
 
-
-@keyframes silverPriceGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-
-@keyframes silverPricePulse {
-  0%,
-  100% {
-    box-shadow:
-      0 5px 15px rgba(15, 118, 110, 0.25);
-  }
-
-  50% {
-    box-shadow:
-      0 8px 25px rgba(15, 118, 110, 0.4);
-  }
-}
-
-
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media screen and (max-width: 768px) {
-
-  .dashboard {
+.dashboard {
     height: calc(100vh - 60px);
 
     padding: 10px;
@@ -1900,151 +1266,87 @@
     gap: 8px;
   }
 
-
-  .shop-header {
+.shop-header {
     padding: 10px 14px;
   }
 
-
-  .shop-header h1 {
+.shop-header h1 {
     font-size: 18px;
   }
 
-
-  .shop-icon {
+.shop-icon {
     font-size: 30px;
   }
 
-
-  .price-section h2,
+.price-section h2,
   .search-section h2 {
     font-size: 15px;
   }
 
-
-  .price-container {
+.price-container {
     gap: 6px;
   }
 
-
-  .rate-card {
+.rate-card {
     padding: 8px;
 
     border-left-width: 3px;
   }
 
-
-  .rate-card p {
+.rate-card p {
     font-size: 10px;
   }
 
-
-  .rate-card h3 {
+.rate-card h3 {
     font-size: 15px;
   }
 
-
-  .rate-card span {
+.rate-card span {
     font-size: 9px;
   }
 
-
-  .search-section {
+.search-section {
     padding: 10px;
   }
 
-
-  .search-container {
+.search-container {
     max-width: 100%;
   }
 
-
-  .search-container input {
+.search-container input {
     height: 38px;
 
     font-size: 14px;
   }
 
-
-  .search-container button {
+.search-container button {
     width: 80px;
 
     font-size: 12px;
   }
 
-
-  .item-content {
+.item-content {
     gap: 10px;
   }
 
-
-  .item-image {
+.item-image {
     width: 110px;
     height: 110px;
   }
 
-
-  .gold-item-card,
-  .silver-item-card {
-    padding: 10px;
-  }
-
-
-  .item-details h2 {
+.item-details h2 {
     font-size: 17px;
   }
 
-
-  .item-id,
-  .silver-id {
-    padding: 5px 8px;
-
-    margin-bottom: 8px;
-  }
-
-
-  .item-id span,
-  .silver-id span {
-    font-size: 18px;
-  }
-
-
-  .gold-details-grid {
+.gold-details-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
-
-  .gold-details-grid > div,
-  .silver-details > div {
-    padding: 7px;
-  }
-
-
-  .gold-details-grid strong,
-  .silver-details strong {
-    font-size: 13px;
-  }
-
-
-  .price-box strong {
+.price-box strong {
     font-size: 22px;
   }
-
-
-  .silver-details {
-    gap: 5px;
-  }
-
-
-  .silver-details > div {
-    min-width: 100px;
-  }
-
-
-  .silver-price strong {
-    font-size: 25px;
-  }
 }
+
 /* =========================================================
    GOLD CARD TOP
 ========================================================= */
@@ -2065,6 +1367,7 @@
   margin-bottom: 8px;
 
 }
+
 /* =========================================================
    ITEM ACTIONS
 ========================================================= */
@@ -2077,7 +1380,6 @@
   position: relative;
   z-index: 30;
 }
-
 
 /* =========================================================
    ADD BUTTON
@@ -2120,14 +1422,12 @@
     box-shadow 0.2s ease;
 }
 
-
 .add-button:hover {
   transform: translateY(-2px);
 
   box-shadow:
     0 8px 20px rgba(22, 163, 74, 0.3);
 }
-
 
 .add-button:active {
   transform: scale(0.95);
@@ -2173,7 +1473,6 @@
 
 }
 
-
 .available-button:hover {
 
   background:
@@ -2188,14 +1487,12 @@
 
 }
 
-
 .available-button:active {
 
   transform:
     scale(0.95);
 
 }
-
 
 .available-button:disabled {
 
@@ -2206,7 +1503,6 @@
   transform: none;
 
 }
-
 
 /* =========================================================
    SOLD CARD
@@ -2243,384 +1539,15 @@
 
 }
 
-
-/* =========================================================
-   SOLD BADGE
-========================================================= */
-
-.sold-status-badge {
-
-  min-width: 160px;
-
-  height: 48px;
-
-  padding:
-    0 20px;
-
-  box-sizing: border-box;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  border-radius: 10px;
-
-  border:
-    2px solid #16a34a;
-
-  background:
-    rgba(22, 163, 74, 0.12);
-
-  color:
-    #15803d;
-
-  font-size: 15px;
-
-  font-weight: 900;
-
-  letter-spacing: 1px;
-
-}
-
-
-/* =========================================================
-   SOLD ITEM TYPE
-========================================================= */
-
-.sold-type {
-
-  background:
-
-    linear-gradient(
-      135deg,
-      #15803d,
-      #22c55e,
-      #166534
-    );
-
-  background-size:
-    200% 200%;
-
-  color: white;
-
-  box-shadow:
-
-    0 4px 12px
-    rgba(22, 163, 74, 0.3);
-
-  animation:
-    soldBadgeGradient
-    3s ease infinite;
-
-}
-
-
-/* =========================================================
-   SOLD MESSAGE
-========================================================= */
-
-.sold-message {
-
-  position: relative;
-
-  z-index: 10;
-
-  margin-top: 10px;
-
-  padding:
-    11px 15px;
-
-  border-radius: 8px;
-
-  background:
-    rgba(22, 163, 74, 0.1);
-
-  border:
-    1px solid
-    rgba(22, 163, 74, 0.3);
-
-  color:
-    #15803d;
-
-  font-size: 13px;
-
-  font-weight: 700;
-
-  text-align: center;
-
-  animation:
-    soldMessageAppear
-    0.6s ease;
-
-}
-
-
-/* =========================================================
-   CONFETTI CONTAINER
-========================================================= */
-
-.sold-confetti {
-
-  position: absolute;
-
-  inset: 0;
-
-  overflow: hidden;
-
-  pointer-events: none;
-
-  z-index: 20;
-
-}
-
-
-/* =========================================================
-   CONFETTI PIECES
-========================================================= */
-
-.confetti-piece {
-
-  position: absolute;
-
-  top: -20px;
-
-  left:
-    calc(
-      var(--i) * 2.22%
-    );
-
-  width: 7px;
-
-  height: 13px;
-
-  background:
-    #d4af37;
-
-  opacity: 0;
-
-  transform:
-    rotate(
-      calc(
-        var(--i) * 37deg
-      )
-    );
-
-  animation:
-    confettiFall
-    2.8s
-    ease-out
-    forwards;
-
-  animation-delay:
-    calc(
-      var(--i) * 0.025s
-    );
-
-}
-
-
-/* Different pieces */
-
-.confetti-piece:nth-child(2n) {
-
-  background:
-    #16a34a;
-
-}
-
-
-.confetti-piece:nth-child(3n) {
-
-  background:
-    #f59e0b;
-
-  width: 5px;
-
-  height: 5px;
-
-  border-radius: 50%;
-
-}
-
-
-.confetti-piece:nth-child(4n) {
-
-  background:
-    #2563eb;
-
-  width: 10px;
-
-  height: 6px;
-
-}
-
-
-.confetti-piece:nth-child(5n) {
-
-  background:
-    #dc2626;
-
-  border-radius: 50%;
-
-}
-
-
-/* =========================================================
-   ANIMATIONS
-========================================================= */
-
-@keyframes confettiFall {
-
-  0% {
-
-    opacity: 1;
-
-    transform:
-      translateY(0)
-      rotate(0deg);
-
-  }
-
-  70% {
-
-    opacity: 1;
-
-  }
-
-  100% {
-
-    opacity: 0;
-
-    transform:
-
-      translateY(550px)
-
-      translateX(
-        calc(
-          (var(--i) - 22) * 8px
-        )
-      )
-
-      rotate(720deg);
-
-  }
-
-}
-
-
-@keyframes soldCardAppear {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      scale(0.96)
-      translateY(15px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      scale(1)
-      translateY(0);
-
-  }
-
-}
-
-
-@keyframes soldMessageAppear {
-
-  from {
-
-    opacity: 0;
-
-    transform:
-      translateY(10px);
-
-  }
-
-  to {
-
-    opacity: 1;
-
-    transform:
-      translateY(0);
-
-  }
-
-}
-
-
-@keyframes soldBadgeGradient {
-
-  0% {
-
-    background-position:
-      0% 50%;
-
-  }
-
-  50% {
-
-    background-position:
-      100% 50%;
-
-  }
-
-  100% {
-
-    background-position:
-      0% 50%;
-
-  }
-
-}
-
-
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media screen and (max-width: 768px) {
-
-  .gold-card-top {
+.gold-card-top {
 
     align-items:
       flex-start;
 
   }
-
-
-  .available-button,
-  .sold-status-badge {
-
-    min-width:
-      105px;
-
-    height:
-      38px;
-
-    padding:
-      0 10px;
-
-    font-size:
-      10px;
-
-  }
-
-
-  .sold-message {
-
-    font-size:
-      11px;
-
-  }
-
 }

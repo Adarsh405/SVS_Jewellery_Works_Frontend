@@ -3,7 +3,7 @@ import React, {
   useRef,
   useEffect
 } from 'react'
-
+import './SilverItem.css'
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
 
