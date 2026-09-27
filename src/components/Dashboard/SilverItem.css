@@ -1,132 +1,724 @@
-
-
-.silver-item-card {
-  height: 100%;
-
-  box-sizing: border-box;
-
-  border-radius: 14px;
-
-  padding: 15px 20px !important;
-
-  display: flex;
-  flex-direction: column;
-
-  position: relative;
-  overflow: hidden;
-}
-
 /* =========================================================
-   SILVER CARD
+   SILVER ITEM CARD
 ========================================================= */
 
 .silver-item-card {
+  position: relative;
+
+  width: 100%;
+
+  min-height: 145px;
+
+  box-sizing: border-box;
+
+  padding: 10px 14px;
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
   background:
     linear-gradient(
       135deg,
-      #ffffff,
-      #e9edf1,
-      #ffffff
+      #ffffff 0%,
+      #f3f7fb 30%,
+      #eef7f6 65%,
+      #fff7e6 100%
     );
 
-  background-size: 200% 200%;
-
-  border: 2px solid #9da4aa;
+  border: 1px solid
+    rgba(148, 163, 184, 0.45);
 
   box-shadow:
-    0 10px 30px rgba(80, 90, 100, 0.12);
+    0 8px 25px
+    rgba(15, 23, 42, 0.10);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
 
   animation:
-    resultAppear 0.6s ease,
-    silverCardGlow 5s ease-in-out infinite;
+    cardEnter 0.45s ease;
 }
 
-.silver-item-card::after {
+
+/* Animated colourful glow */
+
+.silver-item-card::before {
+
   content: "";
 
   position: absolute;
 
-  top: -50%;
-  left: -100%;
+  width: 220px;
+  height: 220px;
 
-  width: 45%;
-  height: 200%;
+  right: -90px;
+  top: -130px;
 
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.7),
-    transparent
-  );
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(56,189,248,0.22),
+      transparent 70%
+    );
+
+  pointer-events: none;
+
+  animation:
+    floatingGlow 5s ease-in-out infinite;
+}
+
+
+.silver-item-card::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: -120%;
+
+  left: -40%;
+
+  width: 35%;
+
+  height: 300%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.75),
+      transparent
+    );
 
   transform: rotate(20deg);
 
-  animation: silverShine 7s ease-in-out infinite;
+  pointer-events: none;
+
+  animation:
+    cardShine 6s ease-in-out infinite;
 }
 
+
+.silver-item-card:hover {
+
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(59,130,246,0.45);
+
+  box-shadow:
+    0 15px 35px
+    rgba(15,23,42,0.15);
+}
+
+
 /* =========================================================
-   SILVER WEIGHT
+   TOP BAR
+========================================================= */
+
+.silver-card-top {
+
+  position: relative;
+
+  z-index: 5;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 38px;
+
+  gap: 10px;
+}
+
+
+/* =========================================================
+   TYPE BADGE
+========================================================= */
+
+.item-type {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 30px;
+
+  padding:
+    4px 11px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.7px;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 4px 12px
+    rgba(0,0,0,0.10);
+
+  animation:
+    badgeFloat 3s ease-in-out infinite;
+}
+
+
+.silver-type {
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      #64748b,
+      #0ea5e9,
+      #14b8a6
+    );
+
+  background-size:
+    200% 200%;
+
+  animation:
+    badgeGradient 4s ease infinite,
+    badgeFloat 3s ease-in-out infinite;
+}
+
+
+.sold-type {
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #059669,
+      #22c55e,
+      #84cc16
+    );
+
+  background-size:
+    200% 200%;
+
+  animation:
+    badgeGradient 3s ease infinite;
+}
+
+
+/* =========================================================
+   ACTION AREA
+========================================================= */
+
+.item-actions {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 7px;
+
+  position: relative;
+
+  z-index: 10;
+}
+
+
+.available-button,
+.add-button {
+
+  height: 34px;
+
+  padding:
+    0 13px;
+
+  border-radius: 9px;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   SALE BUTTON
+========================================================= */
+
+.available-button {
+
+  min-width: 82px;
+
+  color: white;
+
+  border:
+    1px solid
+    #0284c7;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0284c7,
+      #06b6d4,
+      #2563eb
+    );
+
+  background-size:
+    200% 200%;
+
+  box-shadow:
+    0 5px 15px
+    rgba(14,165,233,0.28);
+
+  animation:
+    buttonGradient 4s ease infinite;
+}
+
+
+.available-button:hover:not(:disabled) {
+
+  transform:
+    translateY(-2px)
+    scale(1.02);
+
+  box-shadow:
+    0 8px 20px
+    rgba(14,165,233,0.38);
+}
+
+
+/* =========================================================
+   ADD BUTTON
+========================================================= */
+
+.add-button {
+
+  min-width: 70px;
+
+  color: #713f12;
+
+  border:
+    1px solid
+    #f59e0b;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fbbf24,
+      #fcd34d,
+      #f59e0b
+    );
+
+  background-size:
+    200% 200%;
+
+  box-shadow:
+    0 5px 15px
+    rgba(245,158,11,0.25);
+
+  animation:
+    buttonGradient 4.5s ease infinite;
+}
+
+
+.add-button:hover:not(:disabled) {
+
+  transform:
+    translateY(-2px)
+    scale(1.02);
+
+  box-shadow:
+    0 8px 20px
+    rgba(245,158,11,0.38);
+}
+
+
+.available-button:disabled,
+.add-button:disabled {
+
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.item-content {
+
+  position: relative;
+
+  z-index: 3;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-top: 3px;
+
+  min-height: 82px;
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.item-image {
+
+  width: 75px;
+
+  height: 75px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 6px 8px
+      rgba(15,23,42,0.16)
+    );
+
+  animation:
+    itemFloat 4s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.item-details {
+
+  flex: 1;
+
+  min-width: 0;
+}
+
+
+.item-title-line {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  margin-bottom: 7px;
+}
+
+
+.item-details h2 {
+
+  margin: 0;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 17px;
+
+  line-height: 1.1;
+
+  font-weight: 950;
+
+  color: #172033;
+}
+
+
+/* =========================================================
+   ID
+========================================================= */
+
+.silver-id {
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  padding:
+    4px 8px;
+
+  border-radius: 7px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e0f2fe,
+      #dbeafe
+    );
+
+  border:
+    1px solid
+    #bfdbfe;
+
+  color:
+    #475569;
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+
+.silver-id span {
+
+  font-size: 11px;
+
+  color:
+    #1d4ed8;
+
+  font-weight: 950;
+}
+
+
+/* =========================================================
+   DETAILS BOXES
+========================================================= */
+
+.silver-details {
+
+  display: grid;
+
+  grid-template-columns:
+    0.8fr
+    0.9fr
+    1.45fr;
+
+  gap: 7px;
+
+  width: 100%;
+}
+
+
+.silver-details > div {
+
+  min-width: 0;
+
+  min-height: 47px;
+
+  padding:
+    6px 9px;
+
+  box-sizing: border-box;
+
+  border-radius: 9px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+.silver-details > div:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 7px 16px
+    rgba(15,23,42,0.12);
+}
+
+
+.silver-details span {
+
+  display: block;
+
+  margin-bottom: 2px;
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  opacity: 0.75;
+}
+
+
+.silver-details strong {
+
+  display: block;
+
+  font-size: 15px;
+
+  line-height: 1.1;
+
+  font-weight: 950;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   WEIGHT
 ========================================================= */
 
 .silver-weight-box {
-  background: #e8f0f7 !important;
-
-  border: 2px solid #8da4b8;
 
   text-align: center;
+
+  color:
+    #075985;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e0f2fe,
+      #dbeafe
+    );
+
+  border:
+    1px solid
+    #7dd3fc;
 }
 
-.silver-weight-box p {
-  color: #526575 !important;
-
-  font-size: 14px !important;
-
-  font-weight: 700;
-}
 
 .silver-weight-box strong {
-  display: block;
 
-  margin-top: 5px;
-
-  font-size: 30px !important;
-
-  font-weight: 900;
-
-  color: #263746;
+  color:
+    #0369a1;
 }
 
+
 /* =========================================================
-   SILVER MAKING COST
+   MAKING
 ========================================================= */
 
 .silver-making-box {
-  background: #fff4d6 !important;
-
-  border: 2px solid #d4af37;
 
   text-align: center;
+
+  color:
+    #92400e;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fef3c7,
+      #fde68a
+    );
+
+  border:
+    1px solid
+    #fbbf24;
 }
 
-.silver-making-box p {
-  color: #8a6500 !important;
-
-  font-size: 14px !important;
-
-  font-weight: 700;
-}
 
 .silver-making-box strong {
-  display: block;
 
-  margin-top: 5px;
-
-  font-size: 24px !important;
-
-  font-weight: 900;
-
-  color: #8a6500;
+  color:
+    #b45309;
 }
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.silver-price {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 8px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #2563eb,
+      #0891b2,
+      #059669
+    );
+
+  background-size:
+    300% 300%;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.35);
+
+  box-shadow:
+    0 6px 18px
+    rgba(37,99,235,0.25);
+
+  animation:
+    priceGradient 5s ease infinite;
+}
+
+
+.silver-price span {
+
+  color:
+    rgba(255,255,255,0.85);
+
+  margin: 0;
+
+  white-space: nowrap;
+}
+
+
+.silver-price strong {
+
+  color: white;
+
+  font-size: 19px;
+
+  text-align: right;
+}
+
 
 /* =========================================================
    SOLD STATUS
