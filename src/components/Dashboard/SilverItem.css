@@ -1,0 +1,112 @@
+/* =========================================================
+   SMALL BILL PREVIEW POPUP
+========================================================= */
+
+.bill-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 999999;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+
+.bill-modal {
+
+  position: relative;
+
+  width: min(900px, 92vw);
+
+  height: min(620px, 86vh);
+
+  background: white;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 30px 100px rgba(0, 0, 0, 0.35);
+
+}
+
+
+.bill-modal-close {
+
+  position: absolute;
+
+  right: 12px;
+
+  top: 12px;
+
+  z-index: 999999;
+
+  width: 34px;
+
+  height: 34px;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background: #ef4444;
+
+  color: white;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+
+/* ==========================================
+   PRINT
+========================================== */
+
+@media print {
+
+  .bill-modal-overlay,
+  .bill-modal {
+
+    position: static !important;
+
+    width: auto !important;
+
+    height: auto !important;
+
+    max-width: none !important;
+
+    max-height: none !important;
+
+    padding: 0 !important;
+
+    margin: 0 !important;
+
+    border-radius: 0 !important;
+
+    box-shadow: none !important;
+
+    overflow: visible !important;
+
+    background: white !important;
+
+  }
+
+
+  .bill-modal-close {
+
+    display: none !important;
+
+  }
+
+}

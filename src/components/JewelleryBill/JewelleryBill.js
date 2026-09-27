@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import "./JewelleryBill.css";
-
-import billTemplate from "./svs-bill.png";
+import billTemplate from "./svs-bill.jpeg";
 
 const JewelleryBill = ({
   billNo,
@@ -11,11 +10,19 @@ const JewelleryBill = ({
   paymentMode,
   items = [],
   onClose,
+  autoPrint = true,
 }) => {
 
-  /* =========================================================
-     CLEAN NUMBER
-  ========================================================= */
+  // =========================================================
+  // PRINT PAGE REF
+  // =========================================================
+
+  const printStartedRef = useRef(false);
+
+
+  // =========================================================
+  // CLEAN NUMBER
+  // =========================================================
 
   const cleanNumber = (value) => {
     return (
@@ -28,18 +35,18 @@ const JewelleryBill = ({
   };
 
 
-  /* =========================================================
-     MONEY FORMAT
-  ========================================================= */
+  // =========================================================
+  // MONEY FORMAT
+  // =========================================================
 
   const formatMoney = (value) => {
     return cleanNumber(value).toLocaleString("en-IN");
   };
 
 
-  /* =========================================================
-     TOTAL WEIGHT
-  ========================================================= */
+  // =========================================================
+  // TOTAL WEIGHT
+  // =========================================================
 
   const totalWeight = items.reduce(
     (sum, item) => {
@@ -49,9 +56,9 @@ const JewelleryBill = ({
   );
 
 
-  /* =========================================================
-     GRAND TOTAL
-  ========================================================= */
+  // =========================================================
+  // GRAND TOTAL
+  // =========================================================
 
   const grandTotal = items.reduce(
     (sum, item) => {
@@ -61,9 +68,9 @@ const JewelleryBill = ({
   );
 
 
-  /* =========================================================
-     SILVER CHECK
-  ========================================================= */
+  // =========================================================
+  // SILVER CHECK
+  // =========================================================
 
   const isSilverItem = (item) => {
 
@@ -82,34 +89,116 @@ const JewelleryBill = ({
   };
 
 
-  /* =========================================================
-     PRINT
-  ========================================================= */
+  // =========================================================
+  // PRINT
+  // =========================================================
 
   const printBill = () => {
-    window.print();
+
+    if (printStartedRef.current) {
+      return;
+    }
+
+    printStartedRef.current = true;
+
+    // Give React/browser time to render
+    // the A4 bill before opening print.
+
+    setTimeout(() => {
+
+      window.print();
+
+      // Allow printing again if
+      // the browser closes the dialog.
+
+      setTimeout(() => {
+        printStartedRef.current = false;
+      }, 1000);
+
+    }, 300);
   };
 
 
-  /* =========================================================
-     KEYBOARD
-  ========================================================= */
+  // =========================================================
+  // AUTOMATIC PRINT
+  // =========================================================
+
+  useEffect(() => {
+
+    if (!autoPrint) {
+      return;
+    }
+
+    const timer = setTimeout(() => {
+
+      printBill();
+
+    }, 500);
+
+
+    return () => {
+      clearTimeout(timer);
+    };
+
+  }, [autoPrint]);
+
+
+  // =========================================================
+  // AFTER PRINT
+  // =========================================================
+
+  useEffect(() => {
+
+    const handleAfterPrint = () => {
+
+      printStartedRef.current = false;
+
+    };
+
+
+    window.addEventListener(
+      "afterprint",
+      handleAfterPrint
+    );
+
+
+    return () => {
+
+      window.removeEventListener(
+        "afterprint",
+        handleAfterPrint
+      );
+
+    };
+
+  }, []);
+
+
+  // =========================================================
+  // KEYBOARD
+  // =========================================================
 
   useEffect(() => {
 
     const handleKeyDown = (event) => {
 
-      /* ENTER = PRINT */
+      // ENTER = PRINT
 
-      if (event.key === "Enter") {
+      if (
+        event.key === "Enter" &&
+        !event.target?.matches(
+          "input, textarea, select, button"
+        )
+      ) {
 
         event.preventDefault();
 
         printBill();
+
       }
 
 
-      /* ESC = CLOSE */
+      // ESC = CLOSE
 
       if (event.key === "Escape") {
 
@@ -118,7 +207,9 @@ const JewelleryBill = ({
         if (onClose) {
           onClose();
         }
+
       }
+
     };
 
 
@@ -134,14 +225,15 @@ const JewelleryBill = ({
         "keydown",
         handleKeyDown
       );
+
     };
 
   }, [onClose]);
 
 
-  /* =========================================================
-     COPY DETAILS
-  ========================================================= */
+  // =========================================================
+  // COPY DETAILS
+  // =========================================================
 
   const CopyDetails = ({ type }) => {
 
@@ -156,7 +248,9 @@ const JewelleryBill = ({
         ========================================= */}
 
         <div className="detail bill-number">
+
           {billNo || ""}
+
         </div>
 
 
@@ -165,7 +259,9 @@ const JewelleryBill = ({
         ========================================= */}
 
         <div className="detail bill-date">
+
           {date || ""}
+
         </div>
 
 
@@ -174,7 +270,9 @@ const JewelleryBill = ({
         ========================================= */}
 
         <div className="detail customer-name">
+
           {customerName || ""}
+
         </div>
 
 
@@ -183,7 +281,9 @@ const JewelleryBill = ({
         ========================================= */}
 
         <div className="detail customer-mobile">
+
           {customerMobile || ""}
+
         </div>
 
 
@@ -192,7 +292,9 @@ const JewelleryBill = ({
         ========================================= */}
 
         <div className="detail payment-mode">
+
           {paymentMode || ""}
+
         </div>
 
 
@@ -209,6 +311,7 @@ const JewelleryBill = ({
               const silver =
                 isSilverItem(item);
 
+
               return (
 
                 <div
@@ -223,28 +326,36 @@ const JewelleryBill = ({
                   {/* S.NO */}
 
                   <span className="sno">
+
                     {index + 1}
+
                   </span>
 
 
                   {/* ITEM NAME */}
 
                   <span className="item-name">
+
                     {item?.itemName || ""}
+
                   </span>
 
 
                   {/* CATEGORY */}
 
                   <span className="category">
+
                     {item?.category || ""}
+
                   </span>
 
 
                   {/* WEIGHT */}
 
                   <span className="weight">
+
                     {item?.weight ?? ""}
+
                   </span>
 
 
@@ -262,11 +373,15 @@ const JewelleryBill = ({
                   {/* PRICE */}
 
                   <span className="price">
+
                     {item?.totalPrice ?? ""}
+
                   </span>
 
                 </div>
+
               );
+
             })}
 
         </div>
@@ -294,20 +409,22 @@ const JewelleryBill = ({
         </div>
 
       </div>
+
     );
+
   };
 
 
-  /* =========================================================
-     SCREEN + PRINT
-  ========================================================= */
+  // =========================================================
+  // SCREEN + PRINT
+  // =========================================================
 
   return (
 
     <div className="jewellery-bill-page">
 
       {/* =====================================================
-          SCREEN TOOLBAR
+          SMALL SCREEN TOOLBAR
       ===================================================== */}
 
       <div className="bill-toolbar no-print">
@@ -385,7 +502,9 @@ const JewelleryBill = ({
       </div>
 
     </div>
+
   );
+
 };
 
 
