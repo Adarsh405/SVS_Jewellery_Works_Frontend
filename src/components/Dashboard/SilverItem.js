@@ -4,11 +4,9 @@ import React, {
   useEffect
 } from 'react'
 
-import JewelleryBill from '../JewelleryBill/JewelleryBill'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
-
 
 const SilverItem = ({
   item,
@@ -19,23 +17,15 @@ const SilverItem = ({
   sellRequest
 }) => {
 
-  /* =========================================================
-     STATE
-  ========================================================= */
+  const [selling, setSelling] = useState(false)
 
-  const [selling, setSelling] =
-    useState(false)
+  const [status, setStatus] = useState(
+    item.status?.toLowerCase() || 'available'
+  )
 
-  const [status, setStatus] =
-    useState(
-      item.status?.toLowerCase() ||
-      'available'
-    )
-
-
-  /* =========================================================
-     CUSTOMER POPUP
-  ========================================================= */
+  // ==========================================
+  // CUSTOMER POPUP
+  // ==========================================
 
   const [showCustomerPopup, setShowCustomerPopup] =
     useState(false)
@@ -46,186 +36,48 @@ const SilverItem = ({
   const [customerPhone, setCustomerPhone] =
     useState('')
 
-
-  /* =========================================================
-     CUSTOMER SEARCH
-  ========================================================= */
-
-  const [customerLoading, setCustomerLoading] =
-    useState(false)
-
-  const [customerFound, setCustomerFound] =
-    useState(false)
+  const mobileInputRef = useRef(null)
 
 
-  /* =========================================================
-     BILL PREVIEW
-  ========================================================= */
-
-  const [showBill, setShowBill] =
-    useState(false)
-
-  const [billCustomerName, setBillCustomerName] =
-    useState('')
-
-  const [billCustomerPhone, setBillCustomerPhone] =
-    useState('')
-
-
-  const mobileInputRef =
-    useRef(null)
-
-
-  /* =========================================================
-     AUTO FOCUS MOBILE INPUT
-  ========================================================= */
+  // ==========================================
+  // AUTO FOCUS MOBILE NUMBER
+  // ==========================================
 
   useEffect(() => {
 
-    if (!showCustomerPopup) {
-      return
-    }
+    if (showCustomerPopup) {
 
-    const timer =
       setTimeout(() => {
 
         mobileInputRef.current?.focus()
 
       }, 100)
 
-    return () => {
-      clearTimeout(timer)
     }
 
   }, [showCustomerPopup])
 
 
-  /* =========================================================
-     FIND CUSTOMER BY MOBILE
-  ========================================================= */
-
-  useEffect(() => {
-
-    let cancelled = false
-
-    const fetchCustomer = async () => {
-
-      if (customerPhone.length !== 10) {
-
-        setCustomerFound(false)
-        setCustomerLoading(false)
-
-        return
-      }
-
-
-      setCustomerLoading(true)
-      setCustomerFound(false)
-
-
-      try {
-
-        const response =
-          await fetch(
-            `${API_URL}/api/customers/mobile/${customerPhone}`,
-            {
-              method: 'GET',
-              credentials: 'include'
-            }
-          )
-
-
-        const data =
-          await response.json()
-
-
-        if (cancelled) {
-          return
-        }
-
-
-        if (
-          response.ok &&
-          data.success &&
-          data.customer
-        ) {
-
-          setCustomerName(
-            data.customer.customer_name || ''
-          )
-
-          setCustomerFound(true)
-
-        } else {
-
-          setCustomerName('')
-          setCustomerFound(false)
-
-        }
-
-      } catch (error) {
-
-        if (!cancelled) {
-
-          console.error(
-            'Customer lookup error:',
-            error
-          )
-
-          setCustomerName('')
-          setCustomerFound(false)
-
-        }
-
-      } finally {
-
-        if (!cancelled) {
-          setCustomerLoading(false)
-        }
-
-      }
-
-    }
-
-
-    fetchCustomer()
-
-
-    return () => {
-      cancelled = true
-    }
-
-  }, [customerPhone])
-
-
-  /* =========================================================
-     ITEM CALCULATION
-  ========================================================= */
-
   const weight =
     Number(item.weight) || 0
-
 
   const makingCost =
     Number(item.makingCost) || 0
 
-
   const silverRate =
     Number(SilverRate) || 0
-
 
   const price =
     (weight * silverRate) +
     makingCost
 
-
   const isSold =
     status === 'sold'
 
 
-  /* =========================================================
-     SOLD SOUND
-  ========================================================= */
+  // ==========================================
+  // SOLD SOUND
+  // ==========================================
 
   const playSoldSound = () => {
 
@@ -234,12 +86,6 @@ const SilverItem = ({
       const AudioContext =
         window.AudioContext ||
         window.webkitAudioContext
-
-
-      if (!AudioContext) {
-        return
-      }
-
 
       const audioContext =
         new AudioContext()
@@ -255,22 +101,18 @@ const SilverItem = ({
         const oscillator =
           audioContext.createOscillator()
 
-
         const gainNode =
           audioContext.createGain()
 
 
-        oscillator.connect(
-          gainNode
-        )
+        oscillator.connect(gainNode)
 
         gainNode.connect(
           audioContext.destination
         )
 
 
-        oscillator.type =
-          'sine'
+        oscillator.type = 'sine'
 
 
         oscillator.frequency.setValueAtTime(
@@ -297,10 +139,7 @@ const SilverItem = ({
         )
 
 
-        oscillator.start(
-          startTime
-        )
-
+        oscillator.start(startTime)
 
         oscillator.stop(
           startTime + duration
@@ -313,13 +152,14 @@ const SilverItem = ({
         audioContext.currentTime
 
 
+      // 👑 ROYAL GOLD SOUND
+
       playNote(
         392,
         now,
         0.30,
         0.20
       )
-
 
       playNote(
         523.25,
@@ -328,14 +168,12 @@ const SilverItem = ({
         0.20
       )
 
-
       playNote(
         659.25,
         now + 0.24,
         0.40,
         0.20
       )
-
 
       playNote(
         783.99,
@@ -344,7 +182,6 @@ const SilverItem = ({
         0.18
       )
 
-
       playNote(
         1046.50,
         now + 0.48,
@@ -352,518 +189,348 @@ const SilverItem = ({
         0.15
       )
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
       console.log(
-        'Sold sound unavailable',
+        'Royal Gold sound unavailable',
         error
       )
 
     }
 
   }
+// ==========================================
+// OPEN CUSTOMER POPUP
+// ==========================================
 
+const markAsSold = () => {
 
-  /* =========================================================
-     OPEN CUSTOMER POPUP
-  ========================================================= */
-
-  const markAsSold = () => {
-
-    if (selling || isSold) {
-      return
-    }
-
-
-    setCustomerName('')
-    setCustomerPhone('')
-
-    setCustomerFound(false)
-    setCustomerLoading(false)
-
-    setShowCustomerPopup(true)
-
+  if (selling) {
+    return
   }
 
+  setCustomerName('')
+  setCustomerPhone('')
 
-  /* =========================================================
-     COMPLETE SALE
-     
-     shouldPrint = true
-       → mark sold
-       → save sold record
-       → open bill preview
-
-     shouldPrint = false
-       → mark sold
-       → save sold record
-       → no bill
-  ========================================================= */
-
-  const completeSale = async (
-    shouldPrint = false
-  ) => {
-
-    if (selling) {
-      return
-    }
+  setShowCustomerPopup(true)
+}
 
 
-    /* =======================================================
-       VALIDATE MOBILE
-    ======================================================= */
+// ==========================================
+// CONFIRM CUSTOMER + MARK SOLD
+// ==========================================
 
-    if (
-      customerPhone.length !== 10
-    ) {
+const confirmMarkAsSold = async () => {
 
-      alert(
-        'Please enter a valid 10-digit mobile number.'
-      )
+  if (selling) {
+    return
+  }
 
-      mobileInputRef.current?.focus()
+  setSelling(true)
 
-      return
-    }
+  try {
 
+    // ========================================
+    // DEFAULT CUSTOMER DETAILS
+    // ========================================
 
-    /* =======================================================
-       WAIT FOR CUSTOMER SEARCH
-    ======================================================= */
+    const finalCustomerPhone =
+      customerPhone.trim() || '9908622405'
 
-    if (customerLoading) {
-      return
-    }
+    const finalCustomerName =
+      customerName.trim() || 'Adarsh'
 
 
-    setSelling(true)
+    console.log(
+      'Selling silver item:',
+      {
+        itemId: item.id,
+        itemName: item.name,
+        customerName: finalCustomerName,
+        customerPhone: finalCustomerPhone
+      }
+    )
 
 
-    try {
+    // ========================================
+    // STEP 1
+    // MARK SILVER ITEM AS SOLD
+    // ========================================
 
-      /* =====================================================
-         CUSTOMER DETAILS
-      ===================================================== */
-
-      const billName =
-        customerName.trim()
-
-
-      const billPhone =
-        customerPhone.trim()
-
-
-      const finalCustomerName =
-        billName || 'Customer'
-
-
-      const finalCustomerPhone =
-        billPhone
-
-
-      console.log(
-        'Selling silver item:',
+    const response =
+      await fetch(
+        `${API_URL}/api/silver/${item.id}/sold`,
         {
-          itemId: item.id,
-          itemName: item.name,
-          customerName:
-            finalCustomerName,
-          customerPhone:
-            finalCustomerPhone,
-          printBill:
-            shouldPrint
+          method: 'PATCH',
+
+          credentials: 'include',
+
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       )
 
 
-      /* =====================================================
-         STEP 1
-         MARK SILVER ITEM AS SOLD
-      ===================================================== */
-
-      const response =
-        await fetch(
-          `${API_URL}/api/silver/${item.id}/sold`,
-          {
-            method: 'PATCH',
-
-            credentials: 'include',
-
-            headers: {
-              'Content-Type':
-                'application/json'
-            }
-          }
-        )
+    const data =
+      await response.json()
 
 
-      const data =
-        await response.json()
+    if (!response.ok) {
 
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.message ||
-          'Failed to mark silver item as sold'
-        )
-
-      }
-
-
-      console.log(
-        'Silver item marked as sold:',
-        data
+      throw new Error(
+        data.message ||
+        'Failed to mark silver item as sold'
       )
 
-
-      /* =====================================================
-         STEP 2
-         SAVE SOLD ITEM
-      ===================================================== */
-
-      const soldResponse =
-        await fetch(
-          `${API_URL}/api/sold-items`,
-          {
-            method: 'POST',
-
-            credentials: 'include',
-
-            headers: {
-              'Content-Type':
-                'application/json'
-            },
-
-            body: JSON.stringify({
-
-              itemId:
-                item.id,
-
-              itemType:
-                'Silver',
-
-              itemName:
-                item.name,
-
-              grossWeight:
-                weight,
-
-              makingCost:
-                makingCost,
-
-              soldPrice:
-                price,
-
-              customerName:
-                finalCustomerName,
-
-              customerPhone:
-                finalCustomerPhone
-
-            })
-          }
-        )
+    }
 
 
-      const soldData =
-        await soldResponse.json()
+    console.log(
+      'Silver item marked as sold:',
+      data
+    )
 
 
-      if (!soldResponse.ok) {
+    // ========================================
+    // STEP 2
+    // SAVE SOLD ITEM + CUSTOMER DETAILS
+    // ========================================
 
-        throw new Error(
-          soldData.message ||
-          'Item was marked sold, but sold record could not be saved'
-        )
+    const soldResponse =
+      await fetch(
+        `${API_URL}/api/sold-items`,
+        {
+          method: 'POST',
 
-      }
+          credentials: 'include',
 
+          headers: {
+            'Content-Type':
+              'application/json'
+          },
 
-      console.log(
-        'Sold item saved:',
-        soldData
-      )
+          body: JSON.stringify({
 
+            // ITEM
+            itemId: item.id,
 
-      /* =====================================================
-         STEP 3
-         UPDATE ITEM CARD
-      ===================================================== */
+            itemType: 'Silver',
 
-      setStatus('sold')
+            itemName: item.name,
 
+            // WEIGHT
+            grossWeight: weight,
 
-      /* =====================================================
-         STEP 4
-         SAVE BILL CUSTOMER DETAILS
-      ===================================================== */
+            // MONEY
+            makingCost: makingCost,
 
-      setBillCustomerName(
-        finalCustomerName
-      )
+            soldPrice: price,
 
-      setBillCustomerPhone(
-        finalCustomerPhone
-      )
-
-
-      /* =====================================================
-         STEP 5
-         CLOSE CUSTOMER POPUP
-      ===================================================== */
-
-      setShowCustomerPopup(false)
-
-
-      /* =====================================================
-         STEP 6
-         OPEN BILL ONLY IF PRINT WAS SELECTED
-      ===================================================== */
-
-      if (shouldPrint) {
-
-        setShowBill(true)
-
-      }
-
-
-      /* =====================================================
-         STEP 7
-         RESET CUSTOMER FORM
-      ===================================================== */
-
-      setCustomerName('')
-      setCustomerPhone('')
-
-      setCustomerFound(false)
-      setCustomerLoading(false)
-
-
-      /* =====================================================
-         STEP 8
-         SUCCESS SOUND
-      ===================================================== */
-
-      playSoldSound()
-
-
-      /* =====================================================
-         STEP 9
-         UPDATE PARENT
-      ===================================================== */
-
-      if (onSold) {
-
-        onSold(
-          item,
-          {
-            itemId:
-              item.id,
-
-            itemName:
-              item.name,
-
-            itemType:
-              'Silver',
-
-            grossWeight:
-              weight,
-
-            makingCost:
-              makingCost,
-
-            soldPrice:
-              price,
-
+            // CUSTOMER
             customerName:
               finalCustomerName,
 
             customerPhone:
               finalCustomerPhone
-          }
-        )
 
-      }
-
-    } catch (error) {
-
-      console.error(
-        'Mark silver item sold error:',
-        error
+          })
+        }
       )
 
 
-      alert(
-        'Failed to mark item as sold.\n\n' +
-        error.message
+    const soldData =
+      await soldResponse.json()
+
+
+    if (!soldResponse.ok) {
+
+      throw new Error(
+        soldData.message ||
+        'Item was marked sold, but sold record could not be saved'
       )
 
-    } finally {
+    }
 
-      setSelling(false)
+
+    console.log(
+      'Sold item saved:',
+      soldData
+    )
+
+
+    // ========================================
+    // STEP 3
+    // UPDATE CARD
+    // ========================================
+
+    setStatus('sold')
+
+
+    // ========================================
+    // STEP 4
+    // CLOSE POPUP
+    // ========================================
+
+    setShowCustomerPopup(false)
+
+
+    // ========================================
+    // STEP 5
+    // RESET CUSTOMER FIELDS
+    // ========================================
+
+    setCustomerName('')
+
+    setCustomerPhone('')
+
+
+    // ========================================
+    // STEP 6
+    // PLAY SOLD SOUND
+    // ========================================
+
+    playSoldSound()
+
+
+    // ========================================
+    // STEP 7
+    // UPDATE PARENT / DASHBOARD
+    // ========================================
+
+    if (onSold) {
+
+      onSold(
+        item,
+        {
+          itemId: item.id,
+
+          itemName: item.name,
+
+          itemType: 'Silver',
+
+          grossWeight: weight,
+
+          makingCost: makingCost,
+
+          soldPrice: price,
+
+          customerName:
+            finalCustomerName,
+
+          customerPhone:
+            finalCustomerPhone
+        }
+      )
 
     }
+
+
+  } catch (error) {
+
+    console.error(
+      'Mark silver item sold error:',
+      error
+    )
+
+
+    alert(
+      'Failed to mark item as sold.\n\n' +
+      error.message
+    )
+
+  } finally {
+
+    setSelling(false)
+
+  }
+
+}
+
+
+// ==========================================
+// ⭐ * KEY SELL SHORTCUT
+// ==========================================
+
+// Store previous request
+const sellRequestRef = useRef(sellRequest)
+
+// Store latest markAsSold function
+const markAsSoldRef = useRef(markAsSold)
+
+// Always keep ref pointing to latest function
+markAsSoldRef.current = markAsSold
+
+useEffect(() => {
+
+  // Ignore if request has not changed
+  if (sellRequestRef.current === sellRequest) {
+    return
+  }
+
+  // Update request immediately
+  sellRequestRef.current = sellRequest
+
+  // Ignore empty request
+  if (!sellRequest) {
+    return
+  }
+
+  // Don't open popup for sold item
+  if (
+    item.status?.toLowerCase() === 'sold' ||
+    status === 'sold'
+  ) {
+    return
+  }
+
+  // ⭐ Open the SAME customer popup
+  // used by the AVAILABLE button
+  markAsSoldRef.current()
+
+}, [sellRequest, item.status, status])
+// ==========================================
+// POPUP KEYBOARD CONTROL
+// ==========================================
+
+const handlePopupKeyDown = (e) => {
+
+  // ESC = CLOSE
+
+  if (e.key === 'Escape') {
+
+    if (!selling) {
+
+      setShowCustomerPopup(false)
+
+    }
+
+    return
 
   }
 
 
-  /* =========================================================
-     PRINT BILL
-  ========================================================= */
+  // ENTER = MARK SOLD
 
-  const handlePrintBill = () => {
+  if (e.key === 'Enter') {
 
-    if (
-      selling ||
-      customerLoading
-    ) {
-      return
-    }
+    e.preventDefault()
 
-
-    completeSale(true)
+    confirmMarkAsSold()
 
   }
 
-
-  /* =========================================================
-     MARK SOLD WITHOUT PRINTING
-  ========================================================= */
-
-  const handleMarkAsSold = () => {
-
-    if (
-      selling ||
-      customerLoading
-    ) {
-      return
-    }
-
-
-    completeSale(false)
-
-  }
-
-
-  /* =========================================================
-     SELL REQUEST
-  ========================================================= */
-
-  const sellRequestRef =
-    useRef(sellRequest)
-
-
-  const markAsSoldRef =
-    useRef(markAsSold)
-
-
-  markAsSoldRef.current =
-    markAsSold
-
-
-  useEffect(() => {
-
-    if (
-      sellRequestRef.current ===
-      sellRequest
-    ) {
-      return
-    }
-
-
-    sellRequestRef.current =
-      sellRequest
-
-
-    if (!sellRequest) {
-      return
-    }
-
-
-    if (
-      item.status?.toLowerCase() ===
-        'sold' ||
-      status === 'sold'
-    ) {
-      return
-    }
-
-
-    markAsSoldRef.current()
-
-  }, [
-    sellRequest,
-    item.status,
-    status
-  ])
-
-
-  /* =========================================================
-     CUSTOMER POPUP KEYBOARD
-  ========================================================= */
-
-  const handlePopupKeyDown = (event) => {
-
-    /* ESC = CANCEL */
-
-    if (
-      event.key === 'Escape'
-    ) {
-
-      event.preventDefault()
-
-
-      if (!selling) {
-
-        setShowCustomerPopup(
-          false
-        )
-
-      }
-
-
-      return
-    }
-
-
-    /* ENTER = PRINT BILL */
-
-    if (
-      event.key === 'Enter'
-    ) {
-
-      event.preventDefault()
-
-      handlePrintBill()
-
-    }
-
-  }
-
-
-  /* =========================================================
-     CLOSE BILL
-  ========================================================= */
-
-  const closeBill = () => {
-
-    setShowBill(false)
-
-  }
-
-
-  /* =========================================================
-     RENDER
-  ========================================================= */
+}
 
   return (
 
     <>
 
-      {/* =====================================================
+      {/* =====================================
           SILVER ITEM CARD
-      ===================================================== */}
+      ===================================== */}
 
       <div
         className={
@@ -875,9 +542,10 @@ const SilverItem = ({
         }
       >
 
-        {/* ===================================================
+
+        {/* =================================
             CONFETTI
-        =================================================== */}
+        ================================= */}
 
         {isSold && (
 
@@ -885,30 +553,31 @@ const SilverItem = ({
 
             {Array.from({
               length: 45
-            }).map(
-              (_, index) => (
+            }).map((_, index) => (
 
-                <span
-                  key={index}
-                  className="confetti-piece"
-                  style={{
-                    '--i': index
-                  }}
-                />
+              <span
+                key={index}
+                className="confetti-piece"
+                style={{
+                  '--i': index
+                }}
+              />
 
-              )
-            )}
+            ))}
 
           </div>
 
         )}
 
 
-        {/* ===================================================
+        {/* =================================
             TOP
-        =================================================== */}
+        ================================= */}
 
         <div className="gold-card-top">
+
+
+          {/* TYPE */}
 
           <div
             className={
@@ -927,11 +596,12 @@ const SilverItem = ({
           </div>
 
 
+          {/* AVAILABLE */}
+
           {!isSold && (
 
             <div className="item-actions">
 
-              {/* AVAILABLE / SELL */}
 
               <button
                 type="button"
@@ -940,7 +610,6 @@ const SilverItem = ({
                 onClick={() => {
 
                   markAsSold()
-
 
                   setTimeout(() => {
 
@@ -959,8 +628,6 @@ const SilverItem = ({
 
               </button>
 
-
-              {/* ADD */}
 
               <button
                 type="button"
@@ -996,6 +663,8 @@ const SilverItem = ({
           )}
 
 
+          {/* SOLD */}
+
           {isSold && (
 
             <div className="sold-status-badge">
@@ -1009,11 +678,12 @@ const SilverItem = ({
         </div>
 
 
-        {/* ===================================================
+        {/* =================================
             ITEM CONTENT
-        =================================================== */}
+        ================================= */}
 
         <div className="item-content">
+
 
           <img
             src="https://res.cloudinary.com/dhuby3rax/image/upload/v1787657531/silver_model_klpdob.png"
@@ -1024,10 +694,13 @@ const SilverItem = ({
 
           <div className="item-details">
 
+
             <h2>
               {item.name}
             </h2>
 
+
+            {/* ITEM ID */}
 
             <div className="silver-id">
 
@@ -1040,9 +713,10 @@ const SilverItem = ({
             </div>
 
 
+            {/* DETAILS */}
+
             <div className="silver-details">
 
-              {/* WEIGHT */}
 
               <div className="silver-weight-box">
 
@@ -1056,8 +730,6 @@ const SilverItem = ({
 
               </div>
 
-
-              {/* MAKING COST */}
 
               <div className="silver-making-box">
 
@@ -1074,8 +746,6 @@ const SilverItem = ({
 
               </div>
 
-
-              {/* PRICE */}
 
               <div className="silver-price">
 
@@ -1110,9 +780,9 @@ const SilverItem = ({
         </div>
 
 
-        {/* ===================================================
+        {/* =================================
             SOLD MESSAGE
-        =================================================== */}
+        ================================= */}
 
         {isSold && (
 
@@ -1128,26 +798,24 @@ const SilverItem = ({
       </div>
 
 
-      {/* =====================================================
+      {/* =====================================
           CUSTOMER DETAILS POPUP
-      ===================================================== */}
+      ===================================== */}
 
       {showCustomerPopup && (
 
         <div
           className="customer-popup-overlay"
 
-          onMouseDown={(event) => {
+          onMouseDown={(e) => {
 
             if (
-              event.target ===
-                event.currentTarget &&
+              e.target ===
+              e.currentTarget &&
               !selling
             ) {
 
-              setShowCustomerPopup(
-                false
-              )
+              setShowCustomerPopup(false)
 
             }
 
@@ -1160,13 +828,10 @@ const SilverItem = ({
             onKeyDown={
               handlePopupKeyDown
             }
-
-            tabIndex={-1}
           >
 
-            {/* =================================================
-                HEADER
-            ================================================= */}
+
+            {/* HEADER */}
 
             <div className="customer-popup-header">
 
@@ -1209,9 +874,9 @@ const SilverItem = ({
             </div>
 
 
-            {/* =================================================
+            {/* =================================
                 MOBILE NUMBER
-            ================================================= */}
+            ================================= */}
 
             <div
               className={
@@ -1224,113 +889,48 @@ const SilverItem = ({
               </label>
 
 
-              <div className="customer-input-wrapper">
+              <input
+                ref={mobileInputRef}
 
-                <input
-                  ref={mobileInputRef}
+                type="tel"
 
-                  type="tel"
+                inputMode="numeric"
 
-                  inputMode="numeric"
+                maxLength={10}
 
-                  maxLength={10}
+                value={customerPhone}
 
-                  value={customerPhone}
+                onChange={(e) => {
 
-                  onChange={(event) => {
+                  const value =
+                    e.target.value
+                      .replace(/\D/g, '')
 
-                    const value =
-                      event.target.value
-                        .replace(/\D/g, '')
+                  setCustomerPhone(value)
 
+                }}
 
-                    setCustomerPhone(
-                      value
-                    )
+                placeholder="Enter mobile number"
 
-                  }}
+                autoComplete="tel"
 
-                  placeholder="Enter mobile number"
-
-                  autoComplete="tel"
-
-                  disabled={selling}
-
-                />
+                disabled={selling}
+              />
 
 
-                {/* LOADING */}
+              <span className="customer-hint">
 
-                {customerLoading && (
+                Optional • Default:
+                9908622405
 
-                  <span className="customer-loading">
-
-                    <span className="customer-spinner" />
-
-                  </span>
-
-                )}
-
-              </div>
-
-
-              {/* SEARCHING */}
-
-              {customerLoading && (
-
-                <span
-                  className={
-                    'customer-hint ' +
-                    'customer-searching'
-                  }
-                >
-
-                  Searching customer...
-
-                </span>
-
-              )}
-
-
-              {/* FOUND */}
-
-              {!customerLoading &&
-                customerFound && (
-
-                  <span
-                    className={
-                      'customer-hint ' +
-                      'customer-found'
-                    }
-                  >
-
-                    ✓ Customer found
-
-                  </span>
-
-                )}
-
-
-              {/* NOT FOUND */}
-
-              {!customerLoading &&
-                customerPhone.length === 10 &&
-                !customerFound && (
-
-                  <span className="customer-hint">
-
-                    Customer not found — enter name
-
-                  </span>
-
-                )}
+              </span>
 
             </div>
 
 
-            {/* =================================================
-                CUSTOMER NAME
-            ================================================= */}
+            {/* =================================
+                NAME
+            ================================= */}
 
             <div
               className={
@@ -1348,133 +948,45 @@ const SilverItem = ({
 
                 value={customerName}
 
-                onChange={(event) => {
+                onChange={(e) => {
 
                   setCustomerName(
-                    event.target.value
+                    e.target.value
                   )
 
                 }}
 
-                placeholder={
-                  customerLoading
-                    ? 'Finding customer...'
-                    : 'Customer name'
-                }
+                placeholder="Customer name"
 
                 autoComplete="name"
 
-                disabled={
-                  selling ||
-                  customerLoading
-                }
-
+                disabled={selling}
               />
 
 
               <span className="customer-hint">
 
-                {customerFound
-                  ? '✓ Name loaded from customer database'
-                  : 'Enter customer name'}
+                Optional • Default:
+                Adarsh
 
               </span>
 
             </div>
 
 
-            {/* =================================================
+            {/* =================================
                 ACTIONS
-            ================================================= */}
+            ================================= */}
 
             <div className="customer-popup-actions">
 
 
-              {/* =================================================
-                  PRINT BILL
-              ================================================= */}
-
               <button
                 type="button"
-                className="customer-print-btn"
 
-                onClick={
-                  handlePrintBill
+                className={
+                  'customer-cancel-btn'
                 }
-
-                disabled={
-                  selling ||
-                  customerLoading ||
-                  customerPhone.length !== 10
-                }
-              >
-
-                <span className="customer-action-icon">
-                  🖨️
-                </span>
-
-
-                <span>
-
-                  <strong>
-                    Print Bill
-                  </strong>
-
-                  <small>
-                    Mark sold & print
-                  </small>
-
-                </span>
-
-              </button>
-
-
-              {/* =================================================
-                  MARK AS SOLD
-              ================================================= */}
-
-              <button
-                type="button"
-                className="customer-sold-btn"
-
-                onClick={
-                  handleMarkAsSold
-                }
-
-                disabled={
-                  selling ||
-                  customerLoading ||
-                  customerPhone.length !== 10
-                }
-              >
-
-                <span className="customer-action-icon">
-                  ✓
-                </span>
-
-
-                <span>
-
-                  <strong>
-                    Mark as Sold
-                  </strong>
-
-                  <small>
-                    Sold without printing
-                  </small>
-
-                </span>
-
-              </button>
-
-
-              {/* =================================================
-                  CANCEL
-              ================================================= */}
-
-              <button
-                type="button"
-                className="customer-cancel-btn"
 
                 onClick={() => {
 
@@ -1491,92 +1003,37 @@ const SilverItem = ({
                 disabled={selling}
               >
 
-                <span className="customer-action-icon">
-                  ×
-                </span>
-
-
-                <span>
-
-                  <strong>
-                    Cancel
-                  </strong>
-
-                  <small>
-                    Go back
-                  </small>
-
-                </span>
+                Cancel
 
               </button>
+
+
+              <button
+                type="button"
+
+                className={
+                  'customer-sold-btn'
+                }
+
+                onClick={
+                  confirmMarkAsSold
+                }
+
+                disabled={selling}
+              >
+
+                {selling
+                  ? 'SAVING...'
+                  : '✓ Mark as Sold'}
+
+              </button>
+
 
             </div>
 
           </div>
 
         </div>
-
-      )}
-
-
-      {/* =====================================================
-          BILL PREVIEW
-
-          IMPORTANT:
-          JewelleryBill already contains the
-          bill-modal-overlay and bill-modal.
-
-          DO NOT wrap it in another modal here.
-      ===================================================== */}
-
-      {showBill && (
-
-        <JewelleryBill
-
-          billNo={
-            item.id
-          }
-
-          date={
-            new Date().toLocaleDateString(
-              'en-IN'
-            )
-          }
-
-          customerName={
-            billCustomerName
-          }
-
-          customerMobile={
-            billCustomerPhone
-          }
-
-          paymentMode=""
-
-          items={[
-            {
-              itemName:
-                item.name,
-
-              category:
-                'SILVER',
-
-              weight:
-                weight.toFixed(3),
-
-              charges:
-                makingCost,
-
-              totalPrice:
-                price
-            }
-          ]}
-
-          onClose={
-            closeBill
-          }
-
-        />
 
       )}
 
