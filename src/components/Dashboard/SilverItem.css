@@ -1411,7 +1411,7 @@
   overflow: hidden;
 
   background-image:
-    url('/svs-bill.jpeg');
+    url('./svs-bill.jpeg');
 
   background-repeat:
     no-repeat;
