@@ -13,6 +13,8 @@ import GoldPriceSection from './components/GoldPriceSection/GoldPriceSection'
 import OldSilverPriceSection from './components/OldSilverPriceSection/OldSilverPriceSection'
 import Orders from './components/Orders/Orders';
 import JewelleryBill from './components/JewelleryBill/JewelleryBill.js'
+import Customers from './components/Customers/Customers.js'
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -77,6 +79,7 @@ const App = () => {
         />
         <Route path="/payment" element={<Payment />} />
         <Route path="/invoice" element={<JewelleryBill/>}/>
+        <Route path="/customers" Component={Customers}/>
       </Routes>
 
     </BrowserRouter>
