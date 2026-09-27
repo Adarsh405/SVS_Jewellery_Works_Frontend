@@ -1,6 +1,5 @@
 /* =========================================================
-   SILVER CARD - LARGE MODERN LAYOUT
-   IMAGE FULL HEIGHT + BADGE OVER IMAGE
+   SILVER ITEM CARD - FINAL DESIGN
 ========================================================= */
 
 .silver-item-card {
@@ -8,73 +7,58 @@
 
   width: 100% !important;
 
-  height: 280px !important;
-  min-height: 280px !important;
-
-  box-sizing: border-box !important;
+  height: 265px !important;
+  min-height: 265px !important;
 
   padding: 0 !important;
 
+  box-sizing: border-box !important;
+
   overflow: hidden !important;
 
-  border-radius: 24px !important;
+  border-radius: 22px !important;
 
   background:
     linear-gradient(
       135deg,
       #ffffff 0%,
-      #f1f8ff 35%,
-      #ecfffb 70%,
-      #fff7e8 100%
+      #eef8ff 45%,
+      #ecfffa 100%
     ) !important;
 
-  border: 1px solid
-    rgba(148, 163, 184, 0.45) !important;
+  border: 1px solid rgba(148, 163, 184, 0.45) !important;
 
   box-shadow:
-    0 12px 35px
-    rgba(15, 23, 42, 0.13) !important;
+    0 12px 30px rgba(15, 23, 42, 0.13) !important;
 
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease !important;
 }
 
-
-/* =========================================================
-   CARD HOVER
-========================================================= */
-
 .silver-item-card:hover {
-  transform:
-    translateY(-5px) !important;
+  transform: translateY(-4px) !important;
 
   box-shadow:
-    0 20px 45px
-    rgba(15, 23, 42, 0.18) !important;
+    0 18px 40px rgba(15, 23, 42, 0.18) !important;
 }
 
 
 /* =========================================================
    TOP BAR
-   Keep buttons at TOP RIGHT
 ========================================================= */
 
-.silver-item-card .silver-card-top,
-.silver-item-card .gold-card-top {
+.silver-item-card .gold-card-top,
+.silver-item-card .silver-card-top {
   position: absolute !important;
 
-  top: 18px !important;
-  right: 20px !important;
-  left: 0 !important;
+  inset: 0 !important;
 
   width: 100% !important;
 
-  height: 45px !important;
-  min-height: 45px !important;
+  height: 50px !important;
 
-  padding:
-    0 20px !important;
+  padding: 16px 20px !important;
 
   box-sizing: border-box !important;
 
@@ -84,29 +68,27 @@
 
   justify-content: flex-end !important;
 
-  z-index: 30 !important;
+  z-index: 40 !important;
 
   pointer-events: none !important;
 }
 
 
 /* =========================================================
-   SILVER TYPE
-   OVERLAPS IMAGE
+   SILVER BADGE - OVER IMAGE
 ========================================================= */
 
 .silver-item-card .item-type {
   position: absolute !important;
 
-  left: 20px !important;
+  left: 18px !important;
   top: 18px !important;
 
-  z-index: 50 !important;
+  z-index: 60 !important;
 
   min-height: 38px !important;
 
-  padding:
-    7px 18px !important;
+  padding: 7px 17px !important;
 
   border-radius: 999px !important;
 
@@ -119,16 +101,8 @@
   color: #ffffff !important;
 
   box-shadow:
-    0 8px 20px
-    rgba(0, 0, 0, 0.25) !important;
-
-  pointer-events: auto !important;
+    0 7px 18px rgba(0, 0, 0, 0.28) !important;
 }
-
-
-/* =========================================================
-   SILVER BADGE GRADIENT
-========================================================= */
 
 .silver-item-card .silver-type {
   background:
@@ -140,8 +114,7 @@
       #14b8a6
     ) !important;
 
-  background-size:
-    250% 250% !important;
+  background-size: 250% 250% !important;
 
   animation:
     badgeGradient 4s ease infinite,
@@ -150,45 +123,35 @@
 
 
 /* =========================================================
-   ACTION BUTTON AREA
+   BUTTONS
 ========================================================= */
 
 .silver-item-card .item-actions {
   position: absolute !important;
 
-  top: 18px !important;
+  top: 16px !important;
   right: 20px !important;
 
-  z-index: 40 !important;
+  z-index: 50 !important;
 
   display: flex !important;
 
-  align-items: center !important;
-
-  justify-content: flex-end !important;
-
-  gap: 10px !important;
+  gap: 9px !important;
 
   pointer-events: auto !important;
 }
 
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
 .silver-item-card .available-button,
 .silver-item-card .add-button {
-  height: 42px !important;
+  height: 39px !important;
 
-  min-height: 42px !important;
+  min-height: 39px !important;
 
-  padding:
-    0 18px !important;
+  padding: 0 17px !important;
 
-  border-radius: 11px !important;
+  border-radius: 10px !important;
 
-  font-size: 12px !important;
+  font-size: 11px !important;
 
   font-weight: 950 !important;
 }
@@ -204,14 +167,16 @@
   width: 100% !important;
 
   height: 100% !important;
-  min-height: 280px !important;
+
+  min-height: 265px !important;
 
   margin: 0 !important;
+
   padding: 0 !important;
 
   display: flex !important;
 
-  align-items: center !important;
+  align-items: stretch !important;
 
   gap: 0 !important;
 
@@ -220,8 +185,7 @@
 
 
 /* =========================================================
-   IMAGE AREA
-   FULL TOP → BOTTOM
+   LARGE IMAGE
 ========================================================= */
 
 .silver-item-card .item-image {
@@ -231,11 +195,13 @@
   top: 0 !important;
   bottom: 0 !important;
 
-  width: 190px !important;
+  width: 230px !important;
+
   height: 100% !important;
 
-  min-width: 190px !important;
-  min-height: 280px !important;
+  min-width: 230px !important;
+
+  min-height: 265px !important;
 
   margin: 0 !important;
 
@@ -245,25 +211,22 @@
 
   object-position: center !important;
 
-  border-radius:
-    24px 0 0 24px !important;
+  border-radius: 22px 0 0 22px !important;
 
   filter:
     drop-shadow(
-      0 8px 12px
-      rgba(15, 23, 42, 0.20)
+      0 8px 12px rgba(15, 23, 42, 0.20)
     ) !important;
+
+  z-index: 10 !important;
 
   animation:
     itemFloat 4s ease-in-out infinite !important;
-
-  z-index: 10 !important;
 }
 
 
 /* =========================================================
    IMAGE OVERLAY
-   Makes badge readable
 ========================================================= */
 
 .silver-item-card .item-content::before {
@@ -274,7 +237,7 @@
   left: 0;
   top: 0;
 
-  width: 190px;
+  width: 230px;
   height: 100%;
 
   z-index: 15;
@@ -284,9 +247,9 @@
   background:
     linear-gradient(
       180deg,
-      rgba(0,0,0,0.18),
-      transparent 35%,
-      rgba(0,0,0,0.08)
+      rgba(0, 0, 0, 0.20),
+      transparent 40%,
+      rgba(0, 0, 0, 0.08)
     );
 }
 
@@ -300,14 +263,14 @@
 
   z-index: 20 !important;
 
-  width: calc(100% - 190px) !important;
+  width: calc(100% - 230px) !important;
 
   min-width: 0 !important;
 
-  margin-left: 190px !important;
+  margin-left: 230px !important;
 
   padding:
-    70px 24px 24px 24px !important;
+    68px 24px 20px 24px !important;
 
   box-sizing: border-box !important;
 
@@ -320,26 +283,25 @@
 
 
 /* =========================================================
-   ITEM TITLE
+   ITEM NAME
 ========================================================= */
 
 .silver-item-card .item-details h2 {
-  margin:
-    0 0 12px 0 !important;
+  margin: 0 0 9px 0 !important;
 
-  font-size: 23px !important;
+  font-size: 22px !important;
 
-  line-height: 1.2 !important;
+  line-height: 1.15 !important;
 
   font-weight: 950 !important;
 
   color: #172033 !important;
 
+  white-space: nowrap !important;
+
   overflow: hidden !important;
 
   text-overflow: ellipsis !important;
-
-  white-space: nowrap !important;
 }
 
 
@@ -350,19 +312,30 @@
 .silver-item-card .silver-id {
   width: fit-content !important;
 
-  padding:
-    5px 11px !important;
+  padding: 4px 10px !important;
 
-  margin-bottom: 14px !important;
+  margin-bottom: 10px !important;
 
   border-radius: 8px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dbeafe,
+      #e0f2fe
+    ) !important;
+
+  border: 1px solid #93c5fd !important;
+
+  color: #475569 !important;
 
   font-size: 10px !important;
 }
 
-
 .silver-item-card .silver-id span {
   font-size: 13px !important;
+
+  color: #1d4ed8 !important;
 }
 
 
@@ -376,8 +349,8 @@
   display: grid !important;
 
   grid-template-columns:
-    0.8fr
-    0.9fr
+    0.85fr
+    0.85fr
     1.5fr !important;
 
   gap: 10px !important;
@@ -385,16 +358,15 @@
 
 
 /* =========================================================
-   DETAIL BOXES
+   ALL DETAIL BOXES
 ========================================================= */
 
 .silver-item-card .silver-details > div {
-  height: 72px !important;
+  height: 67px !important;
 
-  min-height: 72px !important;
+  min-height: 67px !important;
 
-  padding:
-    10px 13px !important;
+  padding: 9px 13px !important;
 
   box-sizing: border-box !important;
 
@@ -405,92 +377,177 @@
   flex-direction: column !important;
 
   justify-content: center !important;
+
+  overflow: hidden !important;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease !important;
+}
+
+.silver-item-card .silver-details > div:hover {
+  transform: translateY(-3px) !important;
+
+  box-shadow:
+    0 8px 18px rgba(15, 23, 42, 0.14) !important;
 }
 
 
 /* =========================================================
-   LABEL
+   WEIGHT - BLUE
 ========================================================= */
 
+.silver-item-card .silver-weight-box {
+  background:
+    linear-gradient(
+      135deg,
+      #dff4ff,
+      #bae6fd
+    ) !important;
+
+  border: 1px solid #38bdf8 !important;
+
+  color: #075985 !important;
+
+  box-shadow:
+    0 5px 15px rgba(14, 165, 233, 0.12) !important;
+}
+
+.silver-item-card .silver-weight-box strong {
+  color: #0369a1 !important;
+}
+
+
+/* =========================================================
+   MAKING - GOLD/YELLOW
+========================================================= */
+
+.silver-item-card .silver-making-box {
+  background:
+    linear-gradient(
+      135deg,
+      #fff7cc,
+      #fde68a
+    ) !important;
+
+  border: 1px solid #fbbf24 !important;
+
+  color: #92400e !important;
+
+  box-shadow:
+    0 5px 15px rgba(245, 158, 11, 0.14) !important;
+}
+
+.silver-item-card .silver-making-box strong {
+  color: #b45309 !important;
+}
+
+
+/* =========================================================
+   PRICE - GREEN / TEAL
+========================================================= */
+
+.silver-item-card .silver-price {
+  height: 67px !important;
+
+  min-height: 67px !important;
+
+  padding: 9px 16px !important;
+
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: space-between !important;
+
+  gap: 10px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      #0891b2,
+      #0d9488,
+      #059669
+    ) !important;
+
+  background-size: 200% 200% !important;
+
+  border: 1px solid #14b8a6 !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 7px 18px
+    rgba(5, 150, 105, 0.22) !important;
+
+  animation:
+    priceGradient 5s ease infinite !important;
+}
+
+.silver-item-card .silver-price span {
+  color:
+    rgba(255,255,255,0.88) !important;
+
+  font-size: 10px !important;
+}
+
+.silver-item-card .silver-price strong {
+  color: #ffffff !important;
+
+  font-size: 24px !important;
+
+  font-weight: 950 !important;
+}
+
+
+/* =========================================================
+   DETAIL LABELS
+========================================================= */
+
+.silver-item-card .silver-details p,
 .silver-item-card .silver-details span {
-  margin-bottom: 5px !important;
+  margin: 0 0 4px 0 !important;
 
   font-size: 10px !important;
 
-  font-weight: 800 !important;
+  font-weight: 850 !important;
 }
 
 
 /* =========================================================
-   VALUE
+   DETAIL VALUES
 ========================================================= */
 
 .silver-item-card .silver-details strong {
-  font-size: 19px !important;
+  font-size: 18px !important;
 
   line-height: 1.1 !important;
 
   font-weight: 950 !important;
+
+  white-space: nowrap !important;
+
+  overflow: hidden !important;
+
+  text-overflow: ellipsis !important;
 }
 
 
 /* =========================================================
-   PRICE
-========================================================= */
-
-.silver-item-card .silver-price {
-  height: 72px !important;
-
-  min-height: 72px !important;
-
-  padding:
-    10px 16px !important;
-}
-
-
-.silver-item-card .silver-price span {
-  font-size: 10px !important;
-}
-
-
-.silver-item-card .silver-price strong {
-  font-size: 25px !important;
-
-  font-weight: 950 !important;
-}
-
-
-/* =========================================================
-   SOLD STATE
+   SOLD BADGE
 ========================================================= */
 
 .silver-item-card .sold-status-badge {
   position: absolute !important;
 
-  top: 18px !important;
+  top: 16px !important;
   right: 20px !important;
 
-  z-index: 45 !important;
+  z-index: 55 !important;
 
-  height: 40px !important;
+  height: 39px !important;
 
   min-width: 105px !important;
-
-  border-radius: 999px !important;
-}
-
-
-/* =========================================================
-   SOLD MESSAGE
-========================================================= */
-
-.silver-item-card .sold-message {
-  margin-top: 10px !important;
-
-  padding:
-    7px 12px !important;
-
-  font-size: 10px !important;
 }
 
 
@@ -501,215 +558,93 @@
 @media screen and (min-width: 1200px) {
 
   .silver-item-card {
-    height: 300px !important;
-
-    min-height: 300px !important;
-
-    border-radius: 26px !important;
-  }
-
-
-  .silver-item-card .item-content {
-    min-height: 300px !important;
-  }
-
-
-  .silver-item-card .item-image {
-    width: 215px !important;
-
-    min-width: 215px !important;
-
-    height: 100% !important;
-
-    min-height: 300px !important;
-
-    border-radius:
-      26px 0 0 26px !important;
-  }
-
-
-  .silver-item-card .item-content::before {
-    width: 215px !important;
-  }
-
-
-  .silver-item-card .item-details {
-    width: calc(100% - 215px) !important;
-
-    margin-left: 215px !important;
-
-    padding:
-      78px 30px 30px 30px !important;
-  }
-
-
-  .silver-item-card .item-details h2 {
-    font-size: 26px !important;
-  }
-
-
-  .silver-item-card .silver-details > div,
-  .silver-item-card .silver-price {
-    height: 82px !important;
-
-    min-height: 82px !important;
-  }
-
-
-  .silver-item-card .silver-details strong {
-    font-size: 21px !important;
-  }
-
-
-  .silver-item-card .silver-price strong {
-    font-size: 29px !important;
-  }
-
-
-  .silver-item-card .item-type {
-    left: 22px !important;
-
-    top: 22px !important;
-
-    min-height: 42px !important;
-
-    padding:
-      8px 20px !important;
-
-    font-size: 14px !important;
-  }
-
-
-  .silver-item-card .item-actions {
-    top: 22px !important;
-
-    right: 24px !important;
-  }
-}
-
-
-/* =========================================================
-   TABLET / SMALL SCREEN
-========================================================= */
-
-@media screen and (max-width: 768px) {
-
-  .silver-item-card {
     height: 270px !important;
 
     min-height: 270px !important;
   }
 
+  .silver-item-card .item-content {
+    min-height: 270px !important;
+  }
 
   .silver-item-card .item-image {
-    width: 150px !important;
+    width: 250px !important;
 
-    min-width: 150px !important;
+    min-width: 250px !important;
 
     min-height: 270px !important;
   }
 
-
   .silver-item-card .item-content::before {
-    width: 150px !important;
+    width: 250px !important;
   }
-
 
   .silver-item-card .item-details {
-    width: calc(100% - 150px) !important;
+    width: calc(100% - 250px) !important;
 
-    margin-left: 150px !important;
+    margin-left: 250px !important;
 
     padding:
-      65px 15px 15px 15px !important;
+      66px 28px 20px 28px !important;
   }
-
 
   .silver-item-card .item-details h2 {
-    font-size: 18px !important;
+    font-size: 23px !important;
   }
 
-
-  .silver-item-card .silver-details {
-    grid-template-columns:
-      1fr 1fr !important;
-  }
-
-
+  .silver-item-card .silver-details > div,
   .silver-item-card .silver-price {
-    grid-column:
-      1 / -1 !important;
+    height: 70px !important;
+
+    min-height: 70px !important;
   }
 
-
-  .silver-item-card .item-type {
-    left: 12px !important;
-
-    top: 12px !important;
+  .silver-item-card .silver-details strong {
+    font-size: 19px !important;
   }
 
-
-  .silver-item-card .item-actions {
-    top: 12px !important;
-
-    right: 12px !important;
+  .silver-item-card .silver-price strong {
+    font-size: 26px !important;
   }
 }
 
 
 /* =========================================================
-   VERY SMALL SCREEN
+   TABLET
 ========================================================= */
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
 
   .silver-item-card {
-    height: 360px !important;
+    height: 255px !important;
 
-    min-height: 360px !important;
+    min-height: 255px !important;
   }
-
 
   .silver-item-card .item-image {
-    width: 110px !important;
+    width: 175px !important;
 
-    min-width: 110px !important;
+    min-width: 175px !important;
 
-    min-height: 360px !important;
+    min-height: 255px !important;
   }
-
 
   .silver-item-card .item-content::before {
-    width: 110px !important;
+    width: 175px !important;
   }
-
 
   .silver-item-card .item-details {
-    width: calc(100% - 110px) !important;
+    width: calc(100% - 175px) !important;
 
-    margin-left: 110px !important;
+    margin-left: 175px !important;
 
     padding:
-      70px 10px 12px 10px !important;
+      62px 14px 15px 14px !important;
   }
-
-
-  .silver-item-card .item-details h2 {
-    font-size: 15px !important;
-  }
-
 
   .silver-item-card .silver-details {
-    grid-template-columns:
-      1fr !important;
+    gap: 6px !important;
   }
-
-
-  .silver-item-card .silver-price {
-    grid-column:
-      auto !important;
-  }
-
 
   .silver-item-card .silver-details > div,
   .silver-item-card .silver-price {
@@ -718,14 +653,12 @@
     min-height: 58px !important;
   }
 
-
   .silver-item-card .silver-details strong {
     font-size: 14px !important;
   }
 
-
   .silver-item-card .silver-price strong {
-    font-size: 18px !important;
+    font-size: 19px !important;
   }
 }
 /* =========================================================
