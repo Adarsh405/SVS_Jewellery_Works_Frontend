@@ -1016,14 +1016,32 @@ const SilverItem = ({
 
               <input
                 ref={mobileInputRef}
-
                 type="tel"
-
                 inputMode="numeric"
-
                 maxLength={10}
-
                 value={customerPhone}
+
+                onClick={(e) => {
+                  e.stopPropagation()
+                }}
+
+                onMouseDown={(e) => {
+                  e.stopPropagation()
+                }}
+
+                onFocus={(e) => {
+                  e.stopPropagation()
+                }}
+
+                onKeyDown={(e) => {
+                  e.stopPropagation()
+
+                  // Allow Enter only for the customer popup
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    confirmMarkAsSold()
+                  }
+                }}
 
                 onChange={(e) => {
 
@@ -1032,15 +1050,11 @@ const SilverItem = ({
                       .replace(/\D/g, '')
                       .slice(0, 10)
 
-
                   setCustomerPhone(value)
-
 
                   if (value.length === 10) {
 
-                    fetchCustomerByMobile(
-                      value
-                    )
+                    fetchCustomerByMobile(value)
 
                   } else {
 
@@ -1048,9 +1062,7 @@ const SilverItem = ({
 
                     setCustomerLookupMessage('')
 
-                    setCustomerLookupLoading(
-                      false
-                    )
+                    setCustomerLookupLoading(false)
 
                   }
 
@@ -1062,7 +1074,6 @@ const SilverItem = ({
 
                 disabled={selling}
               />
-
 
               <span className="customer-hint">
 
@@ -1125,7 +1136,16 @@ const SilverItem = ({
                 ACTIONS
             ================================= */}
 
-            <div className="customer-popup-actions">
+            <div
+              className="customer-popup"
+              onMouseDown={(e) => {
+                e.stopPropagation()
+              }}
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
+              onKeyDown={handlePopupKeyDown}
+            >
 
 
               <button
