@@ -982,31 +982,242 @@
 }
 
 /* =========================================================
-   MOBILE
+   SILVER ITEM ACTION BUTTONS
+========================================================= */
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.available-button {
+  min-width: 135px;
+  height: 48px;
+  padding: 0 18px;
+
+  border: 2px solid #16a34a;
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #15803d,
+    #22c55e,
+    #166534
+  );
+
+  background-size: 200% 200%;
+
+  color: #fff;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 15px rgba(22, 163, 74, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+
+  animation: silverButtonGradient 3s ease infinite;
+}
+
+.available-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(22, 163, 74, 0.35);
+}
+
+.available-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.available-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.add-button {
+  min-width: 90px;
+  height: 48px;
+  padding: 0 18px;
+
+  border: 2px solid #d4af37;
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #d4af37,
+    #f5d76e,
+    #b8860b
+  );
+
+  background-size: 200% 200%;
+
+  color: #3d2b00;
+
+  font-size: 14px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 15px rgba(212, 175, 55, 0.25);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  animation: silverButtonGradient 4s ease infinite;
+}
+
+.add-button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 22px rgba(212, 175, 55, 0.4);
+}
+
+.add-button:active {
+  transform: scale(0.97);
+}
+
+@keyframes silverButtonGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* =========================================================
+   CUSTOMER POPUP ACTION BUTTONS
+========================================================= */
+
+.customer-popup-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.customer-cancel-btn,
+.customer-sold-btn {
+  flex: 1;
+
+  height: 48px;
+  padding: 0 18px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.customer-cancel-btn {
+  border: 2px solid #d1d5db;
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.customer-cancel-btn:hover:not(:disabled) {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.customer-sold-btn {
+  border: 2px solid #15803d;
+
+  background: linear-gradient(
+    135deg,
+    #15803d,
+    #22c55e
+  );
+
+  color: #fff;
+
+  box-shadow:
+    0 5px 15px rgba(22, 163, 74, 0.25);
+}
+
+.customer-sold-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px rgba(22, 163, 74, 0.35);
+}
+
+.customer-sold-btn:active:not(:disabled),
+.customer-cancel-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.customer-cancel-btn:disabled,
+.customer-sold-btn:disabled,
+.customer-popup-close:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   BUTTON MOBILE
 ========================================================= */
 
 @media screen and (max-width: 768px) {
-.available-button,
-  .sold-status-badge {
-
-    min-width:
-      105px;
-
-    height:
-      38px;
-
-    padding:
-      0 10px;
-
-    font-size:
-      10px;
-
+  .item-actions {
+    gap: 6px;
   }
 
-.sold-message {
+  .available-button {
+    min-width: 105px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
 
-    font-size:
-      11px;
+  .add-button {
+    min-width: 75px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
 
+  .customer-popup-actions {
+    gap: 8px;
+  }
+
+  .customer-cancel-btn,
+  .customer-sold-btn {
+    height: 44px;
+    font-size: 13px;
+  }
+
+  .sold-status-badge {
+    min-width: 105px;
+    height: 38px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .sold-message {
+    font-size: 11px;
   }
 }
