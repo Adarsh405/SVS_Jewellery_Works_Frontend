@@ -1,20 +1,16 @@
 /* =========================================================
-   SILVER ITEM CARD
+   SILVER ITEM CARD — TALLER / PREMIUM
 ========================================================= */
 
 .silver-item-card {
   position: relative;
-
   width: 100%;
-
-  min-height: 145px;
-
+  min-height: 190px;
   box-sizing: border-box;
 
-  padding: 10px 14px;
+  padding: 14px 18px;
 
-  border-radius: 18px;
-
+  border-radius: 20px;
   overflow: hidden;
 
   background:
@@ -26,43 +22,401 @@
       #fff7e6 100%
     );
 
-  border: 1px solid
-    rgba(148, 163, 184, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.45);
 
   box-shadow:
-    0 8px 25px
-    rgba(15, 23, 42, 0.10);
+    0 10px 30px rgba(15, 23, 42, 0.11);
 
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 
-  animation:
-    cardEnter 0.45s ease;
+  animation: cardEnter 0.45s ease;
 }
 
 
-/* Animated colourful glow */
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.silver-card-top {
+  position: relative;
+  z-index: 5;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 42px;
+
+  gap: 12px;
+}
+
+
+/* =========================================================
+   TYPE BADGE
+========================================================= */
+
+.item-type {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 32px;
+
+  padding: 5px 13px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  letter-spacing: 0.7px;
+  white-space: nowrap;
+
+  box-shadow:
+    0 5px 14px rgba(0, 0, 0, 0.10);
+
+  animation:
+    badgeFloat 3s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  position: relative;
+  z-index: 10;
+}
+
+
+.available-button,
+.add-button {
+  height: 37px;
+
+  padding: 0 15px;
+
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.item-content {
+  position: relative;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  margin-top: 7px;
+
+  min-height: 105px;
+}
+
+
+/* =========================================================
+   IMAGE — INCREASED
+========================================================= */
+
+.item-image {
+  width: 92px;
+  height: 92px;
+
+  flex-shrink: 0;
+
+  object-fit: contain;
+
+  filter:
+    drop-shadow(
+      0 7px 10px
+      rgba(15, 23, 42, 0.18)
+    );
+
+  animation:
+    itemFloat 4s ease-in-out infinite;
+
+  transition:
+    transform 0.3s ease;
+}
+
+
+.silver-item-card:hover .item-image {
+  transform:
+    scale(1.05)
+    translateY(-2px);
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+.item-details {
+  flex: 1;
+  min-width: 0;
+}
+
+
+.item-title-line {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 0;
+
+  margin-bottom: 9px;
+}
+
+
+.item-details h2 {
+  margin: 0;
+
+  min-width: 0;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  font-size: 19px;
+
+  line-height: 1.15;
+
+  font-weight: 950;
+
+  color: #172033;
+}
+
+
+/* =========================================================
+   ID
+========================================================= */
+
+.silver-id {
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 4px;
+
+  padding: 5px 9px;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #e0f2fe,
+      #dbeafe
+    );
+
+  border: 1px solid #bfdbfe;
+
+  color: #475569;
+
+  font-size: 10px;
+  font-weight: 800;
+}
+
+
+.silver-id span {
+  font-size: 12px;
+
+  color: #1d4ed8;
+
+  font-weight: 950;
+}
+
+
+/* =========================================================
+   DETAILS BOXES — TALLER
+========================================================= */
+
+.silver-details {
+  display: grid;
+
+  grid-template-columns:
+    0.8fr
+    0.9fr
+    1.45fr;
+
+  gap: 9px;
+
+  width: 100%;
+}
+
+
+.silver-details > div {
+  min-width: 0;
+
+  min-height: 58px;
+
+  padding: 8px 11px;
+
+  box-sizing: border-box;
+
+  border-radius: 11px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+
+.silver-details > div:hover {
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 8px 18px
+    rgba(15, 23, 42, 0.13);
+}
+
+
+.silver-details span {
+  display: block;
+
+  margin-bottom: 4px;
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  opacity: 0.75;
+}
+
+
+.silver-details strong {
+  display: block;
+
+  font-size: 17px;
+
+  line-height: 1.15;
+
+  font-weight: 950;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.silver-price {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 10px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #2563eb,
+      #0891b2,
+      #059669
+    );
+
+  background-size: 300% 300%;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.35);
+
+  box-shadow:
+    0 7px 20px
+    rgba(37,99,235,0.25);
+
+  animation:
+    priceGradient 5s ease infinite;
+}
+
+
+.silver-price span {
+  color:
+    rgba(255,255,255,0.88);
+
+  margin: 0;
+
+  white-space: nowrap;
+}
+
+
+.silver-price strong {
+  color: white;
+
+  font-size: 21px;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   ANIMATED GLOW
+========================================================= */
 
 .silver-item-card::before {
-
   content: "";
 
   position: absolute;
 
-  width: 220px;
-  height: 220px;
+  width: 260px;
+  height: 260px;
 
-  right: -90px;
-  top: -130px;
+  right: -100px;
+  top: -150px;
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(56,189,248,0.22),
+      rgba(56,189,248,0.24),
       transparent 70%
     );
 
@@ -74,17 +428,14 @@
 
 
 .silver-item-card::after {
-
   content: "";
 
   position: absolute;
 
   top: -120%;
-
   left: -40%;
 
   width: 35%;
-
   height: 300%;
 
   background:
@@ -104,619 +455,142 @@
 }
 
 
-.silver-item-card:hover {
+/* =========================================================
+   HOVER
+========================================================= */
 
+.silver-item-card:hover {
   transform:
-    translateY(-3px);
+    translateY(-4px);
 
   border-color:
-    rgba(59,130,246,0.45);
+    rgba(59,130,246,0.50);
 
   box-shadow:
-    0 15px 35px
-    rgba(15,23,42,0.15);
+    0 17px 40px
+    rgba(15,23,42,0.16);
 }
 
 
 /* =========================================================
-   TOP BAR
+   MOBILE
 ========================================================= */
 
-.silver-card-top {
+@media screen and (max-width: 768px) {
 
-  position: relative;
+  .silver-item-card {
+    min-height: 165px;
 
-  z-index: 5;
+    padding: 11px 13px;
 
-  display: flex;
+    border-radius: 16px;
+  }
 
-  align-items: center;
+  .silver-card-top {
+    min-height: 34px;
+  }
 
-  justify-content: space-between;
+  .item-type {
+    min-height: 28px;
 
-  min-height: 38px;
+    padding: 4px 9px;
 
-  gap: 10px;
+    font-size: 10px;
+  }
+
+  .available-button,
+  .add-button {
+    height: 32px;
+
+    padding: 0 10px;
+
+    font-size: 10px;
+  }
+
+  .item-content {
+    gap: 10px;
+
+    min-height: 88px;
+
+    margin-top: 5px;
+  }
+
+  .item-image {
+    width: 72px;
+    height: 72px;
+  }
+
+  .item-details h2 {
+    font-size: 16px;
+  }
+
+  .silver-details {
+    gap: 6px;
+  }
+
+  .silver-details > div {
+    min-height: 48px;
+
+    padding: 6px 8px;
+  }
+
+  .silver-details span {
+    font-size: 8px;
+  }
+
+  .silver-details strong {
+    font-size: 13px;
+  }
+
+  .silver-price strong {
+    font-size: 16px;
+  }
 }
 
 
 /* =========================================================
-   TYPE BADGE
+   VERY SMALL SCREENS
 ========================================================= */
 
-.item-type {
+@media screen and (max-width: 480px) {
 
-  display: inline-flex;
+  .silver-item-card {
+    min-height: 155px;
 
-  align-items: center;
+    padding: 9px 10px;
+  }
 
-  justify-content: center;
+  .item-content {
+    align-items: center;
 
-  min-height: 30px;
+    gap: 8px;
+  }
 
-  padding:
-    4px 11px;
+  .item-image {
+    width: 60px;
+    height: 60px;
+  }
 
-  border-radius: 999px;
+  .item-title-line {
+    display: block;
 
-  font-size: 11px;
+    margin-bottom: 5px;
+  }
 
-  font-weight: 900;
+  .silver-id {
+    margin-top: 3px;
+  }
 
-  letter-spacing: 0.7px;
+  .silver-details {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
 
-  white-space: nowrap;
-
-  box-shadow:
-    0 4px 12px
-    rgba(0,0,0,0.10);
-
-  animation:
-    badgeFloat 3s ease-in-out infinite;
-}
-
-
-.silver-type {
-
-  color: #ffffff;
-
-  background:
-    linear-gradient(
-      135deg,
-      #64748b,
-      #0ea5e9,
-      #14b8a6
-    );
-
-  background-size:
-    200% 200%;
-
-  animation:
-    badgeGradient 4s ease infinite,
-    badgeFloat 3s ease-in-out infinite;
-}
-
-
-.sold-type {
-
-  color: white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #059669,
-      #22c55e,
-      #84cc16
-    );
-
-  background-size:
-    200% 200%;
-
-  animation:
-    badgeGradient 3s ease infinite;
-}
-
-
-/* =========================================================
-   ACTION AREA
-========================================================= */
-
-.item-actions {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: flex-end;
-
-  gap: 7px;
-
-  position: relative;
-
-  z-index: 10;
-}
-
-
-.available-button,
-.add-button {
-
-  height: 34px;
-
-  padding:
-    0 13px;
-
-  border-radius: 9px;
-
-  font-size: 11px;
-
-  font-weight: 900;
-
-  cursor: pointer;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-
-  position: relative;
-
-  overflow: hidden;
-}
-
-
-/* =========================================================
-   SALE BUTTON
-========================================================= */
-
-.available-button {
-
-  min-width: 82px;
-
-  color: white;
-
-  border:
-    1px solid
-    #0284c7;
-
-  background:
-    linear-gradient(
-      135deg,
-      #0284c7,
-      #06b6d4,
-      #2563eb
-    );
-
-  background-size:
-    200% 200%;
-
-  box-shadow:
-    0 5px 15px
-    rgba(14,165,233,0.28);
-
-  animation:
-    buttonGradient 4s ease infinite;
-}
-
-
-.available-button:hover:not(:disabled) {
-
-  transform:
-    translateY(-2px)
-    scale(1.02);
-
-  box-shadow:
-    0 8px 20px
-    rgba(14,165,233,0.38);
-}
-
-
-/* =========================================================
-   ADD BUTTON
-========================================================= */
-
-.add-button {
-
-  min-width: 70px;
-
-  color: #713f12;
-
-  border:
-    1px solid
-    #f59e0b;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fbbf24,
-      #fcd34d,
-      #f59e0b
-    );
-
-  background-size:
-    200% 200%;
-
-  box-shadow:
-    0 5px 15px
-    rgba(245,158,11,0.25);
-
-  animation:
-    buttonGradient 4.5s ease infinite;
-}
-
-
-.add-button:hover:not(:disabled) {
-
-  transform:
-    translateY(-2px)
-    scale(1.02);
-
-  box-shadow:
-    0 8px 20px
-    rgba(245,158,11,0.38);
-}
-
-
-.available-button:disabled,
-.add-button:disabled {
-
-  opacity: 0.55;
-
-  cursor: not-allowed;
-
-  transform: none;
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.item-content {
-
-  position: relative;
-
-  z-index: 3;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 13px;
-
-  margin-top: 3px;
-
-  min-height: 82px;
-}
-
-
-/* =========================================================
-   IMAGE
-========================================================= */
-
-.item-image {
-
-  width: 75px;
-
-  height: 75px;
-
-  flex-shrink: 0;
-
-  object-fit: contain;
-
-  filter:
-    drop-shadow(
-      0 6px 8px
-      rgba(15,23,42,0.16)
-    );
-
-  animation:
-    itemFloat 4s ease-in-out infinite;
-}
-
-
-/* =========================================================
-   DETAILS
-========================================================= */
-
-.item-details {
-
-  flex: 1;
-
-  min-width: 0;
-}
-
-
-.item-title-line {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  min-width: 0;
-
-  margin-bottom: 7px;
-}
-
-
-.item-details h2 {
-
-  margin: 0;
-
-  min-width: 0;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  font-size: 17px;
-
-  line-height: 1.1;
-
-  font-weight: 950;
-
-  color: #172033;
-}
-
-
-/* =========================================================
-   ID
-========================================================= */
-
-.silver-id {
-
-  flex-shrink: 0;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 3px;
-
-  padding:
-    4px 8px;
-
-  border-radius: 7px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #e0f2fe,
-      #dbeafe
-    );
-
-  border:
-    1px solid
-    #bfdbfe;
-
-  color:
-    #475569;
-
-  font-size: 9px;
-
-  font-weight: 800;
-}
-
-
-.silver-id span {
-
-  font-size: 11px;
-
-  color:
-    #1d4ed8;
-
-  font-weight: 950;
-}
-
-
-/* =========================================================
-   DETAILS BOXES
-========================================================= */
-
-.silver-details {
-
-  display: grid;
-
-  grid-template-columns:
-    0.8fr
-    0.9fr
-    1.45fr;
-
-  gap: 7px;
-
-  width: 100%;
-}
-
-
-.silver-details > div {
-
-  min-width: 0;
-
-  min-height: 47px;
-
-  padding:
-    6px 9px;
-
-  box-sizing: border-box;
-
-  border-radius: 9px;
-
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-
-  position: relative;
-
-  overflow: hidden;
-}
-
-
-.silver-details > div:hover {
-
-  transform:
-    translateY(-2px);
-
-  box-shadow:
-    0 7px 16px
-    rgba(15,23,42,0.12);
-}
-
-
-.silver-details span {
-
-  display: block;
-
-  margin-bottom: 2px;
-
-  font-size: 9px;
-
-  font-weight: 800;
-
-  opacity: 0.75;
-}
-
-
-.silver-details strong {
-
-  display: block;
-
-  font-size: 15px;
-
-  line-height: 1.1;
-
-  font-weight: 950;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-
-  text-overflow: ellipsis;
-}
-
-
-/* =========================================================
-   WEIGHT
-========================================================= */
-
-.silver-weight-box {
-
-  text-align: center;
-
-  color:
-    #075985;
-
-  background:
-    linear-gradient(
-      135deg,
-      #e0f2fe,
-      #dbeafe
-    );
-
-  border:
-    1px solid
-    #7dd3fc;
-}
-
-
-.silver-weight-box strong {
-
-  color:
-    #0369a1;
-}
-
-
-/* =========================================================
-   MAKING
-========================================================= */
-
-.silver-making-box {
-
-  text-align: center;
-
-  color:
-    #92400e;
-
-  background:
-    linear-gradient(
-      135deg,
-      #fef3c7,
-      #fde68a
-    );
-
-  border:
-    1px solid
-    #fbbf24;
-}
-
-
-.silver-making-box strong {
-
-  color:
-    #b45309;
-}
-
-
-/* =========================================================
-   PRICE
-========================================================= */
-
-.silver-price {
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  gap: 8px;
-
-  color: white;
-
-  background:
-    linear-gradient(
-      135deg,
-      #7c3aed,
-      #2563eb,
-      #0891b2,
-      #059669
-    );
-
-  background-size:
-    300% 300%;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.35);
-
-  box-shadow:
-    0 6px 18px
-    rgba(37,99,235,0.25);
-
-  animation:
-    priceGradient 5s ease infinite;
-}
-
-
-.silver-price span {
-
-  color:
-    rgba(255,255,255,0.85);
-
-  margin: 0;
-
-  white-space: nowrap;
-}
-
-
-.silver-price strong {
-
-  color: white;
-
-  font-size: 19px;
-
-  text-align: right;
+  .silver-price {
+    grid-column:
+      1 / -1;
+  }
 }
 
 
