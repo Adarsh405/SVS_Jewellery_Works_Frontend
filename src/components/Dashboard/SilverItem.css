@@ -1645,9 +1645,268 @@
   font-weight: 900;
 }
 
+/* =========================================================
+   PRINT ROOT
+   Only prints customer/item details.
+   NO BACKGROUND IMAGE.
+========================================================= */
+
+.print-bill-root {
+  display: none;
+}
+
+
+/* =========================================================
+   PRINT PAGE
+   Transparent page matching A4 landscape
+========================================================= */
+
+.print-bill-page {
+  position: relative;
+
+  width: 297mm;
+  height: 210mm;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   BILL COPY
+========================================================= */
+
+.bill-copy {
+  position: absolute;
+
+  top: 0;
+
+  width: 50%;
+  height: 100%;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  box-sizing: border-box;
+
+  background: transparent;
+}
+
+
+.bill-copy-left {
+  left: 0;
+}
+
+
+.bill-copy-right {
+  left: 50%;
+}
+
+
+/* =========================================================
+   PRINT FIELD
+========================================================= */
+
+.bill-print-field {
+  position: absolute;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  overflow: hidden;
+
+  color: #102a63;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   BILL NUMBER
+========================================================= */
+
+.bill-no-value {
+  left: 17.5%;
+
+  top: 53.35%;
+
+  width: 36%;
+
+  height: 3.35%;
+
+  padding: 0 5px;
+
+  justify-content: center;
+
+  font-size: 9.5pt;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.bill-date-value {
+  left: 68.4%;
+
+  top: 53.35%;
+
+  width: 27%;
+
+  height: 3.35%;
+
+  padding: 0 5px;
+
+  justify-content: center;
+
+  font-size: 9.5pt;
+}
+
+
+/* =========================================================
+   CUSTOMER NAME
+========================================================= */
+
+.bill-customer-name {
+  left: 26.1%;
+
+  top: 57.1%;
+
+  width: 62%;
+
+  height: 3.25%;
+
+  padding: 0 5px;
+
+  font-size: 10pt;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+.bill-customer-mobile {
+  left: 20.5%;
+
+  top: 60.85%;
+
+  width: 67.5%;
+
+  height: 3.25%;
+
+  padding: 0 5px;
+
+  font-size: 10pt;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.bill-row {
+  top: 70.05%;
+
+  height: 3.55%;
+
+  justify-content: center;
+
+  padding: 0 3px;
+
+  font-size: 8pt;
+
+  text-align: center;
+}
+
+
+.bill-row-item {
+  left: 13.2%;
+
+  width: 22.6%;
+}
+
+
+.bill-row-category {
+  left: 35.8%;
+
+  width: 14.2%;
+}
+
+
+.bill-row-weight {
+  left: 50%;
+
+  width: 13%;
+}
+
+
+.bill-row-charges {
+  left: 63%;
+
+  width: 15.2%;
+}
+
+
+.bill-row-price {
+  left: 78.2%;
+
+  width: 17.7%;
+}
+
+
+/* =========================================================
+   GRAND TOTAL
+========================================================= */
+
+.bill-grand-total {
+  left: 57.2%;
+
+  top: 81.2%;
+
+  width: 32.5%;
+
+  height: 4.5%;
+
+  padding: 0 5px;
+
+  justify-content: center;
+
+  color: #182d64;
+
+  font-size: 12pt;
+
+  font-weight: 900;
+
+  background: transparent;
+}
+
 
 /* =========================================================
    PRINT
+   IMPORTANT:
+   NO BACKGROUND IMAGE
 ========================================================= */
 
 @page {
@@ -1671,14 +1930,22 @@
 
     overflow: hidden !important;
 
-    background: #fff !important;
+    background: transparent !important;
   }
 
+
+  /*
+     Hide entire website
+  */
 
   body * {
     visibility: hidden !important;
   }
 
+
+  /*
+     Show ONLY bill text
+  */
 
   .print-bill-root,
   .print-bill-root * {
@@ -1703,11 +1970,16 @@
 
     overflow: hidden !important;
 
-    background: #fff !important;
+    background: transparent !important;
 
     z-index: 999999999 !important;
   }
 
+
+  /*
+     IMPORTANT:
+     NO background image here.
+  */
 
   .print-bill-page {
     display: block !important;
@@ -1722,23 +1994,15 @@
 
     padding: 0 !important;
 
-    background-image:
-      url('./svs-bill.jpeg') !important;
+    overflow: hidden !important;
 
-    background-repeat:
-      no-repeat !important;
+    background: transparent !important;
 
-    background-position:
-      center !important;
+    background-image: none !important;
 
-    background-size:
-      100% 100% !important;
+    print-color-adjust: exact !important;
 
-    print-color-adjust:
-      exact !important;
-
-    -webkit-print-color-adjust:
-      exact !important;
+    -webkit-print-color-adjust: exact !important;
   }
 
 
@@ -1747,7 +2011,9 @@
 
     position: absolute !important;
 
-    height: 100% !important;
+    background: transparent !important;
+
+    background-image: none !important;
 
     visibility: visible !important;
   }
@@ -1756,15 +2022,16 @@
   .bill-print-field {
     visibility: visible !important;
 
-    print-color-adjust:
-      exact !important;
+    background: transparent !important;
 
-    -webkit-print-color-adjust:
-      exact !important;
+    background-image: none !important;
+
+    print-color-adjust: exact !important;
+
+    -webkit-print-color-adjust: exact !important;
   }
 
 }
-
 
 /* =========================================================
    ANIMATIONS
