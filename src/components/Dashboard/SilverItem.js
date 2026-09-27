@@ -85,7 +85,7 @@ const SilverItem = ({
       ) {
 
         const foundName =
-          data.customer.customer_name || ''
+          data.customer.telugu_name || ''
 
         setCustomerName(foundName)
 
