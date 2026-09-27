@@ -1015,33 +1015,33 @@ const SilverItem = ({
   // ADD ITEM
   // ==========================================================
 
-  const handleAdd = () => {
+  // const handleAdd = () => {
 
-    if (
-      selling ||
-      printing
-    ) {
-      return
-    }
-
-
-    onAdd?.(
-      item,
-      price
-    )
+  //   if (
+  //     selling ||
+  //     printing
+  //   ) {
+  //     return
+  //   }
 
 
-    setTimeout(() => {
+  //   onAdd?.(
+  //     item,
+  //     price
+  //   )
 
-      document
-        .getElementById(
-          'item-id-input'
-        )
-        ?.focus()
 
-    }, 0)
+  //   setTimeout(() => {
 
-  }
+  //     document
+  //       .getElementById(
+  //         'item-id-input'
+  //       )
+  //       ?.focus()
+
+  //   }, 0)
+
+  // }
 
 
   // ==========================================================
