@@ -4,7 +4,6 @@ import React, {
   useEffect
 } from 'react'
 
-
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
 
@@ -37,6 +36,97 @@ const SilverItem = ({
     useState('')
 
   const mobileInputRef = useRef(null)
+
+  // ==========================================
+  // CUSTOMER LOOKUP
+  // ==========================================
+
+  const [customerLookupLoading, setCustomerLookupLoading] =
+    useState(false)
+
+  const [customerLookupMessage, setCustomerLookupMessage] =
+    useState('')
+
+  // ==========================================
+  // FETCH CUSTOMER AFTER 10 DIGITS
+  // ==========================================
+
+  const fetchCustomerByMobile = async (mobile) => {
+
+    if (mobile.length !== 10) {
+      setCustomerLookupMessage('')
+      return
+    }
+
+    setCustomerLookupLoading(true)
+    setCustomerLookupMessage('')
+
+    try {
+
+      const response = await fetch(
+        `${API_URL}/api/customers/mobile/${mobile}`,
+        {
+          method: 'GET',
+          credentials: 'include'
+        }
+      )
+
+      const data = await response.json()
+
+      console.log(
+        'Customer lookup response:',
+        data
+      )
+
+      if (
+        response.ok &&
+        data.success &&
+        data.customer
+      ) {
+
+        const foundName =
+          data.customer.customer_name || ''
+
+        setCustomerName(foundName)
+
+        if (foundName) {
+          setCustomerLookupMessage(
+            '✓ Customer found'
+          )
+        } else {
+          setCustomerLookupMessage('')
+        }
+
+      } else {
+
+        // New customer
+        setCustomerName('')
+
+        setCustomerLookupMessage(
+          'New customer'
+        )
+      }
+
+    } catch (error) {
+
+      console.error(
+        'Customer lookup error:',
+        error
+      )
+
+      setCustomerName('')
+
+      setCustomerLookupMessage(
+        'Customer not found'
+      )
+
+    } finally {
+
+      setCustomerLookupLoading(false)
+
+    }
+
+  }
 
 
   // ==========================================
@@ -161,12 +251,14 @@ const SilverItem = ({
         0.20
       )
 
+
       playNote(
         523.25,
         now + 0.12,
         0.35,
         0.20
       )
+
 
       playNote(
         659.25,
@@ -175,12 +267,14 @@ const SilverItem = ({
         0.20
       )
 
+
       playNote(
         783.99,
         now + 0.36,
         0.50,
         0.18
       )
+
 
       playNote(
         1046.50,
@@ -201,328 +295,359 @@ const SilverItem = ({
     }
 
   }
-// ==========================================
-// OPEN CUSTOMER POPUP
-// ==========================================
 
-const markAsSold = () => {
 
-  if (selling) {
-    return
+  // ==========================================
+  // OPEN CUSTOMER POPUP
+  // ==========================================
+
+  const markAsSold = () => {
+
+    if (selling) {
+      return
+    }
+
+    setCustomerName('')
+    setCustomerPhone('')
+    setCustomerLookupMessage('')
+    setCustomerLookupLoading(false)
+
+    setShowCustomerPopup(true)
+
   }
 
-  setCustomerName('')
-  setCustomerPhone('')
 
-  setShowCustomerPopup(true)
-}
+  // ==========================================
+  // CONFIRM CUSTOMER + MARK SOLD
+  // ==========================================
 
+  const confirmMarkAsSold = async () => {
 
-// ==========================================
-// CONFIRM CUSTOMER + MARK SOLD
-// ==========================================
+    if (selling) {
+      return
+    }
 
-const confirmMarkAsSold = async () => {
+    setSelling(true)
 
-  if (selling) {
-    return
-  }
+    try {
 
-  setSelling(true)
+      // ========================================
+      // CUSTOMER DETAILS
+      // BOTH ARE OPTIONAL
+      // ========================================
 
-  try {
+      const finalCustomerPhone =
+        customerPhone.trim()
 
-    // ========================================
-    // DEFAULT CUSTOMER DETAILS
-    // ========================================
-
-    const finalCustomerPhone =
-      customerPhone.trim() || '9908622405'
-
-    const finalCustomerName =
-      customerName.trim() || 'Adarsh'
+      const finalCustomerName =
+        customerName.trim()
 
 
-    console.log(
-      'Selling silver item:',
-      {
-        itemId: item.id,
-        itemName: item.name,
-        customerName: finalCustomerName,
-        customerPhone: finalCustomerPhone
-      }
-    )
-
-
-    // ========================================
-    // STEP 1
-    // MARK SILVER ITEM AS SOLD
-    // ========================================
-
-    const response =
-      await fetch(
-        `${API_URL}/api/silver/${item.id}/sold`,
+      console.log(
+        'Selling silver item:',
         {
-          method: 'PATCH',
-
-          credentials: 'include',
-
-          headers: {
-            'Content-Type': 'application/json'
-          }
+          itemId: item.id,
+          itemName: item.name,
+          customerName: finalCustomerName,
+          customerPhone: finalCustomerPhone
         }
       )
 
 
-    const data =
-      await response.json()
+      // ========================================
+      // STEP 1
+      // MARK SILVER ITEM AS SOLD
+      // ========================================
+
+      const response =
+        await fetch(
+          `${API_URL}/api/silver/${item.id}/sold`,
+          {
+            method: 'PATCH',
+
+            credentials: 'include',
+
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        )
 
 
-    if (!response.ok) {
+      const data =
+        await response.json()
 
-      throw new Error(
-        data.message ||
-        'Failed to mark silver item as sold'
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.message ||
+          'Failed to mark silver item as sold'
+        )
+
+      }
+
+
+      console.log(
+        'Silver item marked as sold:',
+        data
       )
 
-    }
+
+      // ========================================
+      // STEP 2
+      // SAVE SOLD ITEM + CUSTOMER DETAILS
+      // ========================================
+
+      const soldResponse =
+        await fetch(
+          `${API_URL}/api/sold-items`,
+          {
+            method: 'POST',
+
+            credentials: 'include',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body: JSON.stringify({
+
+              // ITEM
+
+              itemId: item.id,
+
+              itemType: 'Silver',
+
+              itemName: item.name,
 
 
-    console.log(
-      'Silver item marked as sold:',
-      data
-    )
+              // WEIGHT
+
+              grossWeight: weight,
 
 
-    // ========================================
-    // STEP 2
-    // SAVE SOLD ITEM + CUSTOMER DETAILS
-    // ========================================
+              // MONEY
 
-    const soldResponse =
-      await fetch(
-        `${API_URL}/api/sold-items`,
-        {
-          method: 'POST',
+              makingCost: makingCost,
 
-          credentials: 'include',
+              soldPrice: price,
 
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
 
-          body: JSON.stringify({
+              // CUSTOMER
 
-            // ITEM
+              customerName:
+                finalCustomerName,
+
+              customerPhone:
+                finalCustomerPhone
+
+            })
+          }
+        )
+
+
+      const soldData =
+        await soldResponse.json()
+
+
+      if (!soldResponse.ok) {
+
+        throw new Error(
+          soldData.message ||
+          'Item was marked sold, but sold record could not be saved'
+        )
+
+      }
+
+
+      console.log(
+        'Sold item saved:',
+        soldData
+      )
+
+
+      // ========================================
+      // STEP 3
+      // UPDATE CARD
+      // ========================================
+
+      setStatus('sold')
+
+
+      // ========================================
+      // STEP 4
+      // CLOSE POPUP
+      // ========================================
+
+      setShowCustomerPopup(false)
+
+
+      // ========================================
+      // STEP 5
+      // RESET CUSTOMER FIELDS
+      // ========================================
+
+      setCustomerName('')
+
+      setCustomerPhone('')
+
+      setCustomerLookupMessage('')
+
+      setCustomerLookupLoading(false)
+
+
+      // ========================================
+      // STEP 6
+      // PLAY SOLD SOUND
+      // ========================================
+
+      playSoldSound()
+
+
+      // ========================================
+      // STEP 7
+      // UPDATE PARENT / DASHBOARD
+      // ========================================
+
+      if (onSold) {
+
+        onSold(
+          item,
+          {
             itemId: item.id,
-
-            itemType: 'Silver',
 
             itemName: item.name,
 
-            // WEIGHT
+            itemType: 'Silver',
+
             grossWeight: weight,
 
-            // MONEY
             makingCost: makingCost,
 
             soldPrice: price,
 
-            // CUSTOMER
             customerName:
               finalCustomerName,
 
             customerPhone:
               finalCustomerPhone
+          }
+        )
 
-          })
-        }
-      )
-
-
-    const soldData =
-      await soldResponse.json()
-
-
-    if (!soldResponse.ok) {
-
-      throw new Error(
-        soldData.message ||
-        'Item was marked sold, but sold record could not be saved'
-      )
+      }
 
     }
 
+    catch (error) {
 
-    console.log(
-      'Sold item saved:',
-      soldData
-    )
-
-
-    // ========================================
-    // STEP 3
-    // UPDATE CARD
-    // ========================================
-
-    setStatus('sold')
+      console.error(
+        'Mark silver item sold error:',
+        error
+      )
 
 
-    // ========================================
-    // STEP 4
-    // CLOSE POPUP
-    // ========================================
-
-    setShowCustomerPopup(false)
-
-
-    // ========================================
-    // STEP 5
-    // RESET CUSTOMER FIELDS
-    // ========================================
-
-    setCustomerName('')
-
-    setCustomerPhone('')
-
-
-    // ========================================
-    // STEP 6
-    // PLAY SOLD SOUND
-    // ========================================
-
-    playSoldSound()
-
-
-    // ========================================
-    // STEP 7
-    // UPDATE PARENT / DASHBOARD
-    // ========================================
-
-    if (onSold) {
-
-      onSold(
-        item,
-        {
-          itemId: item.id,
-
-          itemName: item.name,
-
-          itemType: 'Silver',
-
-          grossWeight: weight,
-
-          makingCost: makingCost,
-
-          soldPrice: price,
-
-          customerName:
-            finalCustomerName,
-
-          customerPhone:
-            finalCustomerPhone
-        }
+      alert(
+        'Failed to mark item as sold.\n\n' +
+        error.message
       )
 
     }
 
+    finally {
 
-  } catch (error) {
-
-    console.error(
-      'Mark silver item sold error:',
-      error
-    )
-
-
-    alert(
-      'Failed to mark item as sold.\n\n' +
-      error.message
-    )
-
-  } finally {
-
-    setSelling(false)
-
-  }
-
-}
-
-
-// ==========================================
-// ⭐ * KEY SELL SHORTCUT
-// ==========================================
-
-// Store previous request
-const sellRequestRef = useRef(sellRequest)
-
-// Store latest markAsSold function
-const markAsSoldRef = useRef(markAsSold)
-
-// Always keep ref pointing to latest function
-markAsSoldRef.current = markAsSold
-
-useEffect(() => {
-
-  // Ignore if request has not changed
-  if (sellRequestRef.current === sellRequest) {
-    return
-  }
-
-  // Update request immediately
-  sellRequestRef.current = sellRequest
-
-  // Ignore empty request
-  if (!sellRequest) {
-    return
-  }
-
-  // Don't open popup for sold item
-  if (
-    item.status?.toLowerCase() === 'sold' ||
-    status === 'sold'
-  ) {
-    return
-  }
-
-  // ⭐ Open the SAME customer popup
-  // used by the AVAILABLE button
-  markAsSoldRef.current()
-
-}, [sellRequest, item.status, status])
-// ==========================================
-// POPUP KEYBOARD CONTROL
-// ==========================================
-
-const handlePopupKeyDown = (e) => {
-
-  // ESC = CLOSE
-
-  if (e.key === 'Escape') {
-
-    if (!selling) {
-
-      setShowCustomerPopup(false)
+      setSelling(false)
 
     }
 
-    return
-
   }
 
 
-  // ENTER = MARK SOLD
+  // ==========================================
+  // ⭐ KEY SELL SHORTCUT
+  // ==========================================
 
-  if (e.key === 'Enter') {
+  const sellRequestRef =
+    useRef(sellRequest)
 
-    e.preventDefault()
+  const markAsSoldRef =
+    useRef(markAsSold)
 
-    confirmMarkAsSold()
+
+  markAsSoldRef.current =
+    markAsSold
+
+
+  useEffect(() => {
+
+    if (
+      sellRequestRef.current ===
+      sellRequest
+    ) {
+      return
+    }
+
+
+    sellRequestRef.current =
+      sellRequest
+
+
+    if (!sellRequest) {
+      return
+    }
+
+
+    if (
+      item.status?.toLowerCase() === 'sold' ||
+      status === 'sold'
+    ) {
+      return
+    }
+
+
+    markAsSoldRef.current()
+
+  }, [
+    sellRequest,
+    item.status,
+    status
+  ])
+
+
+  // ==========================================
+  // POPUP KEYBOARD CONTROL
+  // ==========================================
+
+  const handlePopupKeyDown = (e) => {
+
+    // ESC = CLOSE
+
+    if (e.key === 'Escape') {
+
+      if (!selling) {
+
+        setShowCustomerPopup(false)
+
+      }
+
+      return
+
+    }
+
+
+    // ENTER = MARK SOLD
+
+    if (e.key === 'Enter') {
+
+      e.preventDefault()
+
+      confirmMarkAsSold()
+
+    }
 
   }
 
-}
 
   return (
 
@@ -905,8 +1030,29 @@ const handlePopupKeyDown = (e) => {
                   const value =
                     e.target.value
                       .replace(/\D/g, '')
+                      .slice(0, 10)
+
 
                   setCustomerPhone(value)
+
+
+                  if (value.length === 10) {
+
+                    fetchCustomerByMobile(
+                      value
+                    )
+
+                  } else {
+
+                    setCustomerName('')
+
+                    setCustomerLookupMessage('')
+
+                    setCustomerLookupLoading(
+                      false
+                    )
+
+                  }
 
                 }}
 
@@ -920,8 +1066,10 @@ const handlePopupKeyDown = (e) => {
 
               <span className="customer-hint">
 
-                Optional • Default:
-                9908622405
+                {customerLookupLoading
+                  ? 'Searching customer...'
+                  : customerLookupMessage ||
+                    'Optional • Enter 10 digits to find customer'}
 
               </span>
 
@@ -966,8 +1114,7 @@ const handlePopupKeyDown = (e) => {
 
               <span className="customer-hint">
 
-                Optional • Default:
-                Adarsh
+                Optional • Auto-filled from mobile number
 
               </span>
 
