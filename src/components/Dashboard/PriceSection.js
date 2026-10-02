@@ -2,25 +2,21 @@
 import React, { useEffect, useState } from 'react'
 import './priceSection.css'
 const PriceSection = (props) => {
-  const { HMGoldRate, KDMGoldRate, silverRate } = props
+  const {KDMGoldRate, silverRate } = props
 
-  const [liveHMGold, setLiveHMGold] = useState(HMGoldRate)
   const [liveKDMGold, setLiveKDMGold] = useState(KDMGoldRate)
   const [liveSilver, setLiveSilver] = useState(silverRate)
 
-  const [hmDirection, setHmDirection] = useState('increase')
   const [kdmDirection, setKdmDirection] = useState('increase')
   const [silverDirection, setSilverDirection] = useState('increase')
 
   useEffect(() => {
-    setLiveHMGold(HMGoldRate)
     setLiveKDMGold(KDMGoldRate)
     setLiveSilver(silverRate)
-  }, [HMGoldRate, KDMGoldRate, silverRate])
+  }, [ KDMGoldRate, silverRate])
 
   useEffect(() => {
     if (
-      !HMGoldRate ||
       !KDMGoldRate ||
       !silverRate
     ) {
@@ -30,37 +26,13 @@ const PriceSection = (props) => {
     const interval = setInterval(() => {
 
       // Randomly choose increase or decrease
-      const hmChange = Math.floor(Math.random() * 50) + 1
       const kdmChange = Math.floor(Math.random() * 40) + 1
       const silverChange = Math.floor(Math.random() * 2) + 1
 
       // Random direction
-      const hmIncrease = Math.random() > 0.5
       const kdmIncrease = Math.random() > 0.5
       const silverIncrease = Math.random() > 0.5
 
-      // Hallmark Gold
-      setLiveHMGold(prev => {
-        let newValue
-
-        if (hmIncrease) {
-          newValue = Math.min(
-            prev + hmChange,
-            Number(HMGoldRate) + 100
-          )
-
-          setHmDirection('increase')
-        } else {
-          newValue = Math.max(
-            prev - hmChange,
-            Number(HMGoldRate)
-          )
-
-          setHmDirection('decrease')
-        }
-
-        return newValue
-      })
 
       // KDM Gold
       setLiveKDMGold(prev => {
@@ -112,7 +84,7 @@ const PriceSection = (props) => {
 
     return () => clearInterval(interval)
 
-  }, [HMGoldRate, KDMGoldRate, silverRate])
+  }, [KDMGoldRate, silverRate])
 
 
   return (
@@ -122,26 +94,11 @@ const PriceSection = (props) => {
 
       <div className="price-container">
 
-        {/* Hallmark Gold */}
-        <div className={`rate-card hallmark ${hmDirection}`}>
-
-          <p>Hall Mark Gold</p>
-
-          <h3>
-            ₹{Number(liveHMGold).toLocaleString()}
-          </h3>
-
-          <span className="price-arrow">
-            {hmDirection === 'increase' ? '▲' : '▼'}
-          </span>
-
-        </div>
-
 
         {/* KDM Gold */}
         <div className={`rate-card kdm ${kdmDirection}`}>
 
-          <p>KDM Gold</p>
+          <p>Gold Price</p>
 
           <h3>
             ₹{Number(liveKDMGold).toLocaleString()}
@@ -157,7 +114,7 @@ const PriceSection = (props) => {
         {/* Silver */}
         <div className={`rate-card silver ${silverDirection}`}>
 
-          <p>Silver</p>
+          <p>Silver Price</p>
 
           <h3>
             ₹{Number(liveSilver).toLocaleString()}
