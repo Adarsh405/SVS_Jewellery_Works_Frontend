@@ -8,10 +8,11 @@ import {
   FaBars,
   FaTimes,
   FaCashRegister,
-  FaClipboardList
+  FaClipboardList,
+  FaUsers 
 } from "react-icons/fa";
 import { MdQrCode2 } from "react-icons/md";
-import { Gem, Recycle } from 'lucide-react'
+import { Gem } from 'lucide-react'
 
 import "./navBar.css";
 
@@ -37,6 +38,11 @@ const Navbar = () => {
       label: "QR"
     },
     {
+      path: "/customers",
+      icon: <FaUsers />,
+      label: "Customers"
+    },
+    {
       path: "/orders",
       icon: <FaClipboardList />,
       label: "Orders"
@@ -44,7 +50,7 @@ const Navbar = () => {
     {
       path: "/goldPriceSection",
       icon: <Gem size={21} />,
-      label: "Gold Price"
+      label: "Calculater"
     },
     {
       path: "/Inventory",
@@ -65,11 +71,6 @@ const Navbar = () => {
       path: "/rates",
       icon: <FaCoins />,
       label: "Rates"
-    },
-    {
-      path: "/oldSilverPriceSection",
-      icon: <Recycle size={21} />,
-      label: "O-Silver"
     }
   ];
 

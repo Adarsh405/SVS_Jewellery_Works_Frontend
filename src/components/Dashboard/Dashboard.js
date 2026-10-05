@@ -6,6 +6,7 @@ import PriceSection from './PriceSection'
 import SearchSection from './SearchSection'
 import GoldItem from './GoldItem'
 import SilverItem from './SilverItem'
+import HMGoldItem from './HMGoldItem'
 import Cart from './Cart'
 
 
@@ -25,6 +26,7 @@ class Dashboard extends Component {
 
     loading: true,
 
+    HMGoldRate: "",
     KDMGoldRate: "",
     silverRate: "",
     isSearchFocused: true,
@@ -203,6 +205,8 @@ class Dashboard extends Component {
           KDMGoldRate:
             Number(ratesData.data.gold_rate),
 
+          HMGoldRate:
+            Number(ratesData.data.hallmark_rate),
 
           silverRate:
             Number(ratesData.data.silver_rate),
@@ -706,11 +710,12 @@ class Dashboard extends Component {
       selectedItem,
       itemType,
       message,
+      HMGoldRate,
       KDMGoldRate,
       silverRate,
       loading,
       cartItems,
-      isSearchFocused,
+      isSearchFocused
     } = this.state
 
 
@@ -724,6 +729,7 @@ class Dashboard extends Component {
           <div className="dashboard-left">
         
             <PriceSection
+              HMGoldRate={HMGoldRate}
               KDMGoldRate={KDMGoldRate}
               silverRate={silverRate}
             />
@@ -778,6 +784,25 @@ class Dashboard extends Component {
 
           <div className="result-section" key={selectedItem.id}>
 
+
+            {/* HALLMARK */}
+
+            {itemType === 'HallMark' && (
+
+              <HMGoldItem
+
+                item={selectedItem}
+
+                HMGoldrate={HMGoldRate}
+                onSold={this.handleHallmarkItemSold}
+                onAdd={this.addToCart}
+                focusItemId={this.focusItemId}
+
+              />
+
+            )}
+
+
             {/* KDM */}
 
             {itemType === 'KDM' && (
@@ -790,7 +815,6 @@ class Dashboard extends Component {
                 onSold={this.handleItemSold}
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
-                sellRequest={this.state.sellRequest}
 
               />
 
@@ -811,6 +835,7 @@ class Dashboard extends Component {
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
                 sellRequest={this.state.sellRequest}
+
               />
 
             )}

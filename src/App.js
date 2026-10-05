@@ -10,7 +10,6 @@ import Payment from "./components/Payment/Payment";
 import Sales from "./components/Sales/sales.js"
 import Inventory from "./components/Inventory/Inventory"
 import GoldPriceSection from './components/GoldPriceSection/GoldPriceSection'
-import OldSilverPriceSection from './components/OldSilverPriceSection/OldSilverPriceSection'
 import Orders from './components/Orders/Orders';
 import JewelleryBill from './components/JewelleryBill/JewelleryBill.js'
 import Customers from './components/Customers/Customers.js'
@@ -48,18 +47,15 @@ const App = () => {
         <Route
           path="/Inventory"
           element={
+            <ProtectedRoute>
               <Inventory />
+            </ProtectedRoute>
           }
         />
         <Route path="/orders" element={<Orders />} />
         <Route
             path="/goldPriceSection"
             element={<GoldPriceSection />}
-        />
-
-        <Route
-            path="/oldSilverPriceSection"
-            element={<OldSilverPriceSection />}
         />
         <Route
           path="/addJewellery"
@@ -79,7 +75,7 @@ const App = () => {
         />
         <Route path="/payment" element={<Payment />} />
         <Route path="/invoice" element={<JewelleryBill/>}/>
-        <Route path="/customers" Component={Customers}/>
+        <Route path="/customers" element={<Customers/>}/>
       </Routes>
 
     </BrowserRouter>

@@ -254,7 +254,7 @@ class RateUpdate extends Component {
 
     try {
       const response = await fetch(
-        'https://svs-jewellery-backend.onrender.com/api/rates',
+        'https://svs-jewellery-works-backend.onrender.com/api/rates',
         {
           method: 'PUT',
 
