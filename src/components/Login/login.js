@@ -6,8 +6,8 @@ const API_URL = "https://svs-jewellery-works-backend.onrender.com";
 
 class Login extends Component {
   state = {
-    username: "",
-    password: "",
+    username: "SVS_Jewellers",
+    password: "Svs@1234",
     showPassword: false,
     loading: false,
     checkingAuth: true,
@@ -210,6 +210,9 @@ class Login extends Component {
 
           <p className="login-description">
             Welcome back. Sign in to manage your jewellery store.
+          </p>
+          <p className="demo-login-note">
+            Demo credentials are pre-filled for testing.
           </p>
 
           <form onSubmit={this.onSubmitLogin}>
