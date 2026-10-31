@@ -833,6 +833,7 @@ class Dashboard extends Component {
                 onSold={this.handleItemSold}
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
+                sellRequest={this.state.sellRequest}
                 onRefresh={this.refreshAllApis}
               />
 
