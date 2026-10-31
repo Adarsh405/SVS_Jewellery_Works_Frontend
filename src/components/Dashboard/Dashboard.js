@@ -246,7 +246,7 @@ class Dashboard extends Component {
   refreshAllApis = async () => {
     try {
       await this.getJewelleryDetails();
-
+      this.setState({selectedItem:null})
       console.log("All jewellery APIs refreshed successfully");
     } catch (error) {
       console.error("Failed to refresh jewellery APIs:", error);
@@ -704,7 +704,10 @@ class Dashboard extends Component {
         {
           id: item.id,
           name: item.name,
+          weight: item.weight,
           itemType: item.itemType,
+          netWeight: item.netWeight,
+          making_charges:item.charges,
           rate: Number(price)
         }
       ],
@@ -830,7 +833,7 @@ class Dashboard extends Component {
                 onSold={this.handleItemSold}
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
-
+                onRefresh={this.refreshAllApis}
               />
 
             )}

@@ -7,6 +7,8 @@
    ===================================================== */
 
 .print-bill-root,
+.gold-print-bill-root,
+.silver-print-bill-root,
 .cart-print-bill-root {
   display: none;
 }
@@ -819,16 +821,22 @@
   body * {
     visibility: hidden !important;
   }
+  /* SHOW PRINTABLE BILL CONTAINERS */
 
- .cart-print-bill-root,
+.cart-print-bill-root,
 .cart-print-bill-root *,
 .silver-print-bill-root,
-.silver-print-bill-root * {
+.silver-print-bill-root *,
+.gold-print-bill-root,
+.gold-print-bill-root * {
   visibility: visible !important;
 }
 
+/* PRINT CONTAINER POSITIONING */
+
 .cart-print-bill-root,
-.silver-print-bill-root {
+.silver-print-bill-root,
+.gold-print-bill-root {
   display: block !important;
   position: fixed !important;
   left: 0 !important;
@@ -840,7 +848,6 @@
   overflow: hidden !important;
   z-index: 999999 !important;
 }
-
   .print-bill-page {
     position: relative !important;
 

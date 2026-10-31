@@ -6,6 +6,7 @@ import React, {
 
 import './goldItem.css'
 import BillCopy from './BillCopy.js'
+import { createPortal } from 'react-dom'
 
 const API_URL =
   'https://svs-jewellery-works-backend.onrender.com'
@@ -21,6 +22,7 @@ const GoldItem = ({
   onAdd,
   focusItemId,
   sellRequest,
+  onRefresh,
 }) => {
   const [selling, setSelling] = useState(false)
   const [printing, setPrinting] = useState(false)
@@ -31,7 +33,6 @@ const GoldItem = ({
 
   const [showDiscountPopup, setShowDiscountPopup] = useState(false)
   const [discountInput, setDiscountInput] = useState('')
-
   const [showCustomerPopup, setShowCustomerPopup] = useState(false)
 
   const [teluguName, setTeluguName] = useState('')
@@ -40,6 +41,7 @@ const GoldItem = ({
 
   const mobileInputRef = useRef(null)
   const discountInputRef = useRef(null)
+  const autoPrintLookupRef = useRef(false)
 
   const [customerLookupLoading, setCustomerLookupLoading] =
     useState(false)
@@ -62,18 +64,15 @@ const GoldItem = ({
   const goldRate = Number(KDMGoldrate) || 0
 
   const totalWeight = netWeight + charges
-
-  const originalPrice =
-    (totalWeight * goldRate) + makingCost
+  const originalPrice = (totalWeight * goldRate) + makingCost
 
   const discount = Math.min(
     Math.max(Number(discountInput) || 0, 0),
+    500,
     originalPrice
   )
 
-  const finalPrice =
-    Math.max(originalPrice - discount, 0)
-
+  const finalPrice = Math.max(originalPrice - discount, 0)
   const isSold = status === 'sold'
 
   // ==========================================================
@@ -99,6 +98,7 @@ const GoldItem = ({
 
     setCustomerLookupLoading(true)
     setCustomerLookupMessage('')
+    autoPrintLookupRef.current = false
 
     try {
       const response = await fetch(
@@ -127,6 +127,7 @@ const GoldItem = ({
 
         if (englishName || teluguCustomerName) {
           setCustomerLookupMessage('✓ Customer found')
+          autoPrintLookupRef.current = true
         } else {
           setCustomerLookupMessage('')
         }
@@ -143,9 +144,7 @@ const GoldItem = ({
 
       setCustomerName('')
       setTeluguName('')
-      setCustomerLookupMessage(
-        'Customer not found'
-      )
+      setCustomerLookupMessage('Customer not found')
     } finally {
       setCustomerLookupLoading(false)
     }
@@ -177,6 +176,34 @@ const GoldItem = ({
   }, [showCustomerPopup])
 
   // ==========================================================
+  // AUTOMATICALLY PRINT WHEN AN EXISTING CUSTOMER IS FOUND
+  // ==========================================================
+
+  useEffect(() => {
+    if (
+      showCustomerPopup &&
+      customerPhone.length === 10 &&
+      customerLookupMessage === '✓ Customer found' &&
+      !customerLookupLoading &&
+      autoPrintLookupRef.current &&
+      !selling &&
+      !printing
+    ) {
+      autoPrintLookupRef.current = false
+      printAfterSale()
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    customerLookupMessage,
+    customerLookupLoading,
+    customerPhone,
+    showCustomerPopup,
+    selling,
+    printing,
+  ])
+
+  // ==========================================================
   // SOLD SOUND
   // ==========================================================
 
@@ -203,9 +230,7 @@ const GoldItem = ({
           audioContext.createGain()
 
         oscillator.connect(gainNode)
-        gainNode.connect(
-          audioContext.destination
-        )
+        gainNode.connect(audioContext.destination)
 
         oscillator.type = 'sine'
 
@@ -230,13 +255,10 @@ const GoldItem = ({
         )
 
         oscillator.start(startTime)
-        oscillator.stop(
-          startTime + duration
-        )
+        oscillator.stop(startTime + duration)
       }
 
-      const now =
-        audioContext.currentTime
+      const now = audioContext.currentTime
 
       playNote(392, now, 0.30, 0.20)
       playNote(523.25, now + 0.12, 0.35, 0.20)
@@ -302,6 +324,11 @@ const GoldItem = ({
       return
     }
 
+    if (enteredDiscount > 500) {
+      alert('Maximum discount allowed is ₹500.')
+      return
+    }
+
     if (enteredDiscount > originalPrice) {
       alert(
         `Discount cannot be more than ${formatMoney(originalPrice)}.`
@@ -339,11 +366,42 @@ const GoldItem = ({
         teluguName.trim() ||
         finalEnglishName
 
+      // Create a new customer only when a valid mobile and name are supplied.
+      if (
+        finalCustomerPhone.length === 10 &&
+        finalEnglishName &&
+        customerLookupMessage === 'New customer'
+      ) {
+        const customerResponse = await fetch(
+          `${API_URL}/api/customers`,
+          {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              customer_name: finalEnglishName,
+              telugu_name: finalTeluguName,
+              mobile_number: finalCustomerPhone,
+            }),
+          }
+        )
+
+        const customerData =
+          await customerResponse.json().catch(() => ({}))
+
+        if (!customerResponse.ok) {
+          throw new Error(
+            customerData.message ||
+            'Unable to create customer'
+          )
+        }
+      }
+
       // STEP 1: MARK GOLD SOLD
 
-      setLoaderText(
-        'Updating item status...'
-      )
+      setLoaderText('Updating item status...')
 
       const response = await fetch(
         `${API_URL}/api/kdm/${item.id}/sold`,
@@ -367,9 +425,7 @@ const GoldItem = ({
 
       // STEP 2: SAVE SOLD ITEM
 
-      setLoaderText(
-        'Saving sale details...'
-      )
+      setLoaderText('Saving sale details...')
 
       const soldResponse = await fetch(
         `${API_URL}/api/sold-items`,
@@ -379,23 +435,16 @@ const GoldItem = ({
           headers: {
             'Content-Type': 'application/json',
           },
-
           body: JSON.stringify({
             itemId: item.id,
             itemType: 'KDM',
             itemName: item.name,
-
             netWeight: netWeight,
             charges: charges,
             makingCost: makingCost,
-
             soldPrice: finalPrice,
-
-            customerName:
-              finalEnglishName,
-
-            customerPhone:
-              finalCustomerPhone,
+            customerName: finalEnglishName,
+            customerPhone: finalCustomerPhone,
           }),
         }
       )
@@ -412,61 +461,46 @@ const GoldItem = ({
 
       // STEP 3: CREATE INVOICE
 
-      setLoaderText(
-        'Creating invoice...'
+      setLoaderText('Creating invoice...')
+
+      const invoiceResponse = await fetch(
+        `${API_URL}/api/invoices`,
+        {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            customer_name:
+              finalEnglishName || null,
+
+            customer_mobile:
+              finalCustomerPhone || null,
+
+            customer_address: 'Telangana',
+
+            items: [
+              {
+                ...item,
+                item_type: 'KDM',
+                item_id: item.id,
+                item_name: item.name,
+                net_weight: netWeight,
+                charges: charges,
+                total_weight: totalWeight,
+                making_cost: makingCost,
+                gold_rate: goldRate,
+                original_amount: originalPrice,
+                discount: discount,
+                amount: finalPrice,
+                sold_price: finalPrice,
+                status: 'sold',
+              },
+            ],
+          }),
+        }
       )
-
-      const invoiceResponse =
-        await fetch(
-          `${API_URL}/api/invoices`,
-          {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-
-            body: JSON.stringify({
-              customer_name:
-                finalEnglishName || null,
-
-              customer_mobile:
-                finalCustomerPhone || null,
-
-              customer_address:
-                'Telangana',
-
-              items: [
-                {
-                  ...item,
-
-                  item_type: 'KDM',
-                  item_id: item.id,
-                  item_name: item.name,
-
-                  net_weight: netWeight,
-                  charges: charges,
-                  total_weight: totalWeight,
-
-                  making_cost: makingCost,
-
-                  gold_rate: goldRate,
-
-                  original_amount:
-                    originalPrice,
-
-                  discount: discount,
-
-                  amount: finalPrice,
-
-                  sold_price: finalPrice,
-
-                  status: 'sold',
-                },
-              ],
-            }),
-          }
-        )
 
       const invoiceData =
         await invoiceResponse.json()
@@ -487,11 +521,9 @@ const GoldItem = ({
         )
       }
 
-      setInvoiceNumber(
-        generatedInvoiceNumber
-      )
-
+      setInvoiceNumber(generatedInvoiceNumber)
       setStatus('sold')
+
       setShowCustomerPopup(false)
       setShowDiscountPopup(false)
 
@@ -504,27 +536,13 @@ const GoldItem = ({
 
       return {
         success: true,
-
-        customerName:
-          finalEnglishName,
-
-        teluguName:
-          finalTeluguName,
-
-        customerPhone:
-          finalCustomerPhone,
-
-        invoiceNumber:
-          generatedInvoiceNumber,
-
-        originalPrice:
-          originalPrice,
-
-        discount:
-          discount,
-
-        finalPrice:
-          finalPrice,
+        customerName: finalEnglishName,
+        teluguName: finalTeluguName,
+        customerPhone: finalCustomerPhone,
+        invoiceNumber: generatedInvoiceNumber,
+        originalPrice: originalPrice,
+        discount: discount,
+        finalPrice: finalPrice,
       }
     } catch (error) {
       console.error(
@@ -550,66 +568,54 @@ const GoldItem = ({
   // ==========================================================
 
   const printAfterSale = async () => {
-    if (
-      printing ||
-      selling ||
-      isSold
-    ) {
-      return
-    }
+    if (printing || selling || isSold) return
 
-    setLoaderText(
-      'Saving sale and preparing bill...'
-    )
-
+    setLoaderText('Saving sale and preparing bill...')
     setPrinting(true)
 
     try {
-      const saleResult =
-        await saveSale()
+      const saleResult = await saveSale()
 
-      if (
-        !saleResult ||
-        !saleResult.success
-      ) {
+      if (!saleResult || !saleResult.success) {
         setPrinting(false)
         return
       }
 
-      setCustomerName(
-        saleResult.customerName || ''
+      setCustomerName(saleResult.customerName || '')
+      setTeluguName(saleResult.teluguName || '')
+      setCustomerPhone(saleResult.customerPhone || '')
+      setInvoiceNumber(saleResult.invoiceNumber)
+
+      setLoaderText('Preparing bill for printing...')
+
+      const handleAfterPrint = async () => {
+        setPrinting(false)
+        setLoaderText('Please wait...')
+
+        try {
+          await onRefresh?.()
+        } catch (error) {
+          console.error(
+            'Dashboard refresh failed:',
+            error
+          )
+        } finally {
+          setTimeout(() => {
+            focusItemId?.()
+            document.getElementById('item-id-input')?.focus()
+          }, 150)
+        }
+      }
+
+      window.addEventListener(
+        'afterprint',
+        handleAfterPrint,
+        { once: true }
       )
 
-      setTeluguName(
-        saleResult.teluguName || ''
-      )
-
-      setCustomerPhone(
-        saleResult.customerPhone || ''
-      )
-
-      setInvoiceNumber(
-        saleResult.invoiceNumber
-      )
-
-      setLoaderText(
-        'Preparing bill for printing...'
-      )
-
-      setTimeout(() => {
-        window.print()
-
-        setTimeout(() => {
-          setPrinting(false)
-          setLoaderText('Please wait...')
-        }, 1000)
-      }, 500)
+      setTimeout(() => window.print(), 500)
     } catch (error) {
-      console.error(
-        'Print sale error:',
-        error
-      )
-
+      console.error('Print sale error:', error)
       setPrinting(false)
     }
   }
@@ -619,14 +625,25 @@ const GoldItem = ({
   // ==========================================================
 
   const confirmMarkAsSold = async () => {
-    if (
-      selling ||
-      printing
-    ) {
-      return
-    }
+    if (selling || printing) return
 
-    await saveSale()
+    const result = await saveSale()
+
+    if (result?.success) {
+      try {
+        await onRefresh?.()
+      } catch (error) {
+        console.error(
+          'Dashboard refresh failed:',
+          error
+        )
+      }
+
+      setTimeout(() => {
+        focusItemId?.()
+        document.getElementById('item-id-input')?.focus()
+      }, 150)
+    }
   }
 
   // ==========================================================
@@ -639,8 +656,7 @@ const GoldItem = ({
   const markAsSoldRef =
     useRef(markAsSold)
 
-  markAsSoldRef.current =
-    markAsSold
+  markAsSoldRef.current = markAsSold
 
   useEffect(() => {
     if (
@@ -650,16 +666,14 @@ const GoldItem = ({
       return
     }
 
-    sellRequestRef.current =
-      sellRequest
+    sellRequestRef.current = sellRequest
 
     if (!sellRequest) {
       return
     }
 
     if (
-      item.status?.toLowerCase() ===
-        'sold' ||
+      item.status?.toLowerCase() === 'sold' ||
       status === 'sold'
     ) {
       return
@@ -743,22 +757,20 @@ const GoldItem = ({
       <div
         className={
           `gold-item-card ${
-            isSold
-              ? 'item-sold'
-              : ''
+            isSold ? 'item-sold' : ''
           }`
         }
       >
         {isSold && (
           <div className="sold-confetti">
             {Array.from({
-              length: 45
+              length: 45,
             }).map((_, index) => (
               <span
                 key={index}
                 className="confetti-piece"
                 style={{
-                  '--i': index
+                  '--i': index,
                 }}
               />
             ))}
@@ -769,9 +781,7 @@ const GoldItem = ({
           <div
             className={
               `item-type ${
-                isSold
-                  ? 'sold-type'
-                  : 'gold-type'
+                isSold ? 'sold-type' : 'gold-type'
               }`
             }
           >
@@ -813,9 +823,7 @@ const GoldItem = ({
 
                   setTimeout(() => {
                     document
-                      .getElementById(
-                        'item-id-input'
-                      )
+                      .getElementById('item-id-input')
                       ?.focus()
                   }, 0)
                 }}
@@ -899,7 +907,7 @@ const GoldItem = ({
           DISCOUNT POPUP
       ==================================================== */}
 
-      {showDiscountPopup && (
+      {showDiscountPopup &&  createPortal((
         <div
           className="discount-popup-overlay"
           onMouseDown={(e) => {
@@ -952,25 +960,21 @@ const GoldItem = ({
               </button>
             </div>
 
-            <div className="discount-price-summary">
-              <div>
-                <span>Total Price</span>
-                <strong>
-                  {formatMoney(
-                    originalPrice
-                  )}
-                </strong>
+            <div className="silver-discount-summary">
+              <div className="silver-discount-metric silver-discount-items">
+                <span>Total Items</span>
+                <strong>1</strong>
               </div>
 
-              <div>
-                <span>Total Weight</span>
+              <div className="silver-discount-metric silver-discount-total">
+                <span>Total Price</span>
                 <strong>
-                  {totalWeight.toFixed(3)} g
+                  {formatMoney(originalPrice)}
                 </strong>
               </div>
             </div>
 
-            <div className="discount-field">
+            <div className="discount-field silver-discount-field">
               <label>
                 Discount Amount (₹)
               </label>
@@ -978,23 +982,23 @@ const GoldItem = ({
               <input
                 ref={discountInputRef}
                 type="number"
-                inputMode="decimal"
+                inputMode="numeric"
                 min="0"
-                max={originalPrice}
+                max={Math.min(originalPrice, 500)}
                 step="1"
                 value={discountInput}
                 onChange={(e) => {
-                  const value =
-                    e.target.value
+                  const value = e.target.value
 
                   if (
                     value === '' ||
-                    /^\d*\.?\d*$/.test(value)
+                    (/^\d*$/.test(value) &&
+                      Number(value) <= 500)
                   ) {
                     setDiscountInput(value)
                   }
                 }}
-                placeholder="Enter discount in rupees"
+                placeholder="Enter discount (max ₹500)"
                 disabled={
                   selling ||
                   printing
@@ -1002,34 +1006,15 @@ const GoldItem = ({
               />
 
               <span className="discount-hint">
-                Maximum discount:{' '}
-                {formatMoney(originalPrice)}
+                Maximum discount: ₹500
               </span>
             </div>
 
-            <div className="discount-result">
-              <div>
-                <span>Original Price</span>
-                <strong>
-                  {formatMoney(
-                    originalPrice
-                  )}
-                </strong>
-              </div>
-
-              <div className="discount-result-minus">
-                <span>Discount</span>
-                <strong>
-                  − {formatMoney(discount)}
-                </strong>
-              </div>
-
-              <div className="discount-result-total">
-                <span>Final Bill Amount</span>
-                <strong>
-                  {formatMoney(finalPrice)}
-                </strong>
-              </div>
+            <div className="silver-after-discount">
+              <span>After Discount Price</span>
+              <strong>
+                {formatMoney(finalPrice)}
+              </strong>
             </div>
 
             <div className="discount-popup-actions">
@@ -1068,13 +1053,13 @@ const GoldItem = ({
             </div>
           </div>
         </div>
-      )}
+      ), document.body)}
 
       {/* ====================================================
           CUSTOMER POPUP
       ==================================================== */}
 
-      {showCustomerPopup && (
+      {showCustomerPopup &&  createPortal((
         <div
           className="customer-popup-overlay"
           onMouseDown={(e) => {
@@ -1384,14 +1369,14 @@ const GoldItem = ({
             )}
           </div>
         </div>
-      )}
+      ), document.body)}
 
       {/* ====================================================
           PRINTABLE BILL
       ==================================================== */}
-
+      {printing && (
       <div
-        className="print-bill-root"
+        className="gold-print-bill-root"
         aria-hidden="true"
       >
         <div className="print-bill-page">
@@ -1415,11 +1400,16 @@ const GoldItem = ({
                 ...item,
                 item_type: 'KDM',
                 item_id: item.id,
+
+                name: item.name,
                 item_name: item.name,
 
+                weight: netWeight,
                 netWeight: netWeight,
                 net_weight: netWeight,
 
+                charges: charges,
+                makingCharges: charges,
                 making_charges: charges,
 
                 makingCost: makingCost,
@@ -1435,9 +1425,7 @@ const GoldItem = ({
                 price: finalPrice,
 
                 discount: discount,
-
-                original_amount:
-                  originalPrice,
+                original_amount: originalPrice,
               },
             ]}
             subtotal={
@@ -1471,11 +1459,16 @@ const GoldItem = ({
                 ...item,
                 item_type: 'KDM',
                 item_id: item.id,
+
+                name: item.name,
                 item_name: item.name,
 
+                weight: netWeight,
                 netWeight: netWeight,
                 net_weight: netWeight,
 
+                charges: charges,
+                makingCharges: charges,
                 making_charges: charges,
 
                 makingCost: makingCost,
@@ -1491,9 +1484,7 @@ const GoldItem = ({
                 price: finalPrice,
 
                 discount: discount,
-
-                original_amount:
-                  originalPrice,
+                original_amount: originalPrice,
               },
             ]}
             subtotal={
@@ -1508,6 +1499,7 @@ const GoldItem = ({
           />
         </div>
       </div>
+      )}
     </>
   )
 }

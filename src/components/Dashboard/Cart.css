@@ -166,12 +166,23 @@
   padding: 9px 12px;
   border: none;
   border-radius: 9px;
-  background: linear-gradient(135deg, #174b32, #246443);
-  color: #fff;
+  background: linear-gradient(135deg, #6B1028 0%, #8B1E3F 50%, #4A0D20 100%);
+  color: #FFF4E6;
   cursor: pointer;
   font-size: 13px;
   font-weight: 900;
   letter-spacing: .3px;
+  box-shadow: 0 3px 8px rgba(107, 16, 40, 0.25);
+  transition: all 0.2s ease;
+}
+
+.cart-print-btn:hover {
+  background: linear-gradient(135deg, #801630 0%, #A52A4D 50%, #5C1028 100%);
+  box-shadow: 0 5px 12px rgba(107, 16, 40, 0.35);
+}
+
+.cart-print-btn:active {
+  transform: scale(0.98);
 }
 
 .cart-print-btn:hover:not(:disabled) {

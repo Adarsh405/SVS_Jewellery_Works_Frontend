@@ -55,17 +55,19 @@ const getItemWeight = (item, type) => {
   if (type === "Silver") {
     return Number(
       item.weight ??
-        item.gross_weight ??
-        item.grossWeight ??
-        0
+      item.gross_weight ??
+      item.grossWeight ??
+      item.net_weight ??
+      item.netWeight ??
+      0
     ) || 0;
   }
 
   return Number(
     item.netWeight ??
-      item.net_weight ??
-      item.weight ??
-      0
+    item.net_weight ??
+    item.weight ??
+    0
   ) || 0;
 };
 
@@ -859,12 +861,12 @@ return (
           </div>
 
           {/* GRAND TOTAL */}
-          <div className="cart-summary">
+          {/* <div className="cart-summary">
             <div className="cart-grand-total">
               <span>Grand Total</span>
               <strong>{formatMoney(total)}</strong>
             </div>
-          </div>
+          </div> */}
 
           {/* BILL BUTTON */}
           <button
@@ -873,7 +875,7 @@ return (
             onClick={openDiscountPopup}
             disabled={processing}
           >
-            PROCEED & BILL
+            PROCEED & BILL <strong>{formatMoney(total)}</strong>
           </button>
 
         </div>
@@ -1175,7 +1177,9 @@ return (
           />
 
         </div>
+        {console.log(printItems)}
       </div>
+      
     )}
   </>
 );
