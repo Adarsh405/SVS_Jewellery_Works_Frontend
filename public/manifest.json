@@ -1,6 +1,7 @@
+
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SVS Jewellery",
+  "name": "SVS Jewellery Management",
   "icons": [
     {
       "src": "favicon.ico",
@@ -19,7 +20,8 @@
     }
   ],
   "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "theme_color": "#ffffff",
   "background_color": "#ffffff"
 }
