@@ -875,7 +875,7 @@ return (
             onClick={openDiscountPopup}
             disabled={processing}
           >
-            PROCEED & BILL <strong>{formatMoney(total)}</strong>
+            <strong className="total-amount">{formatMoney(total)}</strong>
           </button>
 
         </div>

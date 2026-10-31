@@ -1008,3 +1008,6 @@
   .cart-discount-field input { height: 58px; font-size: 28px; }
   .cart-after-discount strong { font-size: 30px; }
 }
+.total-amount{
+  font-size: 20px;
+}
