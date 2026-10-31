@@ -1,0 +1,930 @@
+/* =====================================================
+   SVS JEWELLERY - BILL COPY
+   A4 LANDSCAPE PRINT
+   HEADER SPACE: 2.6 INCH
+   FOOTER SPACE: 0.8 INCH
+   MAXIMUM ITEMS: 4
+   ===================================================== */
+
+.print-bill-root,
+.cart-print-bill-root {
+  display: none;
+}
+
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
+
+.print-bill-page {
+  position: relative;
+  width: 297mm;
+  height: 210mm;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: transparent !important;
+}
+
+/* =====================================================
+   TWO BILL COPIES
+   ===================================================== */
+
+.bill-copy {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 210mm;
+  overflow: hidden;
+  box-sizing: border-box;
+  pointer-events: none;
+  background: transparent !important;
+}
+
+.bill-copy-left {
+  left: 0;
+}
+
+.bill-copy-right {
+  left: 50%;
+}
+
+/* =====================================================
+   BILL BODY
+   HEADER: 66.04mm = 2.6 INCH
+   FOOTER: 20.32mm = 0.8 INCH
+   ===================================================== */
+
+.bill-copy-body {
+  position: absolute;
+  left: 0.14in;
+  top: 66.04mm;
+  width: 5.55in;
+  height: 123.64mm;
+
+  padding: 0.08in 0.10in 0.55in;
+
+  box-sizing: border-box;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  font-family:
+    "Noto Sans",
+    "Noto Sans Telugu",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 8pt;
+  line-height: 1.15;
+
+  color: #30332e;
+
+  background: transparent !important;
+
+  z-index: 20;
+
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+
+  writing-mode: horizontal-tb;
+}
+
+/* =====================================================
+   COLOUR PALETTE
+   ===================================================== */
+
+.bill-copy-original {
+  --bill-primary: #76251f;
+  --bill-secondary: #963e30;
+  --bill-accent: #b18a35;
+  --bill-pale: #fbf1d8;
+  --bill-text: #382720;
+  --bill-rule: #d5bd83;
+}
+
+.bill-copy-shop {
+  --bill-primary: #174b32;
+  --bill-secondary: #246443;
+  --bill-accent: #a88732;
+  --bill-pale: #edf4e9;
+  --bill-text: #203a2b;
+  --bill-rule: #a9c1ad;
+}
+
+/* =====================================================
+   BILL NUMBER AND DATE
+   ===================================================== */
+
+.bill-meta-row {
+  flex: 0 0 auto;
+
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 0.10in;
+
+  margin: 0 0 0.045in;
+  padding: 0.025in 0.045in;
+
+  box-sizing: border-box;
+
+  border-bottom: 1.2px solid var(--bill-accent);
+
+  background: transparent;
+}
+
+.bill-meta-box {
+  display: flex;
+  align-items: baseline;
+
+  gap: 0.04in;
+
+  min-width: 0;
+
+  white-space: nowrap;
+}
+
+.bill-date-box {
+  justify-content: flex-end;
+}
+
+.bill-meta-label {
+  color: var(--bill-primary) !important;
+
+  font-size: 7pt;
+  font-weight: 900;
+
+  text-transform: uppercase;
+  letter-spacing: 0.2px;
+}
+
+.bill-meta-value {
+  color: var(--bill-text) !important;
+
+  font-size: 7.5pt;
+  font-weight: 800;
+}
+
+/* =====================================================
+   SECTION HEADINGS
+   ===================================================== */
+
+.section-title {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-height: 0.22in;
+
+  box-sizing: border-box;
+
+  padding: 0.03in 0.07in;
+  margin: 0 0 0.035in;
+
+  background: #f3e5c5 !important;
+
+  color: #572018 !important;
+
+  border: 1px solid #9b7130;
+  border-left: 4px solid #76251f;
+
+  border-radius: 0.025in;
+
+  font-size: 7.5pt;
+  font-weight: 900;
+
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.bill-copy-shop .section-title {
+  background: #e1ebdf !important;
+
+  color: #174b32 !important;
+
+  border-color: #62846a;
+  border-left-color: #174b32;
+}
+
+/* =====================================================
+   CUSTOMER DETAILS
+   ===================================================== */
+
+.customer-section {
+  flex: 0 0 auto;
+
+  width: 100%;
+
+  margin: 0 0 0.045in;
+}
+
+.customer-details-grid {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  padding: 0 0.035in;
+
+  box-sizing: border-box;
+}
+
+.customer-detail {
+  display: flex;
+  align-items: baseline;
+
+  gap: 0.06in;
+
+  min-width: 0;
+  min-height: 0.20in;
+
+  padding: 0.02in 0;
+
+  box-sizing: border-box;
+
+  border-bottom: 1px solid var(--bill-rule);
+}
+
+.detail-label {
+  flex: 0 0 0.65in;
+
+  color: var(--bill-primary) !important;
+
+  font-size: 6.8pt;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+.detail-value {
+  flex: 1 1 auto;
+
+  min-width: 0;
+
+  color: #242019 !important;
+
+  font-size: 7.2pt;
+  font-weight: 700;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* =====================================================
+   TWO OR MORE ITEMS
+   CUSTOMER DETAILS IN ONE ROW
+   ===================================================== */
+
+.bill-copy-body:has(
+  .bill-items-table tbody tr:nth-child(3)
+) .customer-details-grid {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.07in;
+}
+
+.bill-copy-body:has(
+  .bill-items-table tbody tr:nth-child(3)
+) .customer-detail {
+  flex: 1 1 0;
+
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 0.02in;
+
+  min-width: 0;
+  min-height: 0.34in;
+}
+
+.bill-copy-body:has(
+  .bill-items-table tbody tr:nth-child(3)
+) .detail-label {
+  flex: none;
+  font-size: 6.2pt;
+}
+
+.bill-copy-body:has(
+  .bill-items-table tbody tr:nth-child(3)
+) .detail-value {
+  width: 100%;
+
+  font-size: 6.5pt;
+  line-height: 1.1;
+}
+
+/* =====================================================
+   ITEM DETAILS
+   ===================================================== */
+
+.items-section {
+  flex: 0 0 auto;
+
+  width: 100%;
+
+  margin: 0 0 0.045in;
+}
+
+.bill-items-table {
+  width: 100%;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  table-layout: fixed;
+
+  font-size: 6.5pt;
+
+  color: #30332e;
+
+  background: transparent;
+
+  writing-mode: horizontal-tb;
+}
+
+/* TABLE HEADER */
+
+.bill-items-table thead th {
+  height: 0.27in;
+
+  padding: 0.025in 0.02in;
+
+  box-sizing: border-box;
+
+  border: 1px solid #805c29;
+
+  background: #542018 !important;
+
+  color: #ffffff !important;
+
+  font-size: 6.2pt;
+  font-weight: 900;
+
+  line-height: 1.1;
+
+  text-align: center;
+  vertical-align: middle;
+
+  overflow-wrap: anywhere;
+
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.bill-copy-shop .bill-items-table thead th {
+  background: #174b32 !important;
+
+  border-color: #174b32;
+
+  color: #ffffff !important;
+}
+
+/* TABLE BODY */
+
+.bill-items-table tbody td {
+  height: 0.235in;
+
+  padding: 0.018in 0.025in;
+
+  box-sizing: border-box;
+
+  border: 1px solid #c9c4b8;
+
+  background: transparent;
+
+  vertical-align: middle;
+
+  font-size: 6.3pt;
+  font-weight: 700;
+
+  color: #211b16 !important;
+
+  overflow: hidden;
+}
+
+.bill-copy-shop .bill-items-table tbody td {
+  border-color: #b9c8bc;
+}
+
+/* =====================================================
+   GOLD COLUMNS
+   ===================================================== */
+
+.bill-items-table.has-gold-columns .col-sl {
+  width: 5%;
+}
+
+.bill-items-table.has-gold-columns .col-name {
+  width: 21%;
+}
+
+.bill-items-table.has-gold-columns .col-type {
+  width: 11%;
+}
+
+.bill-items-table.has-gold-columns .col-id {
+  width: 12%;
+}
+
+.bill-items-table.has-gold-columns .col-weight {
+  width: 11%;
+}
+
+.bill-items-table.has-gold-columns .col-making {
+  width: 14%;
+}
+
+.bill-items-table.has-gold-columns .col-total-weight {
+  width: 13%;
+}
+
+.bill-items-table.has-gold-columns .col-amount {
+  width: 13%;
+}
+
+/* =====================================================
+   SILVER COLUMNS
+   ===================================================== */
+
+.bill-items-table.silver-only-table .col-sl {
+  width: 6%;
+}
+
+.bill-items-table.silver-only-table .col-name {
+  width: 27%;
+}
+
+.bill-items-table.silver-only-table .col-type {
+  width: 15%;
+}
+
+.bill-items-table.silver-only-table .col-id {
+  width: 17%;
+}
+
+.bill-items-table.silver-only-table .col-weight {
+  width: 17%;
+}
+
+.bill-items-table.silver-only-table .col-amount {
+  width: 18%;
+}
+
+/* =====================================================
+   COLUMN TEXT
+   ===================================================== */
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.item-name-cell {
+  text-align: left;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-type-cell {
+  white-space: nowrap;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.amount-cell {
+  font-weight: 900 !important;
+
+  color: #242a24 !important;
+
+  white-space: nowrap;
+}
+
+.making-charges-cell,
+.total-weight-cell {
+  font-weight: 800 !important;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   TABLE TOTAL
+   ===================================================== */
+
+.table-total-row td {
+  height: 0.24in !important;
+
+  font-weight: 900 !important;
+
+  background: var(--bill-pale) !important;
+
+  border-top: 1.5px solid var(--bill-accent) !important;
+
+  color: var(--bill-text) !important;
+
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.total-label-cell {
+  text-align: right !important;
+
+  padding-right: 0.06in !important;
+}
+
+.total-weight-summary {
+  color: var(--bill-text) !important;
+}
+
+.grand-total-cell {
+  color: var(--bill-text) !important;
+
+  font-size: 6.5pt !important;
+}
+
+/* =====================================================
+   PRICE SUMMARY
+   ===================================================== */
+
+.grand-total-box {
+  flex: 0 0 auto;
+
+  width: 100%;
+
+  min-height: 0.32in;
+
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 0.08in;
+
+  padding: 0.03in 0.06in;
+  margin: 0;
+
+  border: 1.2px solid var(--bill-accent);
+  border-left: 3px solid var(--bill-primary);
+
+  border-radius: 0.02in;
+
+  background: var(--bill-pale);
+
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.bill-total-summary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  gap: 0.02in;
+
+  min-width: 42%;
+}
+
+.bill-total-line {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 0.08in;
+
+  color: var(--bill-text);
+
+  font-size: 6.4pt;
+  line-height: 1.1;
+}
+
+.bill-total-line span {
+  font-weight: 700;
+}
+
+.bill-total-line strong {
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.bill-discount-line {
+  color: var(--bill-primary);
+}
+
+.bill-final-total {
+  min-width: 34%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+
+  gap: 0.02in;
+}
+
+.grand-total-label {
+  color: var(--bill-primary) !important;
+
+  font-size: 7pt;
+  font-weight: 900;
+
+  letter-spacing: 0.25px;
+}
+
+.grand-total-value {
+  color: var(--bill-primary) !important;
+
+  font-family:
+    "Noto Sans",
+    "Noto Sans Telugu",
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 9.5pt;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+/* =====================================================
+   EMPTY PAYMENT WRITING SPACES
+   NO PAID / DUE HEADINGS
+   ===================================================== */
+
+.payment-write-in {
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 0.20in;
+
+  width: 100%;
+
+  min-height: 0.38in;
+
+  margin: 0.025in 0;
+
+  padding: 0 0.025in;
+
+  box-sizing: border-box;
+
+  background: transparent !important;
+}
+
+.payment-write-space {
+  flex: 1 1 50%;
+
+  height: 0.28in;
+
+  min-width: 0;
+
+  border-bottom: 1.1px solid #9b7130;
+
+  background: transparent !important;
+}
+
+.bill-copy-shop .payment-write-space {
+  border-bottom-color: #62846a;
+}
+
+/* =====================================================
+   SIGNATURE
+   FIXED AT BOTTOM ABOVE FOOTER
+   ===================================================== */
+
+.signature-section {
+  position: absolute !important;
+
+  left: 0.10in;
+  right: 0.10in;
+
+  bottom: 0.07in;
+
+  width: auto;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  margin: 0 !important;
+
+  padding: 0 0.025in;
+
+  box-sizing: border-box;
+
+  background: transparent !important;
+}
+
+.signature-box {
+  width: 40%;
+
+  text-align: center;
+}
+
+.signature-line {
+  width: 100%;
+
+  height: 0.13in;
+
+  margin-bottom: 0.02in;
+
+  border-bottom: 1px solid var(--bill-rule);
+}
+
+.signature-label {
+  color: var(--bill-text) !important;
+
+  font-size: 6.3pt;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.signature-name {
+  display: block;
+
+  margin-top: 0.02in;
+
+  color: var(--bill-primary) !important;
+
+  font-size: 7pt;
+  font-weight: 900;
+
+  white-space: nowrap;
+}
+
+/* EMPTY TABLE */
+
+.bill-items-table tbody:empty {
+  display: none;
+}
+
+/* =====================================================
+   SCREEN PREVIEW
+   ===================================================== */
+
+@media screen {
+  .bill-copy-body {
+    pointer-events: none;
+  }
+}
+
+/* =====================================================
+   PRINT SETTINGS
+   ===================================================== */
+
+@media print {
+
+  @page {
+    size: A4 landscape !important;
+    margin: 0 !important;
+  }
+
+  html,
+  body {
+    width: 297mm !important;
+    height: 210mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+
+    background: transparent !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+ .cart-print-bill-root,
+.cart-print-bill-root *,
+.silver-print-bill-root,
+.silver-print-bill-root * {
+  visibility: visible !important;
+}
+
+.cart-print-bill-root,
+.silver-print-bill-root {
+  display: block !important;
+  position: fixed !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 297mm !important;
+  height: 210mm !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  z-index: 999999 !important;
+}
+
+  .print-bill-page {
+    position: relative !important;
+
+    width: 297mm !important;
+    height: 210mm !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: hidden !important;
+  }
+
+  .bill-copy {
+    position: absolute !important;
+
+    top: 0 !important;
+
+    width: 148.5mm !important;
+    height: 210mm !important;
+
+    overflow: hidden !important;
+
+    background: transparent !important;
+  }
+
+  .bill-copy-left {
+    left: 0 !important;
+  }
+
+  .bill-copy-right {
+    left: 148.5mm !important;
+  }
+
+  .bill-copy-body {
+    position: absolute !important;
+
+    left: 0.14in !important;
+    top: 66.04mm !important;
+
+    width: 5.55in !important;
+    height: 123.64mm !important;
+
+    padding: 0.08in 0.10in 0.55in !important;
+
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+  }
+
+  .bill-copy-original,
+  .bill-copy-shop {
+    left: 0.14in !important;
+    top: 66.04mm !important;
+
+    width: 5.55in !important;
+    height: 123.64mm !important;
+  }
+
+  .signature-section {
+    position: absolute !important;
+
+    left: 0.10in !important;
+    right: 0.10in !important;
+
+    bottom: 0.07in !important;
+
+    margin: 0 !important;
+  }
+
+  .bill-copy-body,
+  .bill-meta-row,
+  .section-title,
+  .customer-details-grid,
+  .customer-detail,
+  .bill-items-table,
+  .bill-items-table th,
+  .bill-items-table td,
+  .table-total-row,
+  .grand-total-box,
+  .payment-write-in,
+  .payment-write-space,
+  .signature-section,
+  .signature-name {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+}

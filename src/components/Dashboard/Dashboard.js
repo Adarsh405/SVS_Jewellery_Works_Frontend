@@ -242,7 +242,16 @@ class Dashboard extends Component {
 
     }
 
+  // REFRESH ALL INVENTORY AND RATES AFTER SALE
+  refreshAllApis = async () => {
+    try {
+      await this.getJewelleryDetails();
 
+      console.log("All jewellery APIs refreshed successfully");
+    } catch (error) {
+      console.error("Failed to refresh jewellery APIs:", error);
+    }
+  };
   // SEARCH ITEM FROM LOCAL STATE
   searchItem = () => {
 
@@ -457,6 +466,9 @@ class Dashboard extends Component {
 
   }
 
+  setCartItems = () =>{
+    this.setState({cartItems:[]})
+  }
 
   // ITEM ID INPUT
 
@@ -721,7 +733,7 @@ class Dashboard extends Component {
 
     return (
 
-      <div className="dashboard" onClick={this.focusItemId}>
+      <div className="dashboard">
 
         <ShopHeader isFocused={isSearchFocused}/>
         <div className="dashboard-main">
@@ -774,7 +786,10 @@ class Dashboard extends Component {
         
           <div className="dashboard-right">
         
-            <Cart cartItems={cartItems} />
+            <Cart cartItems={cartItems}
+             onClearCart={() => this.setCartItems([])}
+             onRefresh={this.refreshAllApis}
+             focusItemId={this.focusItemId}/>
         
           </div>
         
@@ -835,6 +850,7 @@ class Dashboard extends Component {
                 onAdd={this.addToCart}
                 focusItemId={this.focusItemId}
                 sellRequest={this.state.sellRequest}
+                onRefresh={this.refreshAllApis}
 
               />
 
