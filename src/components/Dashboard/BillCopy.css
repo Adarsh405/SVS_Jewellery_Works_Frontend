@@ -801,7 +801,7 @@
 @media print {
 
   @page {
-    size: A4 portrait !important;
+    size: A4 landscape !important;
     margin: 0 !important;
   }
 
