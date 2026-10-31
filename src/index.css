@@ -1,6 +1,6 @@
 
 /* =========================================================
-   GLOBAL STYLES
+   GLOBAL RESET
 ========================================================= */
 
 * {
@@ -33,15 +33,16 @@ code {
 }
 
 /* =========================================================
-   TABLET LANDSCAPE SUPPORT
+   TABLET LANDSCAPE
 ========================================================= */
 
-@media screen and (orientation: landscape) {
+@media screen and (orientation: landscape) and (max-width: 1400px) {
 
   html,
   body,
   #root {
     width: 100%;
+    min-width: 0;
     min-height: 100vh;
   }
 
@@ -49,14 +50,20 @@ code {
     overflow-x: auto;
   }
 
+  #root {
+    display: block;
+  }
+
   .app-container {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     min-height: 100vh;
   }
 }
 
 /* =========================================================
-   TABLET PORTRAIT SUPPORT
+   TABLET PORTRAIT
 ========================================================= */
 
 @media screen and (orientation: portrait) {
@@ -70,18 +77,21 @@ code {
 
   .app-container {
     width: 100%;
-    min-height: 100vh;
+    min-width: 0;
   }
 }
 
 /* =========================================================
-   RESPONSIVE VIEWPORT
+   RESPONSIVE IMAGES
 ========================================================= */
 
 img {
   max-width: 100%;
-  height: auto;
 }
+
+/* =========================================================
+   FORM ELEMENTS
+========================================================= */
 
 input,
 select,
@@ -96,30 +106,21 @@ button {
 
 @media print {
 
-  /* Hide everything by default */
-
   body * {
     visibility: hidden !important;
   }
-
-  /* Show ONLY the jewellery bill */
 
   .print-page,
   .print-page * {
     visibility: visible !important;
   }
 
-  /* Hide buttons, navbar, dashboard, cards, etc. */
-
   .no-print {
     display: none !important;
   }
 
-  /* Make sure bill is positioned correctly */
-
   .print-page {
     position: fixed !important;
-
     left: 0 !important;
     top: 0 !important;
 
@@ -130,11 +131,8 @@ button {
     padding: 0 !important;
 
     overflow: hidden !important;
-
     background: white !important;
   }
-
-  /* A4 landscape */
 
   @page {
     size: A4 landscape;
