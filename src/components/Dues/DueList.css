@@ -8,9 +8,15 @@
     padding: 20px;
     background: #f4f5f9;
     font-family: Arial, sans-serif;
+    animation: fadeIn 0.4s ease-in-out;
 }
 
-/* SEARCH */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* SEARCH & TOP CONTROLS */
 
 .due-search-container {
     display: flex;
@@ -30,10 +36,32 @@
     font-size: 19px;
     color: #171717;
     outline: none;
+    transition: all 0.25s ease;
 }
 
 .due-search:focus {
     border-color: #7c3aed;
+    box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+}
+
+.due-add-btn {
+    height: 60px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #7c3aed, #4f46e5);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+.due-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
 }
 
 .due-refresh {
@@ -45,9 +73,38 @@
     color: white;
     font-size: 34px;
     cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-/* DUE LIST */
+.due-refresh:hover {
+    transform: rotate(180deg);
+}
+
+/* LOADER ANIMATION */
+
+.due-loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #7c3aed;
+    border-radius: 50%;
+    animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* DUE LIST & EQUAL SPACING */
 
 .due-list {
     display: flex;
@@ -64,46 +121,32 @@
     border-radius: 16px;
     cursor: pointer;
     border: 1px solid rgba(0,0,0,0.07);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+    animation: slideUp 0.35s ease backwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .due-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.10);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
-.due-color-0 {
-    background: #dceafe;
-    color: #12346b;
-}
+.due-color-0 { background: #dceafe; color: #12346b; }
+.due-color-1 { background: #dcfce7; color: #14532d; }
+.due-color-2 { background: #ffedd5; color: #7c2d12; }
+.due-color-3 { background: #f3e8ff; color: #581c87; }
+.due-color-4 { background: #ffe4e6; color: #881337; }
+.due-color-5 { background: #fef9c3; color: #713f12; }
 
-.due-color-1 {
-    background: #dcfce7;
-    color: #14532d;
-}
-
-.due-color-2 {
-    background: #ffedd5;
-    color: #7c2d12;
-}
-
-.due-color-3 {
-    background: #f3e8ff;
-    color: #581c87;
-}
-
-.due-color-4 {
-    background: #ffe4e6;
-    color: #881337;
-}
-
-.due-color-5 {
-    background: #fef9c3;
-    color: #713f12;
-}
+/* EQUAL SPACING FOR LEFT & RIGHT ITEMS */
 
 .due-card-left {
-    display: flex;
+    display: grid;
+    grid-template-columns: 90px 1.5fr 140px 1.5fr;
     align-items: center;
     gap: 16px;
     flex: 1;
@@ -115,17 +158,6 @@
     font-weight: 700;
     opacity: 0.8;
     white-space: nowrap;
-    padding-left:20px;
-}
-
-.due-telugu {
-    font-family: "Noto Sans Telugu", sans-serif;
-    font-size: 22px;
-    font-weight: 700;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-left:20px;
 }
 
 .due-english {
@@ -135,15 +167,22 @@
     overflow: hidden;
     text-overflow: ellipsis;
     opacity: 0.9;
-    padding-left:20px;
 }
 
 .due-mobile {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     letter-spacing: 0.5px;
     white-space: nowrap;
-    padding-left:20px;
+}
+
+.due-telugu {
+    font-family: "Noto Sans Telugu", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .due-card-right {
@@ -174,7 +213,7 @@
     font-weight: 700;
 }
 
-/* POPUP OVERLAY */
+/* POPUP OVERLAY & MODALS */
 
 .due-modal-overlay {
     position: fixed;
@@ -188,8 +227,6 @@
     padding: 15px;
     animation: overlayFade 0.25s ease;
 }
-
-/* POPUP */
 
 .due-modal {
     position: relative;
@@ -217,11 +254,16 @@
     color: #222;
     font-size: 30px;
     cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.due-close:hover {
+    background: #e2e8f0;
 }
 
 .popup-telugu-name {
     font-family: "Noto Sans Telugu", sans-serif;
-    font-size: 39px;
+    font-size: 36px;
     font-weight: 900;
     color: #25143d;
     margin: 12px 35px 8px;
@@ -238,6 +280,31 @@
     font-size: 18px;
     color: #666;
     margin-top: 7px;
+}
+
+/* STATUS BANNER FOR ADD DUE */
+
+.checking-text {
+    font-size: 13px;
+    color: #7c3aed;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+.status-banner {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+}
+.status-banner.found-due { background: #ffedd5; color: #9a3412; }
+.status-banner.found-customer { background: #dcfce7; color: #166534; }
+.status-banner.new { background: #f3e8ff; color: #6b21a8; }
+
+.telugu-font {
+    font-family: "Noto Sans Telugu", sans-serif;
 }
 
 /* OUTSTANDING BALANCE */
@@ -272,22 +339,23 @@
 
 .payment-section label {
     display: block;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 900;
     color: #333;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .payment-input {
     width: 100%;
-    height: 72px;
+    height: 60px;
     padding: 10px 18px;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: 800;
     border: 2px solid #d4d4df;
     border-radius: 13px;
     color: #181818;
     outline: none;
+    transition: all 0.2s ease;
 }
 
 .payment-input:focus {
@@ -321,11 +389,15 @@
     font-size: 19px;
     font-weight: 900;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .payment-submit:hover {
     background: #49247b;
+}
+
+.payment-submit:active {
+    transform: scale(0.98);
 }
 
 .payment-submit:disabled {
@@ -405,13 +477,8 @@
 /* ANIMATIONS */
 
 @keyframes overlayFade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes popupOpen {
@@ -419,7 +486,6 @@
         opacity: 0;
         transform: scale(0.88) translateY(20px);
     }
-
     to {
         opacity: 1;
         transform: scale(1) translateY(0);
@@ -437,8 +503,11 @@
     }
 
     .due-card-left {
-        flex-wrap: wrap;
-        gap: 8px 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        width: 100%;
     }
 
     .due-card-right {

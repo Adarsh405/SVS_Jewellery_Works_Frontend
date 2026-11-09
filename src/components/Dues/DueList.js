@@ -21,6 +21,18 @@ function DueList() {
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
+    // ADD DUE MODAL STATES
+    const [isAddOpen, setIsAddOpen] = useState(false);
+    const [addMobile, setAddMobile] = useState("");
+    const [addForm, setAddForm] = useState({
+        invoice_number: "",
+        english_name: "",
+        telugu_name: "",
+        outstanding_amount: ""
+    });
+    const [customerStatus, setCustomerStatus] = useState(null); // 'found-due', 'found-customer', 'new'
+    const [checkingMobile, setCheckingMobile] = useState(false);
+
     // =================================
     // FETCH DUES
     // =================================
@@ -28,17 +40,13 @@ function DueList() {
     const fetchDues = async () => {
         try {
             setLoading(true);
-
             const response = await axios.get(API, {
                 withCredentials: true
             });
-
             setDues(response.data);
-
         } catch (err) {
             console.error(err);
             setError("Unable to load dues");
-
         } finally {
             setLoading(false);
         }
@@ -78,11 +86,91 @@ function DueList() {
 
     const closePopup = () => {
         if (saving) return;
-
         setSelected(null);
         setPayment("");
         setHistory([]);
         setError("");
+    };
+
+    // =================================
+    // ADD DUE MODAL HANDLERS
+    // =================================
+
+    const openAddModal = () => {
+        setIsAddOpen(true);
+        setAddMobile("");
+        setAddForm({ invoice_number: "", english_name: "", telugu_name: "", outstanding_amount: "" });
+        setCustomerStatus(null);
+        setError("");
+    };
+
+    const closeAddModal = () => {
+        if (saving) return;
+        setIsAddOpen(false);
+    };
+
+    const handleMobileCheck = async (mobile) => {
+        setAddMobile(mobile);
+        setError("");
+        if (mobile.length < 10) {
+            setCustomerStatus(null);
+            return;
+        }
+
+        try {
+            setCheckingMobile(true);
+            const res = await axios.get(`${API}/check-mobile/${mobile}`, {
+                withCredentials: true
+            });
+
+            if (res.data.existsInDues) {
+                // Found in dues -> show details & modifiable
+                setCustomerStatus("found-due");
+                setAddForm({
+                    invoice_number: res.data.due.invoice_number || "",
+                    english_name: res.data.due.english_name || "",
+                    telugu_name: res.data.due.telugu_name || "",
+                    outstanding_amount: res.data.due.outstanding_amount || ""
+                });
+            } else if (res.data.existsInCustomers) {
+                // Found in customers -> fill name and telugu name automatically
+                setCustomerStatus("found-customer");
+                setAddForm(prev => ({
+                    ...prev,
+                    english_name: res.data.customer.english_name || "",
+                    telugu_name: res.data.customer.telugu_name || ""
+                }));
+            } else {
+                // Not found anywhere -> ask to enter details manually
+                setCustomerStatus("new");
+            }
+        } catch (err) {
+            setCustomerStatus("new");
+        } finally {
+            setCheckingMobile(false);
+        }
+    };
+
+    const handleAddSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setSaving(true);
+            setError("");
+            await axios.post(
+                API,
+                {
+                    mobile_number: addMobile,
+                    ...addForm
+                },
+                { withCredentials: true }
+            );
+            closeAddModal();
+            fetchDues();
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to save due");
+        } finally {
+            setSaving(false);
+        }
     };
 
     // =================================
@@ -124,20 +212,12 @@ function DueList() {
             setSaving(true);
             setError("");
 
-            const response = await axios.post(
+            await axios.post(
                 `${API}/${selected.id}/payments`,
-                {
-                    paid_amount: amount
-                },
-                {
-                    withCredentials: true
-                }
+                { paid_amount: amount },
+                { withCredentials: true }
             );
 
-            // Update selected customer balance
-            setSelected(response.data.due);
-
-            // Refresh payment history
             const details = await axios.get(
                 `${API}/${selected.id}`,
                 { withCredentials: true }
@@ -145,11 +225,8 @@ function DueList() {
 
             setSelected(details.data.due);
             setHistory(details.data.history);
-
-            // Clear input
             setPayment("");
 
-            // Refresh main list
             const list = await axios.get(API, {
                 withCredentials: true
             });
@@ -161,7 +238,6 @@ function DueList() {
                 err.response?.data?.message ||
                 "Payment failed"
             );
-
         } finally {
             setSaving(false);
         }
@@ -173,7 +249,6 @@ function DueList() {
 
     const filteredDues = dues.filter((item) => {
         const query = search.toLowerCase().trim();
-
         if (!query) return true;
 
         return [
@@ -205,6 +280,14 @@ function DueList() {
                 />
 
                 <button
+                    className="due-add-btn"
+                    onClick={openAddModal}
+                    title="Add Due"
+                >
+                    + Add Due
+                </button>
+
+                <button
                     className="due-refresh"
                     onClick={fetchDues}
                     title="Refresh"
@@ -214,8 +297,9 @@ function DueList() {
             </div>
 
             {loading ? (
-                <div className="due-message">
-                    Loading...
+                <div className="due-loader-container">
+                    <div className="spinner"></div>
+                    <div className="due-message">Loading Dues...</div>
                 </div>
             ) : (
                 <div className="due-list">
@@ -226,14 +310,12 @@ function DueList() {
                             className={`due-card due-color-${index % 6}`}
                             onClick={() => openPopup(item)}
                         >
-
                             <div className="due-card-left">
                                 <div className="due-invoice">
                                     {item.invoice_number
                                         ? `#${item.invoice_number}`
                                         : "No Inv"}
                                 </div>
-
 
                                 <div className="due-english" title={item.english_name}>
                                     {item.english_name}
@@ -271,19 +353,104 @@ function DueList() {
                 </div>
             )}
 
-            {/* PAYMENT POPUP */}
+            {/* ADD DUE MODAL */}
+            {isAddOpen && (
+                <div className="due-modal-overlay" onClick={closeAddModal}>
+                    <div className="due-modal" onClick={(e) => e.stopPropagation()}>
+                        <button className="due-close" onClick={closeAddModal}>×</button>
+                        
+                        <div className="popup-english-name">Add New Due</div>
+                        
+                        <form onSubmit={handleAddSubmit} className="payment-section">
+                            <label>MOBILE NUMBER</label>
+                            <input
+                                type="tel"
+                                className="payment-input"
+                                placeholder="Enter 10-digit mobile"
+                                maxLength="10"
+                                value={addMobile}
+                                onChange={(e) => handleMobileCheck(e.target.value)}
+                                required
+                                autoFocus
+                            />
 
+                            {checkingMobile && <div className="checking-text">Checking database...</div>}
+
+                            {customerStatus && (
+                                <div className={`status-banner ${customerStatus}`}>
+                                    {customerStatus === 'found-due' && "⚠️ Existing Due found for this mobile. You can update details below."}
+                                    {customerStatus === 'found-customer' && "✓ Customer found! Name auto-filled from customers table."}
+                                    {customerStatus === 'new' && "ℹ️ New customer. Please enter details manually."}
+                                </div>
+                            )}
+
+                            {customerStatus && (
+                                <>
+                                    <label style={{marginTop: "15px"}}>INVOICE NUMBER</label>
+                                    <input
+                                        type="text"
+                                        className="payment-input"
+                                        placeholder="Invoice No"
+                                        value={addForm.invoice_number}
+                                        onChange={(e) => setAddForm({...addForm, invoice_number: e.target.value})}
+                                    />
+
+                                    <label style={{marginTop: "15px"}}>ENGLISH NAME</label>
+                                    <input
+                                        type="text"
+                                        className="payment-input"
+                                        placeholder="Customer Name"
+                                        value={addForm.english_name}
+                                        onChange={(e) => setAddForm({...addForm, english_name: e.target.value})}
+                                        required
+                                    />
+
+                                    <label style={{marginTop: "15px"}}>TELUGU NAME</label>
+                                    <input
+                                        type="text"
+                                        className="payment-input telugu-font"
+                                        placeholder="తెలుగు పేరు"
+                                        value={addForm.telugu_name}
+                                        onChange={(e) => setAddForm({...addForm, telugu_name: e.target.value})}
+                                    />
+
+                                    <label style={{marginTop: "15px"}}>OUTSTANDING AMOUNT</label>
+                                    <input
+                                        type="number"
+                                        className="payment-input"
+                                        placeholder="₹ 0.00"
+                                        value={addForm.outstanding_amount}
+                                        onChange={(e) => setAddForm({...addForm, outstanding_amount: e.target.value})}
+                                        required
+                                    />
+
+                                    {error && <div className="due-error">{error}</div>}
+
+                                    <button
+                                        type="submit"
+                                        className="payment-submit"
+                                        style={{marginTop: "20px"}}
+                                        disabled={saving}
+                                    >
+                                        {saving ? "Saving..." : "SAVE DUE"}
+                                    </button>
+                                </>
+                            )}
+                        </form>
+                    </div>
+                </div>
+            )}
+
+            {/* PAYMENT POPUP */}
             {selected && (
                 <div
                     className="due-modal-overlay"
                     onClick={closePopup}
                 >
-
                     <div
                         className="due-modal"
                         onClick={(e) => e.stopPropagation()}
                     >
-
                         <button
                             className="due-close"
                             onClick={closePopup}
@@ -315,10 +482,7 @@ function DueList() {
 
                         {currentBalance > 0 && (
                             <div className="payment-section">
-
-                                <label>
-                                    ENTER PAID AMOUNT
-                                </label>
+                                <label>ENTER PAID AMOUNT</label>
 
                                 <input
                                     type="number"
@@ -344,11 +508,8 @@ function DueList() {
 
                                 <div className="live-balance">
                                     <span>Remaining Balance</span>
-
                                     <strong>
-                                        ₹{formatMoney(
-                                            remainingBalance
-                                        )}
+                                        ₹{formatMoney(remainingBalance)}
                                     </strong>
                                 </div>
 
@@ -362,11 +523,8 @@ function DueList() {
                                         paidValue > currentBalance
                                     }
                                 >
-                                    {saving
-                                        ? "Saving..."
-                                        : "ADD PAYMENT"}
+                                    {saving ? "Saving..." : "ADD PAYMENT"}
                                 </button>
-
                             </div>
                         )}
 
@@ -383,9 +541,7 @@ function DueList() {
                         )}
 
                         {/* PAYMENT HISTORY */}
-
                         <div className="payment-history">
-
                             <div className="history-title">
                                 PAYMENT HISTORY
                             </div>
@@ -400,7 +556,6 @@ function DueList() {
                                         className="history-row"
                                         key={item.id}
                                     >
-
                                         <div className="history-date">
                                             {new Date(
                                                 item.payment_date
@@ -415,11 +570,9 @@ function DueList() {
                                                 item.paid_amount
                                             )}
                                         </div>
-
                                     </div>
                                 ))
                             )}
-
                         </div>
 
                     </div>
