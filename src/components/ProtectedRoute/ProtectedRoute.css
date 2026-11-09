@@ -1,0 +1,308 @@
+
+.svs-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      #292014 0%,
+      #110f0c 45%,
+      #050505 100%
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
+  color: #fff;
+}
+
+.svs-loader-content {
+  position: relative;
+  z-index: 2;
+  width: 90%;
+  max-width: 390px;
+  text-align: center;
+  animation: loaderAppear 1s ease forwards;
+}
+
+/* Background glow */
+
+.loader-glow {
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.16;
+  background: #d4a94e;
+  animation: glowMove 5s ease-in-out infinite alternate;
+}
+
+.glow-one {
+  top: 10%;
+  left: -100px;
+}
+
+.glow-two {
+  bottom: 5%;
+  right: -100px;
+  animation-delay: 2s;
+}
+
+/* Logo */
+
+.svs-logo-wrapper {
+  position: relative;
+  width: 190px;
+  height: 190px;
+  margin: 0 auto 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svs-logo {
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  border: 1px solid #cba65b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    145deg,
+    #302515,
+    #100e0a
+  );
+  box-shadow:
+    0 0 25px rgba(212, 169, 78, 0.25),
+    inset 0 0 20px rgba(212, 169, 78, 0.12);
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+.svs-logo span {
+  font-size: 39px;
+  font-weight: 800;
+  letter-spacing: 5px;
+  padding-left: 5px;
+  background: linear-gradient(
+    135deg,
+    #fff2bd,
+    #d6a849,
+    #fff1b5
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.logo-line {
+  width: 65px;
+  height: 1px;
+  background: #cba65b;
+  margin: 4px 0;
+}
+
+.svs-logo small {
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: #e7c77f;
+  padding-left: 4px;
+}
+
+/* Rotating rings */
+
+.svs-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  pointer-events: none;
+}
+
+.orbit-one {
+  inset: 0;
+  border-top-color: #e7c16b;
+  border-right-color: rgba(231, 193, 107, 0.25);
+  animation: orbitRotate 3s linear infinite;
+}
+
+.orbit-two {
+  inset: 10px;
+  border-bottom-color: #fff0b0;
+  border-left-color: rgba(231, 193, 107, 0.2);
+  animation: orbitRotateReverse 4s linear infinite;
+}
+
+/* Heading */
+
+.loader-heading {
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  margin: 0;
+}
+
+.loader-heading span {
+  color: #e5bd68;
+  font-weight: 800;
+}
+
+.loader-subheading {
+  color: #b4a58b;
+  font-size: 12px;
+  letter-spacing: 3px;
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+/* Progress */
+
+.loader-progress-section {
+  margin: 40px 0 20px;
+}
+
+.loader-percentage {
+  font-size: 43px;
+  font-weight: 300;
+  color: #f0d18a;
+  margin-bottom: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.loader-percentage small {
+  font-size: 19px;
+  margin-left: 3px;
+}
+
+.loader-progress-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 10px;
+  background: #393126;
+  overflow: hidden;
+}
+
+.loader-progress-fill {
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    #92702f,
+    #ffe4a0,
+    #c69a43
+  );
+  box-shadow: 0 0 12px #d6ad59;
+  transition: width 0.2s linear;
+}
+
+/* Messages */
+
+.loader-message {
+  min-height: 20px;
+  color: #c5b99f;
+  font-size: 12px;
+  letter-spacing: 1px;
+  animation: messageFade 0.6s ease;
+}
+
+.loader-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 25px;
+}
+
+.loader-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #e5bd68;
+  animation: dotPulse 1.2s infinite ease-in-out;
+}
+
+.loader-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loader-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.loader-footer {
+  margin-top: 55px;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #8d7952;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.loader-footer span {
+  color: #d5ae60;
+}
+
+/* Animations */
+
+@keyframes orbitRotate {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbitRotateReverse {
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+@keyframes dotPulse {
+  0%, 80%, 100% {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+@keyframes glowMove {
+  from { transform: translateY(-20px); }
+  to { transform: translateY(30px); }
+}
+
+@keyframes loaderAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes messageFade {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svs-loader *,
+  .svs-loader *::before,
+  .svs-loader *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

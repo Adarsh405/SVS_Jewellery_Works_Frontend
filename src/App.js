@@ -13,7 +13,7 @@ import GoldPriceSection from './components/GoldPriceSection/GoldPriceSection'
 import Orders from './components/Orders/Orders';
 import JewelleryBill from './components/JewelleryBill/JewelleryBill.js'
 import Customers from './components/Customers/Customers.js'
-import Dues from './components/Dues/Dues.js'
+import DueList from './components/Dues/DueList'
 const App = () => {
   return (
     <BrowserRouter>
@@ -28,7 +28,7 @@ const App = () => {
         />
         <Route
           path="/dues"
-          element={<Dues />}
+          element={<DueList />}
         />
 
        

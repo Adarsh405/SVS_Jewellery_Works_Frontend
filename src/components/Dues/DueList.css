@@ -1,0 +1,464 @@
+* {
+    box-sizing: border-box;
+}
+
+.due-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    background: #f4f5f9;
+    font-family: Arial, sans-serif;
+}
+
+/* SEARCH */
+
+.due-search-container {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 22px;
+}
+
+.due-search {
+    flex: 1;
+    min-width: 0;
+    height: 60px;
+    padding: 0 22px;
+    border: 2px solid #d9dce5;
+    border-radius: 14px;
+    background: white;
+    font-size: 19px;
+    color: #171717;
+    outline: none;
+}
+
+.due-search:focus {
+    border-color: #7c3aed;
+}
+
+.due-refresh {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 14px;
+    background: #28213f;
+    color: white;
+    font-size: 34px;
+    cursor: pointer;
+}
+
+/* DUE LIST */
+
+.due-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.due-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 24px;
+    border-radius: 16px;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.07);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.due-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.10);
+}
+
+.due-color-0 {
+    background: #dceafe;
+    color: #12346b;
+}
+
+.due-color-1 {
+    background: #dcfce7;
+    color: #14532d;
+}
+
+.due-color-2 {
+    background: #ffedd5;
+    color: #7c2d12;
+}
+
+.due-color-3 {
+    background: #f3e8ff;
+    color: #581c87;
+}
+
+.due-color-4 {
+    background: #ffe4e6;
+    color: #881337;
+}
+
+.due-color-5 {
+    background: #fef9c3;
+    color: #713f12;
+}
+
+.due-card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+}
+
+.due-invoice {
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0.8;
+    white-space: nowrap;
+    padding-left:20px;
+}
+
+.due-telugu {
+    font-family: "Noto Sans Telugu", sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-left:20px;
+}
+
+.due-english {
+    font-size: 18px;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0.9;
+    padding-left:20px;
+}
+
+.due-mobile {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    padding-left:20px;
+}
+
+.due-card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.due-label {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.due-amount {
+    font-size: 26px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.due-message {
+    text-align: center;
+    padding: 50px 15px;
+    color: #555;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* POPUP OVERLAY */
+
+.due-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(12, 15, 30, 0.72);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    animation: overlayFade 0.25s ease;
+}
+
+/* POPUP */
+
+.due-modal {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    max-height: 92vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+    animation: popupOpen 0.3s cubic-bezier(.2,.8,.2,1);
+}
+
+.due-close {
+    position: absolute;
+    right: 17px;
+    top: 12px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: #f1f1f5;
+    color: #222;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.popup-telugu-name {
+    font-family: "Noto Sans Telugu", sans-serif;
+    font-size: 39px;
+    font-weight: 900;
+    color: #25143d;
+    margin: 12px 35px 8px;
+    overflow-wrap: anywhere;
+}
+
+.popup-english-name {
+    font-size: 23px;
+    font-weight: 800;
+    color: #333;
+}
+
+.popup-mobile {
+    font-size: 18px;
+    color: #666;
+    margin-top: 7px;
+}
+
+/* OUTSTANDING BALANCE */
+
+.popup-balance {
+    margin-top: 24px;
+    padding: 22px 15px;
+    border-radius: 17px;
+    background: #fff1e7;
+}
+
+.popup-balance-label {
+    color: #91400d;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.popup-balance-amount {
+    font-size: 39px;
+    font-weight: 900;
+    color: #a43c08;
+    margin-top: 7px;
+}
+
+/* PAYMENT INPUT */
+
+.payment-section {
+    margin-top: 24px;
+    text-align: left;
+}
+
+.payment-section label {
+    display: block;
+    font-size: 15px;
+    font-weight: 900;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.payment-input {
+    width: 100%;
+    height: 72px;
+    padding: 10px 18px;
+    font-size: 32px;
+    font-weight: 800;
+    border: 2px solid #d4d4df;
+    border-radius: 13px;
+    color: #181818;
+    outline: none;
+}
+
+.payment-input:focus {
+    border-color: #7138d5;
+    box-shadow: 0 0 0 4px rgba(113,56,213,0.10);
+}
+
+.live-balance {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    margin: 18px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: #555;
+}
+
+.live-balance strong {
+    font-size: 23px;
+    color: #b45309;
+}
+
+.payment-submit {
+    width: 100%;
+    height: 62px;
+    border: none;
+    border-radius: 13px;
+    background: #25143d;
+    color: white;
+    font-size: 19px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.payment-submit:hover {
+    background: #49247b;
+}
+
+.payment-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* FULLY PAID */
+
+.due-cleared {
+    margin-top: 23px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #dcfce7;
+    color: #166534;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+/* ERROR */
+
+.due-error {
+    margin-top: 15px;
+    color: #dc2626;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* HISTORY */
+
+.payment-history {
+    margin-top: 27px;
+    text-align: left;
+    border-top: 2px solid #eeeeee;
+    padding-top: 20px;
+}
+
+.history-title {
+    font-size: 16px;
+    font-weight: 900;
+    color: #302044;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.history-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 12px;
+    border-radius: 10px;
+    background: #f5f3f9;
+    margin-bottom: 9px;
+}
+
+.history-date {
+    color: #555;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.history-amount {
+    color: #15803d;
+    font-size: 18px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.history-empty {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+    font-size: 16px;
+}
+
+/* ANIMATIONS */
+
+@keyframes overlayFade {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes popupOpen {
+    from {
+        opacity: 0;
+        transform: scale(0.88) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+    .due-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .due-card-left {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+    }
+
+    .due-card-right {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        padding-top: 10px;
+    }
+
+    .due-telugu {
+        font-size: 19px;
+    }
+
+    .due-english {
+        font-size: 16px;
+    }
+
+    .due-amount {
+        font-size: 22px;
+    }
+}
